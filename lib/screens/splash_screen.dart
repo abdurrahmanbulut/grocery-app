@@ -46,14 +46,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-      backgroundColor: const Color.fromRGBO(238, 186, 43, 0.9),
-      splash: Image.asset('./assets/images/logo.png'),
-      nextScreen: const HomePage(),
-      splashTransition: SplashTransition.fadeTransition,
-      pageTransitionType: PageTransitionType.fade,
-      splashIconSize: 130.0,
-      duration: 1000,
+    return Scaffold(
+      body: AnimatedSplashScreen(
+        backgroundColor: const Color.fromRGBO(238, 186, 43, 0.9),
+        splash: Image.asset('./assets/images/logo.png'),
+        nextScreen: const HomePage(),
+        splashTransition: SplashTransition.fadeTransition,
+        pageTransitionType: PageTransitionType.fade,
+        splashIconSize: 130.0,
+        duration: 1000,
+      ),
     );
   }
 }
