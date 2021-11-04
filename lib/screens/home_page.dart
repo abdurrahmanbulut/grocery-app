@@ -8,14 +8,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.amber,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Severus grocery'),
         backgroundColor: Colors.white,
       ),
       body: const Center(
         child: Text('Main screen'),
       ),
-      floatingActionButton: FloatingActionButton(backgroundColor:
-        Colors.white, onPressed: () {  }),
+      floatingActionButton:
+          FloatingActionButton(backgroundColor: Colors.white, onPressed: () {}),
     );
   }
 }
