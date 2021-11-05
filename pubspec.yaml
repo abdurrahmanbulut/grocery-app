@@ -37,6 +37,13 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/logos/google.jpg
+
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/OpenSans.ttf
+
 
 
 
