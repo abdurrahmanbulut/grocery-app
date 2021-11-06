@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/screens/contact_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
+import 'package:grocery_app/screens/profile_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   @override
@@ -38,8 +39,8 @@ Widget AccountView(context) {
                 padding: const EdgeInsets.all(10),
               ),
               onPressed: () {
-                /*Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()));*/
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
               },
             ),
             const Icon(
@@ -141,8 +142,8 @@ Widget AccountView(context) {
                       fontWeight: FontWeight.bold,
                       color: Colors.black)),
               onPressed: () {
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Contact()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Contact()));
               },
             ),
             const Icon(
@@ -163,7 +164,7 @@ Widget AccountView(context) {
                   color: Colors.red)),
           onPressed: () {
             Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const LoginScreen()));
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
           },
         ),
       ],
