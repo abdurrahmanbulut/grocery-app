@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/utilities/constants.dart';
+import 'package:grocery_app/screens/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
-
 
   Widget _buildEmailTF() {
     return Column(
@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
-              border:  OutlineInputBorder(),
+              border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 13.0),
               prefixIcon: Icon(
                 Icons.email,
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
-              border:  OutlineInputBorder(),
+              border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 13.0),
               prefixIcon: Icon(
                 Icons.lock,
@@ -92,8 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-
 
   Widget _buildRememberMeCheckbox() {
     return Container(
@@ -128,8 +126,11 @@ class _LoginScreenState extends State<LoginScreen> {
       width: double.infinity,
       child: RaisedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>(MaterialApp(
-              theme:ThemeData.light(),home:HomeScreen()))));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => (MaterialApp(
+                      theme: ThemeData.light(), home: HomeScreen()))));
         },
         padding: EdgeInsets.all(12.0),
         shape: RoundedRectangleBorder(
@@ -157,7 +158,9 @@ class _LoginScreenState extends State<LoginScreen> {
           'Or',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0,)
+        SizedBox(
+          height: 10.0,
+        )
       ],
     );
   }
@@ -169,7 +172,6 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         side: BorderSide(color: Colors.black, width: 2),
       ),
-
       onPressed: () {},
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -191,54 +193,61 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Text(
             "Sign In with Google",
-            style: TextStyle(color: Colors.black,
+            style: TextStyle(
+              color: Colors.black,
               fontSize: 13.0,
               fontWeight: FontWeight.normal,
-              fontFamily: 'OpenSans',),
+              fontFamily: 'OpenSans',
+            ),
           )
         ],
       ),
     );
   }
+
   Widget _text2() {
     return Column(
       children: <Widget>[
         Text(
-          'Don\'t you have an account?' ,
+          'Don\'t you have an account?',
           style: kLabelStyle,
         ),
-        SizedBox(height: 10.0,)
+        SizedBox(
+          height: 10.0,
+        )
       ],
     );
   }
 
   OutlinedButton _SignUpButon() {
     return OutlinedButton(
-
       style: OutlinedButton.styleFrom(
         primary: Colors.white,
         backgroundColor: Colors.white,
         side: BorderSide(color: Colors.black, width: 2),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => (MaterialApp(
+                    theme: ThemeData.light(), home: RegisterScreen()))));
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const SizedBox(
             width: 35,
           ),
-
-          Text(
-            'Don\'t you have an account? SIGN UP',
-            style: TextStyle(color: Colors.black, fontFamily: 'OpenSans' ,
-          )
-          ),
-      ],
+          Text('Don\'t you have an account? SIGN UP',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'OpenSans',
+              )),
+        ],
       ),
     );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +255,9 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: Text('Sign In',style: TextStyle(color:Colors.black,fontFamily: 'YOUR_FONT_FAMILY')),
+        title: Text('Sign In',
+            style:
+                TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -273,7 +284,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
