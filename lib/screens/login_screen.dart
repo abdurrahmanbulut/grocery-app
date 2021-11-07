@@ -18,12 +18,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 5.0),
+        const SizedBox(height: 5.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
-          child: TextField(
+          child: const TextField(
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.black,
@@ -49,12 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
-          child: TextField(
+          child: const TextField(
             obscureText: true,
             style: TextStyle(
               color: Colors.black,
@@ -80,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        padding: EdgeInsets.only(right: 0.0),
-        child: Text(
+        onPressed: () => {}, //print('Forgot Password Button Pressed'),
+        padding: const EdgeInsets.only(right: 0.0),
+        child: const Text(
           'Forgot Password?',
           style: TextStyle(
             color: Colors.black,
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildRememberMeCheckbox() {
-    return Container(
+    return SizedBox(
       height: 20.0,
       child: Row(
         children: <Widget>[
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
           ),
-          Text(
+          const Text(
             'Remember me',
             style: kLabelStyle,
           ),
@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15.0),
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
       width: double.infinity,
       child: RaisedButton(
         onPressed: () {
@@ -130,14 +130,14 @@ class _LoginScreenState extends State<LoginScreen> {
               context,
               MaterialPageRoute(
                   builder: (context) => (MaterialApp(
-                      theme: ThemeData.light(), home: HomeScreen()))));
+                      theme: ThemeData.light(), home: const HomeScreen()))));
         },
-        padding: EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
         color: Colors.amber,
-        child: Text(
+        child: const Text(
           'Sign In',
           style: TextStyle(
             color: Colors.white,
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _or() {
     return Column(
-      children: <Widget>[
+      children: const <Widget>[
         Text(
           'Or',
           style: kLabelStyle,
@@ -165,12 +165,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  OutlinedButton GoogleButton() {
+  OutlinedButton googleButton() {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         primary: Colors.white,
         backgroundColor: Colors.white,
-        side: BorderSide(color: Colors.black, width: 2),
+        side: const BorderSide(color: Colors.black, width: 2),
       ),
       onPressed: () {},
       child: Row(
@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             width: 58,
           ),
-          Text(
+          const Text(
             "Sign In with Google",
             style: TextStyle(
               color: Colors.black,
@@ -205,38 +205,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _text2() {
-    return Column(
-      children: <Widget>[
-        Text(
-          'Don\'t you have an account?',
-          style: kLabelStyle,
-        ),
-        SizedBox(
-          height: 10.0,
-        )
-      ],
-    );
-  }
-
-  OutlinedButton _SignUpButon() {
+  OutlinedButton _signUpButon() {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         primary: Colors.white,
         backgroundColor: Colors.white,
-        side: BorderSide(color: Colors.black, width: 2),
+        side: const BorderSide(color: Colors.black, width: 2),
       ),
       onPressed: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: RegisterScreen()))));
+                    theme: ThemeData.light(), home: const RegisterScreen()))));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(
+        children: const [
+          SizedBox(
             width: 35,
           ),
           Text('Don\'t you have an account? SIGN UP',
@@ -255,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: Text('Sign In',
+        title: const Text('Sign In',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -269,7 +255,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -283,20 +269,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 40.0,
                     vertical: 65.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                       _buildEmailTF(), // email widget
-                      SizedBox(
+                      const SizedBox(
                         height: 15.0,
                       ),
                       _buildPasswordTF(),
@@ -304,10 +290,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
                       _or(),
-                      GoogleButton(),
-                      SizedBox(height: 25.0),
+                      googleButton(),
+                      const SizedBox(height: 25.0),
                       //_text2(),
-                      _SignUpButon(),
+                      _signUpButon(),
                     ],
                   ),
                 ),

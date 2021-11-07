@@ -62,9 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            Container(
+            const SizedBox(
                 width: 350,
-                child: const Divider(
+                child: Divider(
                   color: Colors.amber,
                   height: 0,
                 )),
@@ -86,9 +86,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            Container(
+            const SizedBox(
                 width: 350,
-                child: const Divider(
+                child: Divider(
                   color: Colors.amber,
                   height: 0,
                 )),
@@ -110,9 +110,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            Container(
+            const SizedBox(
                 width: 350,
-                child: const Divider(
+                child: Divider(
                   color: Colors.amber,
                   height: 0,
                 )),
@@ -134,20 +134,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
             ),
-            Container(
+            const SizedBox(
                 width: 350,
-                child: const Divider(
+                child: Divider(
                   color: Colors.amber,
                   height: 0,
                 )),
-            EditButton(context),
-            Container(
+            editButton(context),
+            const SizedBox(
                 width: 350,
-                child: const Divider(
+                child: Divider(
                   color: Colors.amber,
                   height: 0,
                 )),
-            PasswordButton(context),
+            passwordButton(context),
           ],
         ),
       ],
@@ -155,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-MaterialButton EditButton(context) {
+MaterialButton editButton(context) {
   return MaterialButton(
     padding: const EdgeInsets.fromLTRB(40.0, 0.0, 19.22, 0.0),
     onPressed: () {
@@ -176,7 +176,7 @@ MaterialButton EditButton(context) {
   );
 }
 
-MaterialButton PasswordButton(context) {
+MaterialButton passwordButton(context) {
   return MaterialButton(
     padding: const EdgeInsets.fromLTRB(40.0, 0.0, 20.72, 0.0),
     onPressed: () {

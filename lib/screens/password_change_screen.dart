@@ -51,7 +51,7 @@ Widget passwordChangeView(context) {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: double.infinity,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -63,19 +63,19 @@ Widget passwordChangeView(context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 5.0),
-                  CurrentPassword(),
+                  currentPassword(),
                   const SizedBox(
                     height: 15.0,
                   ),
-                  NewPassword(),
+                  newPassword(),
                   const SizedBox(
                     height: 15.0,
                   ),
-                  ConfirmPassword(),
+                  confirmPassword(),
                   const SizedBox(
                     height: 15.0,
                   ),
-                  SubmitButton(context),
+                  submitButton(context),
                 ],
               ),
             ),
@@ -86,7 +86,7 @@ Widget passwordChangeView(context) {
   );
 }
 
-Widget CurrentPassword() {
+Widget currentPassword() {
   var kHintTextStyle;
   var kBoxDecorationStyle;
   return Column(
@@ -119,7 +119,7 @@ Widget CurrentPassword() {
   );
 }
 
-Widget NewPassword() {
+Widget newPassword() {
   var kHintTextStyle;
   var kBoxDecorationStyle;
   return Column(
@@ -152,7 +152,7 @@ Widget NewPassword() {
   );
 }
 
-Widget ConfirmPassword() {
+Widget confirmPassword() {
   var kHintTextStyle;
   var kBoxDecorationStyle;
   return Column(
@@ -185,7 +185,7 @@ Widget ConfirmPassword() {
   );
 }
 
-Widget SubmitButton(context) {
+Widget submitButton(context) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 15.0),
     width: double.infinity,

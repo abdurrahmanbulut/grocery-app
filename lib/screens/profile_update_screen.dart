@@ -23,12 +23,12 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
       ),
-      body: ProfileUpdatePageBody(context),
+      body: profileUpdatePageBody(context),
     );
   }
 }
 
-Widget ProfileUpdatePageBody(context) {
+Widget profileUpdatePageBody(context) {
   return AnnotatedRegion<SystemUiOverlayStyle>(
     value: SystemUiOverlayStyle.light,
     child: GestureDetector(
@@ -52,7 +52,7 @@ Widget ProfileUpdatePageBody(context) {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: double.infinity,
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -64,17 +64,17 @@ Widget ProfileUpdatePageBody(context) {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 5.0),
-                  PhotoButton(),
+                  photoButton(),
                   const SizedBox(height: 15.0),
-                  NameSurname(),
+                  nameSurname(),
                   const SizedBox(height: 15.0),
-                  Username(),
+                  username(),
                   const SizedBox(height: 15.0),
-                  Email(),
+                  email(),
                   const SizedBox(height: 15.0),
-                  PhoneNumber(),
+                  phoneNumber(),
                   const SizedBox(height: 20.0),
-                  SubmitButton(context),
+                  submitButton(context),
                 ],
               ),
             ),
@@ -85,7 +85,7 @@ Widget ProfileUpdatePageBody(context) {
   );
 }
 
-ElevatedButton PhotoButton() {
+ElevatedButton photoButton() {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       shape: const CircleBorder(),
@@ -105,7 +105,7 @@ ElevatedButton PhotoButton() {
         child: Container(
           alignment: Alignment.bottomRight,
           //child: expFAB(),
-          child: PhotoEditButton(),
+          child: photoEditButton(),
         ),
       ),
     ),
@@ -113,7 +113,7 @@ ElevatedButton PhotoButton() {
   );
 }
 
-ElevatedButton PhotoEditButton() {
+ElevatedButton photoEditButton() {
   return ElevatedButton(
     style: ElevatedButton.styleFrom(
       shape: const CircleBorder(),
@@ -126,7 +126,7 @@ ElevatedButton PhotoEditButton() {
   );
 }
 
-Widget SubmitButton(context) {
+Widget submitButton(context) {
   return Container(
     padding: const EdgeInsets.symmetric(vertical: 15.0),
     width: double.infinity,
@@ -136,7 +136,7 @@ Widget SubmitButton(context) {
             context,
             MaterialPageRoute(
                 builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: ProfileScreen()))));
+                    theme: ThemeData.light(), home: const ProfileScreen()))));
       },
       padding: const EdgeInsets.all(12.0),
       shape: RoundedRectangleBorder(
@@ -157,7 +157,7 @@ Widget SubmitButton(context) {
   );
 }
 
-Widget Username() {
+Widget username() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -188,7 +188,7 @@ Widget Username() {
   );
 }
 
-Widget Email() {
+Widget email() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -219,7 +219,7 @@ Widget Email() {
   );
 }
 
-Widget PhoneNumber() {
+Widget phoneNumber() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
@@ -250,7 +250,7 @@ Widget PhoneNumber() {
   );
 }
 
-Widget NameSurname() {
+Widget nameSurname() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[

@@ -22,11 +22,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
       ),
-      body: RegisterPageBody(),
+      body: registerPageBody(),
     );
   }
 
-  Widget RegisterPageBody() {
+  Widget registerPageBody() {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: GestureDetector(
@@ -50,7 +50,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: double.infinity,
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -62,21 +62,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const SizedBox(height: 5.0),
-                    Username(), // email widget
+                    username(), // email widget
                     const SizedBox(
                       height: 15.0,
                     ),
-                    Email(),
+                    email(),
                     const SizedBox(
                       height: 15.0,
                     ),
-                    Password(),
+                    password(),
                     const SizedBox(
                       height: 15.0,
                     ),
-                    SignUpButton(),
-                    Or(),
-                    GoogleButton(),
+                    signUpButton(),
+                    or(),
+                    googleButton(),
                     const SizedBox(height: 25.0),
                   ],
                 ),
@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget Username() {
+  Widget username() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget Email() {
+  Widget email() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -150,7 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget Password() {
+  Widget password() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -181,7 +181,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget SignUpButton() {
+  Widget signUpButton() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       width: double.infinity,
@@ -213,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 }
 
-OutlinedButton GoogleButton() {
+OutlinedButton googleButton() {
   return OutlinedButton(
     style: OutlinedButton.styleFrom(
       primary: Colors.white,
@@ -253,7 +253,7 @@ OutlinedButton GoogleButton() {
   );
 }
 
-Widget Or() {
+Widget or() {
   var kLabelStyle;
   return Column(
     children: <Widget>[

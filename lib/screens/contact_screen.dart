@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Contact extends StatelessWidget {
+  const Contact({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,8 +14,7 @@ class Contact extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.amber,
       ),
-      body: Container(
-          child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           Text("Grocery Name",
@@ -27,8 +28,7 @@ class Contact extends StatelessWidget {
             height: 15,
             thickness: 2,
           ),
-          Text("Owner",
-              style: TextStyle(fontSize: 15, color: Colors.grey)),
+          Text("Owner", style: TextStyle(fontSize: 15, color: Colors.grey)),
           Text("The Severus",
               style: TextStyle(
                   fontSize: 17,
@@ -49,8 +49,7 @@ class Contact extends StatelessWidget {
             height: 15,
             thickness: 2,
           ),
-          Text("Adress",
-              style: TextStyle(fontSize: 15, color: Colors.grey)),
+          Text("Adress", style: TextStyle(fontSize: 15, color: Colors.grey)),
           Text("İstanbul",
               style: TextStyle(
                   fontSize: 17,
@@ -60,8 +59,7 @@ class Contact extends StatelessWidget {
             height: 15,
             thickness: 2,
           ),
-          Text("E-Mail",
-              style: TextStyle(fontSize: 15, color: Colors.grey)),
+          Text("E-Mail", style: TextStyle(fontSize: 15, color: Colors.grey)),
           Text("theseverus@gmail.com",
               style: TextStyle(
                   fontSize: 17,
@@ -72,7 +70,7 @@ class Contact extends StatelessWidget {
             thickness: 2,
           )
         ],
-      )),
+      ),
     );
   }
 }

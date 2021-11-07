@@ -4,6 +4,8 @@ import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/screens/profile_screen.dart';
 
 class AccountScreen extends StatefulWidget {
+  const AccountScreen({Key? key}) : super(key: key);
+
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
@@ -12,12 +14,12 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AccountView(context),
+      body: accountView(context),
     );
   }
 }
 
-Widget AccountView(context) {
+Widget accountView(context) {
   return Container(
     padding: const EdgeInsets.all(10),
     child: ListView(
@@ -39,8 +41,10 @@ Widget AccountView(context) {
                 padding: const EdgeInsets.all(10),
               ),
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfileScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileScreen()));
               },
             ),
             const Icon(
