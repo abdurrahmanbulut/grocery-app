@@ -147,7 +147,7 @@ Widget accountView(context) {
                       color: Colors.black)),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Contact()));
+                    MaterialPageRoute(builder: (context) => const Contact()));
               },
             ),
             const Icon(

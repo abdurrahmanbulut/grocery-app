@@ -170,7 +170,7 @@ MaterialButton editButton(context) {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, fontFamily: 'OpenSans')),
       ),
-      SizedBox(height: 0, width: 147.5),
+      SizedBox(height: 0, width: 113),
       Icon(Icons.arrow_forward_ios, color: Colors.amber, size: 24),
     ]),
   );
@@ -193,7 +193,7 @@ MaterialButton passwordButton(context) {
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, fontFamily: 'OpenSans')),
       ),
-      SizedBox(height: 0, width: 87),
+      SizedBox(height: 0, width: 50),
       Icon(Icons.arrow_forward_ios, color: Colors.amber, size: 24),
     ]),
   );
