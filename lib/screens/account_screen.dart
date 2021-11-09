@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/screens/contact_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/screens/profile_screen.dart';
+import 'dart:io';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -33,10 +34,7 @@ Widget accountView(context) {
             TextButton(
               child: const Text(
                   "Profile                                                 ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.all(10),
               ),
@@ -66,10 +64,7 @@ Widget accountView(context) {
             TextButton(
               child: const Text(
                   "Previous Orders                                ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
               onPressed: () {},
             ),
             const Icon(
@@ -91,10 +86,7 @@ Widget accountView(context) {
             TextButton(
               child: const Text(
                   "Favorites                                            ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
               onPressed: () {},
             ),
             const Icon(
@@ -116,10 +108,7 @@ Widget accountView(context) {
             TextButton(
               child: const Text(
                   "Cards                                                  ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
               onPressed: () {},
             ),
             const Icon(
@@ -141,10 +130,7 @@ Widget accountView(context) {
             TextButton(
               child: const Text(
                   "Contact                                              ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Contact()));
@@ -160,6 +146,9 @@ Widget accountView(context) {
           height: 15,
           thickness: 2,
         ),
+        const SizedBox(
+          height: 40.0,
+        ),
         TextButton(
           child: const Text("Sing Out",
               style: TextStyle(
@@ -170,6 +159,35 @@ Widget accountView(context) {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const LoginScreen()));
           },
+        ),
+        const SizedBox(height: 80.0),
+        SizedBox(
+          width: 100.0,
+          child: FloatingActionButton(
+            backgroundColor: Colors.amber,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content: const Text('Do you want to close the App'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('No'),
+                    ),
+                    TextButton(
+                      onPressed: () => exit(0),
+                      child: const Text('Yes'),
+                    ),
+                  ],
+                ),
+              );
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: const Text("Close App"),
+          ),
         ),
       ],
     ),
