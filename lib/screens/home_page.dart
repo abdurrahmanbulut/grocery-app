@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/screens/account_screen.dart';
+import 'package:grocery_app/screens/category/category_page.dart';
 import 'package:grocery_app/screens/search_screen.dart';
 import 'search_screen.dart';
 
@@ -80,7 +81,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = <Widget>[
-    Column(children: const [PromotionList()]),
+    CategoryPage(),
     const SearchPage(),
     Container(color: Colors.red),
     Container(color: Colors.orange),
