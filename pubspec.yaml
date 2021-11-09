@@ -39,6 +39,7 @@ flutter:
     - assets/
     - assets/images/
     - assets/logos/google.jpg
+    - assets/images/products/img01.png
 
   fonts:
     - family: OpenSans

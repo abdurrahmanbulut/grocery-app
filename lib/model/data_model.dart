@@ -27,21 +27,10 @@ class Category {
   String image;
   List<SubCategory> subCategories = [];
 
-  Category(this.name,this.image);
+  Category(this.name,this.image,this.subCategories);
 
   get size => subCategories.length;
 
-  void addSubCategory(String categoryName) {
-    subCategories.add(SubCategory(categoryName));
-  }
-  SubCategory getSubCategory(String categoryName) {
-    for(int i=0;i<size;i++) {
-      if(subCategories[i].name == categoryName) {
-        return subCategories[i];
-      }
-    }
-    return SubCategory("null");
-  }
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -57,7 +46,7 @@ class SubCategory {
   String name;
   List<Product> productList = [];
 
-  SubCategory(this.name);
+  SubCategory(this.name,this.productList);
 
   get size => productList.length;
 
@@ -86,18 +75,75 @@ class SubCategory {
 
 
 }
+List<Product> sodaList = [
+ Product("1Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("2Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01 ),
+  Product("3Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("4Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+];
+SubCategory soda = SubCategory("Soda", sodaList);
 
-List<Category> categories = [
-  Category("Beverage","image"),
-  Category("Snack","image"),
-  Category("Ice-cream","image"),
-  Category("Water","image"),
-  Category("Milk & Breakfast","image"),
-  Category("Fruit & Vegetables","image"),
-  Category("Bread","image"),
-  Category("Convenience Food","image"),
+List<Product> teaList = [
+  Product("1Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("2Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("3Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("4Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+];
+SubCategory tea = SubCategory("Cold Tea & Coffee", teaList);
+
+List<Product> ayranList = [
+  Product("1Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("2Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("3Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("4Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+];
+SubCategory ayran = SubCategory("Ayran", ayranList);
+
+List<Product> coffeeList = [
+  Product("1Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("2Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("3Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("4Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+];
+SubCategory coffee = SubCategory("Coffee", coffeeList);
+
+List<Product> juiceList = [
+  Product("1Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("2Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("3Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("4Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+];
+SubCategory juice = SubCategory("Fruit Juice", juiceList);
+
+List<SubCategory> beveragesub = [
+  soda,tea,ayran,coffee,juice
 ];
 
+List<Product> chocolateList = [
+  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("2Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("3Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("4Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+];
+SubCategory choco = SubCategory("Chocolate", chocolateList);
 
 
+List<SubCategory> snacksub = [
+  choco,tea,ayran,coffee,juice
+];
 
+List<Category> categories = [
+  Category("Beverage","assets/images/products/img01.png",beveragesub),
+  Category("Snack","assets/images/products/img01.png",snacksub),
+  Category("Ice-cream","assets/images/products/img01.png",beveragesub),
+  Category("Water","assets/images/products/img01.png",beveragesub),
+  Category("Milk & Breakfast","assets/images/products/img01.png",beveragesub),
+  Category("Fruit & Vegetables","assets/images/products/img01.png",beveragesub),
+  Category("Bread","assets/images/products/img01.png",beveragesub),
+  Category("Convenience Food","assets/images/products/img01.png",beveragesub),
+  Category("Staple Food","assets/images/products/img01.png",beveragesub),
+  Category("Fit & Form","assets/images/products/img01.png",beveragesub),
+  Category("Personal Care","assets/images/products/img01.png",beveragesub),
+  Category("Home Care","assets/images/products/img01.png",beveragesub),
+  Category("Cosmetics","assets/images/products/img01.png",beveragesub),
+];
