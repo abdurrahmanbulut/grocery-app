@@ -150,12 +150,11 @@ List<Category> categories = [
 
 
 
-
 List<Product> demoProducts = [
   Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("qqq Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("22222 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("3 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("qqq Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 02),
+  Product("22222 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 03),
+  Product("3 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 04),
 
 ];
 
@@ -171,7 +170,7 @@ class Cart {
 List<Cart> demoCarts = [
   Cart(product: demoProducts[0], numOfItem: 2),
   Cart(product: demoProducts[1], numOfItem: 1),
-  Cart(product: demoProducts[3], numOfItem: 1),
+  Cart(product: demoProducts[2], numOfItem: 1),
 ];
 
 
