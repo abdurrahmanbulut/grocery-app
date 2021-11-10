@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:grocery_app/screens/contact_screen.dart';
+import 'package:grocery_app/screens/favorites_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
+import 'package:grocery_app/screens/order_history.dart';
 import 'package:grocery_app/screens/profile_screen.dart';
 import 'dart:io';
+import 'package:grocery_app/utilities/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -25,123 +30,131 @@ Widget accountView(context) {
     padding: const EdgeInsets.all(10),
     child: ListView(
       children: [
-        Row(
-          children: [
-            const Icon(
+        TextButton.icon(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
+            },
+            icon: const Icon(
               Icons.person,
               color: Colors.amber,
             ),
-            TextButton(
-              child: const Text(
-                  "Profile                                                 ",
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.all(10),
-              ),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
-              },
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.amber,
-            )
-          ],
-        ),
+            label: Row(
+              children: const [
+                Text("Profile                                                ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black)),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.amber,
+                )
+              ],
+            )),
         const Divider(
           height: 15,
           thickness: 2,
         ),
-        Row(
-          children: [
-            const Icon(
+        TextButton.icon(
+            onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => OrderHistory()));
+            },
+            icon: const Icon(
               Icons.shopping_cart,
               color: Colors.amber,
             ),
-            TextButton(
-              child: const Text(
-                  "Previous Orders                                ",
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
-              onPressed: () {},
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.amber,
-            )
-          ],
-        ),
+            label: Row(
+              children: const [
+                Text("Previous Orders                               ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black)),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.amber,
+                )
+              ],
+            )),
         const Divider(
           height: 15,
           thickness: 2,
         ),
-        Row(
-          children: [
-            const Icon(
+        TextButton.icon(
+            onPressed: () {
+                Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Favorites()));
+            },
+            icon: const Icon(
               Icons.favorite,
               color: Colors.amber,
             ),
-            TextButton(
-              child: const Text(
-                  "Favorites                                            ",
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
-              onPressed: () {},
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.amber,
-            )
-          ],
-        ),
+            label: Row(
+              children: const [
+                Text("Favorites                                           ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black)),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.amber,
+                )
+              ],
+            )),
         const Divider(
           height: 15,
           thickness: 2,
         ),
-        Row(
-          children: [
-            const Icon(
+        TextButton.icon(
+            onPressed: () {},
+            icon: const Icon(
               Icons.credit_card,
               color: Colors.amber,
             ),
-            TextButton(
-              child: const Text(
-                  "Cards                                                  ",
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
-              onPressed: () {},
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.amber,
-            )
-          ],
-        ),
+            label: Row(
+              children: const [
+                Text("Cards                                                 ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black)),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.amber,
+                )
+              ],
+            )),
         const Divider(
           height: 15,
           thickness: 2,
         ),
-        Row(
-          children: [
-            const Icon(
+        TextButton.icon(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Contact()));
+            },
+            icon: const Icon(
               Icons.contacts,
               color: Colors.amber,
             ),
-            TextButton(
-              child: const Text(
-                  "Contact                                              ",
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Contact()));
-              },
-            ),
-            const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.amber,
-            )
-          ],
-        ),
+            label: Row(
+              children: const [
+                Text("Contact                                             ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black)),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.amber,
+                )
+              ],
+            )),
         const Divider(
           height: 15,
           thickness: 2,
@@ -149,13 +162,20 @@ Widget accountView(context) {
         const SizedBox(
           height: 40.0,
         ),
-        TextButton(
-          child: const Text("Sing Out",
+        TextButton.icon(
+          icon: const Icon(
+            Icons.exit_to_app,
+            color: Colors.red,
+          ),
+          label: const Text("Sing Out",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.red)),
           onPressed: () {
+            final provider =
+                Provider.of<GoogleSignInProvider>(context, listen: false);
+              provider.logout();  
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const LoginScreen()));
           },
