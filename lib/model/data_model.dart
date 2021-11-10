@@ -147,3 +147,31 @@ List<Category> categories = [
   Category("Home Care","assets/images/products/img01.png",beveragesub),
   Category("Cosmetics","assets/images/products/img01.png",beveragesub),
 ];
+
+
+
+
+List<Product> demoProducts = [
+  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("qqq Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("22222 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+  Product("3 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
+
+];
+
+class Cart {
+  final Product product;
+  final int numOfItem;
+
+  Cart({required this.product, required this.numOfItem});
+}
+
+// Demo data for our cart
+
+List<Cart> demoCarts = [
+  Cart(product: demoProducts[0], numOfItem: 2),
+  Cart(product: demoProducts[1], numOfItem: 1),
+  Cart(product: demoProducts[3], numOfItem: 1),
+];
+
+
