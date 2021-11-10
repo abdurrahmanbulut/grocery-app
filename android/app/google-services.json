@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "41516160651",
+    "project_id": "high-lacing-330220",
+    "storage_bucket": "high-lacing-330220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:41516160651:android:b7b0ce17c37813d68f268e",
+        "android_client_info": {
+          "package_name": "com.example.grocery_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "41516160651-c2k37lq49jska20g5p201bacjht3i7o3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCymFpTrwI8WvRj6iq6hjvdKzVI3C0OqkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "41516160651-c2k37lq49jska20g5p201bacjht3i7o3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
