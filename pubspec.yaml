@@ -14,7 +14,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_svg: ^0.22.0
 
   cupertino_icons: ^1.0.2
   animated_splash_screen: ^1.1.0
@@ -40,6 +40,7 @@ flutter:
     - assets/images/
     - assets/logos/google.jpg
     - assets/images/products/img01.png
+    - assets/icons/
 
   fonts:
     - family: OpenSans

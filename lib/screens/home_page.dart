@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/screens/account_screen.dart';
+import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/category/category_page.dart';
 import 'package:grocery_app/screens/search_screen.dart';
 import 'search_screen.dart';
@@ -83,8 +84,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     CategoryPage(),
     const SearchPage(),
+    CartScreen(),
     Container(color: Colors.red),
-    Container(color: Colors.orange),
     const AccountScreen()
   ];
 
