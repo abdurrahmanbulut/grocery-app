@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
-import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -81,10 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       alignment: Alignment.centerRight,
       child: FlatButton(
-        onPressed: () => {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const ForgotPassword()))
-        }, //print('Forgot Password Button Pressed'),
+        onPressed: () => {}, //print('Forgot Password Button Pressed'),
         padding: const EdgeInsets.only(right: 0.0),
         child: const Text(
           'Forgot Password?',

@@ -1,3 +1,6 @@
+
+import 'package:flutter/material.dart';
+
 class Product {
   String name;
   String image;
@@ -126,6 +129,34 @@ List<Product> chocolateList = [
   Product("4Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
 ];
 SubCategory choco = SubCategory("Chocolate", chocolateList);
+
+class Cart {
+  final Product product;
+  final int numOfItem;
+
+  Cart({required this.product, required this.numOfItem});
+}
+
+
+
+List<Product> demoProducts = [
+  Product("6 Pack Milk","assets/images/2.jpg",45.0,"Semi-skimmed pasteurized milk.",2.0,10,1),
+  Product("XL 30 Eggs","assets/images/3.jpg",5.0,"Kingsize eggs.",2.0,10,2),
+  Product("Butter","assets/images/4.jpg",5.0,"400g packet butter.",2.0,10,3),
+  Product("Rye Bread","assets/images/1.jpg",5.0,"350g packet bread.",2.0,10,4),
+];
+
+// Demo data for our cart
+
+List<Cart> demoCarts = [
+  Cart(product: demoProducts[0], numOfItem: 2),
+  Cart(product: demoProducts[1], numOfItem: 1),
+  Cart(product: demoProducts[3], numOfItem: 1),
+  Cart(product: demoProducts[2], numOfItem: 1),
+];
+
+
+
 
 
 List<SubCategory> snacksub = [

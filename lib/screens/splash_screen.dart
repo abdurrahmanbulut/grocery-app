@@ -2,6 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
+import 'home_page.dart';
 import 'introduction_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,7 +51,7 @@ class SplashScreen extends StatelessWidget {
       body: AnimatedSplashScreen(
         backgroundColor: const Color.fromRGBO(238, 186, 43, 0.9),
         splash: Image.asset('./assets/images/logo.png'),
-        nextScreen: const LoginScreen(),
+        nextScreen:  LoginScreen(),
         splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.fade,
         splashIconSize: 130.0,
