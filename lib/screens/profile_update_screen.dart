@@ -167,7 +167,7 @@ Widget username() {
         decoration: kBoxDecorationStyle,
         height: 50.0,
         child: const TextField(
-          obscureText: true,
+          obscureText: false,
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'OpenSans',
@@ -180,6 +180,7 @@ Widget username() {
               color: Colors.amber,
             ),
             hintText: 'Username',
+
             hintStyle: kHintTextStyle,
           ),
         ),
@@ -198,7 +199,7 @@ Widget email() {
         decoration: kBoxDecorationStyle,
         height: 50.0,
         child: const TextField(
-          obscureText: true,
+          obscureText: false,
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'OpenSans',
@@ -229,7 +230,6 @@ Widget phoneNumber() {
         decoration: kBoxDecorationStyle,
         height: 50.0,
         child: const TextField(
-          obscureText: true,
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'OpenSans',
@@ -260,7 +260,6 @@ Widget nameSurname() {
         decoration: kBoxDecorationStyle,
         height: 50.0,
         child: const TextField(
-          obscureText: true,
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'OpenSans',
