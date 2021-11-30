@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grocery_app/screens/forgot_password_screen.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
-import 'forgot_password_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:grocery_app/utilities/google_sign_in.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -176,7 +179,13 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         side: const BorderSide(color: Colors.black, width: 2),
       ),
-      onPressed: () {},
+      onPressed: () {
+        final provider= Provider.of<GoogleSignInProvider>(context, listen: false );
+        provider.googleLogIn();
+        /*Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const HomeScreen()));*/
+
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [

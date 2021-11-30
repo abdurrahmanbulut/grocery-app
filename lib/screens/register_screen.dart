@@ -240,7 +240,7 @@ OutlinedButton googleButton() {
           width: 58,
         ),
         const Text(
-          "Sign In with Google",
+          "Sign Up with Google",
           style: TextStyle(
             color: Colors.black,
             fontSize: 13.0,
