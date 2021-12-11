@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/user.dart';
 
 class Campaigns extends StatefulWidget {
-  const Campaigns({Key? key}) : super(key: key);
+  final AppUser user;
+  const Campaigns(this.user,{Key? key}) : super(key: key);
 
   @override
   _CampaignsState createState() => _CampaignsState();

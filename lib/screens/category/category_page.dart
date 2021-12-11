@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
+import 'package:grocery_app/model/user.dart';
 import '../home_page.dart';
 import 'components/product_card.dart';
 
 class CategoryPage extends StatefulWidget {
-  const CategoryPage({Key? key}) : super(key: key);
+  final AppUser user;
+
+
+  CategoryPage(this.user);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();

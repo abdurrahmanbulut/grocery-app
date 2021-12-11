@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/account_screen.dart';
 import 'package:grocery_app/screens/campaigns_screen.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
@@ -7,7 +8,10 @@ import 'package:grocery_app/screens/search_screen.dart';
 import 'search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final AppUser user;
+
+
+  const HomeScreen(this.user, {Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -24,8 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: BottomNavBar(),
+    return Scaffold(
+      body: BottomNavBar(widget.user),
     );
   }
 }
@@ -73,7 +77,11 @@ class _PromotionListState extends State<PromotionList> {
 
 /// This is the stateful widget that the main application instantiates.
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+
+  final AppUser user;
+
+
+  const BottomNavBar(this.user, {Key? key}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -82,13 +90,20 @@ class BottomNavBar extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
-  static final List<Widget> _widgetOptions = <Widget>[
-    const CategoryPage(),
-    const SearchPage(),
-    CartScreen(),
-    const Campaigns(),
-    const AccountScreen()
-  ];
+  static List<Widget> _widgetOptions = [];
+
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = <Widget>[
+      CategoryPage(widget.user),
+      SearchPage(widget.user),
+      CartScreen(widget.user),
+      Campaigns(widget.user),
+      AccountScreen(widget.user)
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {

@@ -1,11 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/forgot_password_screen.dart';
 import 'package:grocery_app/screens/home_page.dart';
+import 'package:grocery_app/services/auth.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:grocery_app/utilities/google_sign_in.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -17,6 +18,118 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
+  bool isLoading = false;
+  final auth = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+  String _email = '',_password = '';
+  String _rememberedEmail = '', _rememberedPassword = '';
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  late final UserCredential _userCredential;
+
+
+  @override
+  void initState() {
+    super.initState();
+    logout();
+    if (_rememberMe) {
+      _emailController.value = _emailController.value.copyWith(
+        text: _rememberedEmail,
+        selection: TextSelection(
+            baseOffset: _rememberedEmail.length,
+            extentOffset: _rememberedEmail.length),
+        composing: TextRange.empty,
+      );
+      _passwordController.value = _passwordController.value.copyWith(
+        text: _rememberedPassword,
+        selection: TextSelection(
+            baseOffset: _rememberedPassword.length,
+            extentOffset: _rememberedPassword.length),
+        composing: TextRange.empty,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.amber,
+        title: const Text('Sign In',
+            style:
+            TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
+        centerTitle: true,
+      ),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white,
+                      Colors.white,
+                      Colors.white,
+                      Colors.white,
+                    ],
+                    stops: [0.1, 0.4, 0.7, 0.9],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0,
+                    vertical: 65.0,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const SizedBox(height: 5.0),
+                        _buildEmailTF(), // email widget
+                        const SizedBox(
+                          height: 15.0,
+                        ),
+                        _buildPasswordTF(),
+                        _buildForgotPasswordBtn(),
+                        _buildRememberMeCheckbox(),
+                        _buildLoginBtn(),
+                        _or(),
+                        googleButton(),
+                        const SizedBox(height: 25.0),
+                        //_text2(),
+                        _signUpButton(),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -27,22 +140,28 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
-          child: const TextField(
+          child: TextFormField(
+            controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 13.0),
               prefixIcon: Icon(
                 Icons.email,
                 color: Colors.amber,
               ),
-              hintText: 'Username / E-mail',
+              hintText: 'E-mail',
               hintStyle: kLabelStyle,
             ),
+            onChanged: (value) {
+              setState(() {
+                _email = value;
+              });
+            },
           ),
         ),
       ],
@@ -58,13 +177,14 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
-          child: const TextField(
+          child: TextFormField(
+            controller: _passwordController,
             obscureText: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 13.0),
               prefixIcon: Icon(
@@ -74,6 +194,11 @@ class _LoginScreenState extends State<LoginScreen> {
               hintText: 'Password',
               hintStyle: kHintTextStyle,
             ),
+            onChanged: (value) {
+              setState(() {
+                _password = value;
+              });
+            },
           ),
         ),
       ],
@@ -114,6 +239,8 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 setState(() {
                   _rememberMe = value!;
+                  _rememberedEmail = '';
+                  _rememberedPassword = '';
                 });
               },
             ),
@@ -132,12 +259,19 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       width: double.infinity,
       child: RaisedButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => (MaterialApp(
-                      theme: ThemeData.light(), home: const HomeScreen()))));
+        onPressed: () async {
+          AppUser user = await signInWithEmail(_email, _password);
+          if(auth.currentUser!.email == _email) {
+            if(_rememberMe) {
+              _rememberedEmail = _email;
+              _rememberedPassword = _password;
+            }
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => (MaterialApp(
+                        theme: ThemeData.light(), home: HomeScreen(user)))));
+          }
         },
         padding: const EdgeInsets.all(12.0),
         shape: RoundedRectangleBorder(
@@ -179,12 +313,22 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         side: const BorderSide(color: Colors.black, width: 2),
       ),
-      onPressed: () {
-        final provider= Provider.of<GoogleSignInProvider>(context, listen: false );
-        provider.googleLogIn();
-        /*Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const HomeScreen()));*/
-
+      onPressed: () async {
+        setState(() {
+          isLoading = true;
+        });
+        try {
+          AppUser user = signInWithGoogle() as AppUser;
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen(user)));
+        } catch(e){
+          if(e is FirebaseAuthException){
+            throw e;
+          }
+        }
+        setState(() {
+          isLoading = false;
+        });
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -218,7 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  OutlinedButton _signUpButon() {
+  OutlinedButton _signUpButton() {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         primary: Colors.white,
@@ -230,7 +374,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: const RegisterScreen()))));
+                    theme: ThemeData.light(), home:  RegisterScreen()))));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -248,73 +392,5 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.amber,
-        title: const Text('Sign In',
-            style:
-                TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
-        centerTitle: true,
-      ),
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.white,
-                      Colors.white,
-                      Colors.white,
-                      Colors.white,
-                    ],
-                    stops: [0.1, 0.4, 0.7, 0.9],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 65.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const SizedBox(height: 5.0),
-                      _buildEmailTF(), // email widget
-                      const SizedBox(
-                        height: 15.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
-                      _buildLoginBtn(),
-                      _or(),
-                      googleButton(),
-                      const SizedBox(height: 25.0),
-                      //_text2(),
-                      _signUpButon(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+
 }

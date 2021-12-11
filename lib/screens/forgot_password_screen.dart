@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -8,6 +9,16 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final auth = FirebaseAuth.instance;
+  String _email = '';
+  final TextEditingController _emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -17,11 +28,17 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     labelText: 'Enter your Email'),
+                onChanged: (value) {
+                  setState(() {
+                    _email = value.trim();
+                  });
+                },
               ),
             ),
             SizedBox(
@@ -29,6 +46,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
+                  auth.sendPasswordResetEmail(email: _email);
+
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -46,7 +65,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 },
                 child: const Text("Submit"),
               ),
-            )
+            ),
           ],
         ),
       ),

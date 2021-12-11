@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/user.dart';
 import 'package:searchfield/searchfield.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final AppUser user;
+
+  SearchPage(this.user, {Key? key}) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();

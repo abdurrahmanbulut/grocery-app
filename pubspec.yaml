@@ -18,6 +18,8 @@ dependencies:
 
   # Google Sign In
   firebase_auth: ^1.1.4
+  firebase_database: 7.1.1
+  firebase_storage: ^10.2.3
   google_sign_in: ^5.0.3  
 
   # Google Icon
@@ -32,6 +34,7 @@ dependencies:
   after_layout: ^1.1.0
   shared_preferences: ^2.0.8
   searchfield: ^0.5.6
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:

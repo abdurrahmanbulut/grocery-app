@@ -2,12 +2,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/components/body.dart';
 
 class CartScreen extends StatelessWidget {
+  final AppUser user;
   static String routeName = "/cart";
 
-  CartScreen({Key? key}) : super(key: key);
+  const CartScreen(this.user,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class CartScreen extends StatelessWidget {
           ),
           Text(
             "(${demoCarts.length} items)",
-              style: TextStyle(fontSize: 15,color: Colors.black)
+              style: const TextStyle(fontSize: 15,color: Colors.black)
             //style: Theme.of(context).textTheme.caption,
           ),
         ],
