@@ -23,6 +23,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.amber,
+          title: const Text('Reset Password',
+              style:
+              TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
+          centerTitle: true,
+        ),
         body: Column(
           children: [
             Padding(
