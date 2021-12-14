@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/contact_screen.dart';
+import 'package:grocery_app/screens/credit_cards_screen.dart';
 import 'package:grocery_app/screens/favorites_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/screens/order_history.dart';
@@ -10,7 +11,7 @@ import 'dart:io';
 
 class AccountScreen extends StatefulWidget {
   final AppUser user;
-  const AccountScreen(this.user,{Key? key}) : super(key: key);
+  const AccountScreen(this.user, {Key? key}) : super(key: key);
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -44,7 +45,8 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               label: Row(
                 children: const [
-                  Text("Profile                                                ",
+                  Text(
+                      "Profile                                                ",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -112,7 +114,12 @@ class _AccountScreenState extends State<AccountScreen> {
             thickness: 2,
           ),
           TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreditCardsScreen()));
+              },
               icon: const Icon(
                 Icons.credit_card,
                 color: Colors.amber,
@@ -213,5 +220,3 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 }
-
-
