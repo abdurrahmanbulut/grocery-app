@@ -4,6 +4,7 @@ import 'package:grocery_app/model/data_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/components/body.dart';
+import 'package:grocery_app/screens/cart/components/cart_card.dart';
 
 class CartScreen extends StatelessWidget {
   final AppUser user;
@@ -43,22 +44,25 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-
-class CheckOurCard extends StatelessWidget {
+class CheckOurCard extends StatefulWidget {
   const CheckOurCard({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<CheckOurCard> createState() => _CheckOurCardState();
+}
+
+class _CheckOurCardState extends State<CheckOurCard> {
+  @override
   Widget build(BuildContext context) {
-
-    double sum=0;
-    for(int i= 0; i<demoCarts.length;i++)
-    {
-      sum=sum+(demoCarts[i].product.price*demoCarts[i].numOfItem);
-    }
-
-    print("  wqqq "+ sum.toString());
+    double sum = 0;
+    setState(() {
+      for (int i = 0; i < demoCarts.length; i++) {
+        sum += (demoCarts[i].product.price * demoCarts[i].numOfItem);
+      }
+    });
+    print("  wqqq " + sum.toString());
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
       height: 140,
