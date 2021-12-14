@@ -76,42 +76,42 @@ class SubCategory {
 
 }
 List<Product> sodaList = [
- Product("1Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("2Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01 ),
-  Product("3Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("4Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+ Product("1Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("2Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01 ),
+  Product("3Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("4Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
 ];
 SubCategory soda = SubCategory("Soda", sodaList);
 
 List<Product> teaList = [
-  Product("1Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("2Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("3Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("4Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+  Product("1Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("2Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("3Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("4Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
 ];
 SubCategory tea = SubCategory("Cold Tea & Coffee", teaList);
 
 List<Product> ayranList = [
-  Product("1Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("2Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("3Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("4Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+  Product("1Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("2Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("3Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("4Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
 ];
 SubCategory ayran = SubCategory("Ayran", ayranList);
 
 List<Product> coffeeList = [
-  Product("1Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("2Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("3Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("4Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+  Product("1Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("2Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("3Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("4Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
 ];
 SubCategory coffee = SubCategory("Coffee", coffeeList);
 
 List<Product> juiceList = [
-  Product("1Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("2Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("3Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("4Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+  Product("1Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("2Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("3Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("4Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
 ];
 SubCategory juice = SubCategory("Fruit Juice", juiceList);
 
@@ -120,10 +120,10 @@ List<SubCategory> beveragesub = [
 ];
 
 List<Product> chocolateList = [
-  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("2Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("3Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("4Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01)
+  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("2Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("3Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("4Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
 ];
 SubCategory choco = SubCategory("Chocolate", chocolateList);
 
@@ -148,19 +148,17 @@ List<Category> categories = [
   Category("Cosmetics","assets/images/products/img01.png",beveragesub),
 ];
 
-
-
 List<Product> demoProducts = [
-  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 01),
-  Product("qqq Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 02),
-  Product("22222 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 03),
-  Product("3 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 50, 04),
+  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
+  Product("qqq Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 02),
+  Product("22222 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 03),
+  Product("3 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 04),
 
 ];
 
 class Cart {
   final Product product;
-  final int numOfItem;
+  int numOfItem;
 
   Cart({required this.product, required this.numOfItem});
 }
@@ -168,9 +166,10 @@ class Cart {
 // Demo data for our cart
 
 List<Cart> demoCarts = [
-  Cart(product: demoProducts[0], numOfItem: 2),
+  Cart(product: demoProducts[0], numOfItem: 4),
   Cart(product: demoProducts[1], numOfItem: 1),
   Cart(product: demoProducts[2], numOfItem: 1),
+
 ];
 
 

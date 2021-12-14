@@ -15,13 +15,13 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  bool isChildPressed=false;
+  bool isChildPressed = false;
   int childIndex = 0;
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return  isChildPressed? buildSubCategoryScreen() : buildCategoryScreen();
+    return isChildPressed ? buildSubCategoryScreen() : buildCategoryScreen();
   }
 
   Widget buildCategoryScreen() {
@@ -30,7 +30,7 @@ class _CategoryPageState extends State<CategoryPage> {
         const PromotionList(),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: GridView.builder(
                 shrinkWrap: true,
                 itemCount: categories.length,
@@ -39,9 +39,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   mainAxisSpacing: 20.0,
                   childAspectRatio: 0.75,
                 ),
-                itemBuilder: (context,index) =>
-                    buildCategoryCard(index)
-            ),
+                itemBuilder: (context, index) => buildCategoryCard(index)),
           ),
         ),
       ],
@@ -61,10 +59,7 @@ class _CategoryPageState extends State<CategoryPage> {
               height: 60,
               child: Center(
                 child: Text(categories[childIndex].name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                ),
+                    style: Theme.of(context).textTheme.headline5!),
               ),
             ),
           ),
@@ -74,26 +69,30 @@ class _CategoryPageState extends State<CategoryPage> {
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories[childIndex].size,
-              itemBuilder: (context,index) => buildCategory(index)),
+              itemBuilder: (context, index) => buildCategory(index)),
         ),
         Expanded(
           child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: GridView.builder(
-                  itemCount: categories[childIndex].subCategories[selectedIndex].productList.length,
+                  itemCount: categories[childIndex]
+                      .subCategories[selectedIndex]
+                      .productList
+                      .length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
+                    crossAxisCount: 3,
                     mainAxisSpacing: 20.0,
                     childAspectRatio: 0.75,
                   ),
                   shrinkWrap: true,
-                  itemBuilder: (context,index) =>
-                      ProductCard(
-                        product: categories[childIndex].subCategories[selectedIndex].productList[index],
-                        press: (){},
-                      ))
-          ),
-        )
+                  itemBuilder: (context, index) => ProductCard(
+                        product: categories[childIndex]
+                            .subCategories[selectedIndex]
+                            .productList[index],
+                        press: () {},
+                      ))),
+        ),
+        
       ],
     );
   }
@@ -110,16 +109,7 @@ class _CategoryPageState extends State<CategoryPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(5.0),
-              height: 30,
-              width: 80,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Image.asset(categories[categoryIndex].image),
-            ),
+            child: Image.asset(categories[categoryIndex].image),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -146,24 +136,24 @@ class _CategoryPageState extends State<CategoryPage> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+              children: <Widget>[  
                 Text(
                   categories[childIndex].subCategories[index].name,
-                  style: selectedIndex == index ? const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black
-                  ) : const TextStyle(
-                      color: Colors.black
-                  ) ,
+                  style: selectedIndex == index
+                      ? const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black)
+                      : const TextStyle(color: Colors.black),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 5.0),
                   height: 2,
                   width: 30,
-                  color: selectedIndex == index ? Colors.amber : Colors.transparent,
+                  color: selectedIndex == index
+                      ? Colors.amber
+                      : Colors.transparent,
                 ),
-              ]
-          ),
+                
+              ]),
         ),
       ),
     );
