@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/forgot_password_screen.dart';
-import 'package:grocery_app/screens/cashier_login_screen.dart';
+import 'package:grocery_app/screens/cashier_home_screen.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/services/auth.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class CashierLoginScreen extends StatefulWidget {
+  const CashierLoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _CashierLoginScreenState createState() => _CashierLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _CashierLoginScreenState extends State<CashierLoginScreen> {
   bool _rememberMe = false;
   bool isLoading = false;
   final auth = FirebaseAuth.instance;
@@ -115,11 +115,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         _buildLoginBtn(),
                         _or(),
                         googleButton(),
-                        const SizedBox(height: 25.0),
-                        //_text2(),
-                        _signUpButton(),
-                        const SizedBox(height: 25.0),
-                        _cashierLoginButton(),
                       ],
                     ),
                   ),
@@ -271,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => (MaterialApp(
-                        theme: ThemeData.light(), home: HomeScreen(user)))));
+                        theme: ThemeData.light(), home: CashierHomeScreen()))));
           }
         },
         padding: const EdgeInsets.all(12.0),
@@ -358,66 +353,6 @@ class _LoginScreenState extends State<LoginScreen> {
               fontFamily: 'OpenSans',
             ),
           )
-        ],
-      ),
-    );
-  }
-
-  OutlinedButton _signUpButton() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: RegisterScreen()))));
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            width: 35,
-          ),
-          Text('Don\'t you have an account? SIGN UP',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-              )),
-        ],
-      ),
-    );
-  }
-
-  OutlinedButton _cashierLoginButton() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: CashierLoginScreen()))));
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            width: 80,
-          ),
-          Text('Click for Cashier Login',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-              )),
         ],
       ),
     );
