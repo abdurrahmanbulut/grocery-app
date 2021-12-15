@@ -23,6 +23,9 @@ class AppUser{
       this.password, this.phoneNumber, this.type);
 
   Map<String, dynamic> toJson() {
+    List<Map> cards =  this.cards.map((i) => i.toJson()).toList();
+    List<Map> prevOrders =  this.prevOrders.map((i) => i.toJson()).toList();
+    List<Map> carts =  this.carts.map((i) => i.toJson()).toList();
     return {
       'uid': uid,
       'name':name,
@@ -31,9 +34,9 @@ class AppUser{
       'password':password,
       'phoneNumber':phoneNumber,
       'type': (type == Type.customer)? 0 : 1,
-      'cards':cards.toList(),
-      'prevOrders':prevOrders.toList(),
-      'carts':carts.toList()
+      'cards':cards,
+      'prevOrders':prevOrders,
+      'carts':carts
     };
   }
 
@@ -87,10 +90,11 @@ class Order{
   Order(this.time, this.id);
 
   Map<String, dynamic> toJson() {
+    List<Map> products =  this.products.map((i) => i.toJson()).toList();
     return {
       'time': time,
       'id':id,
-      'products':products.toList()
+      'products':products
     };
   }
 }

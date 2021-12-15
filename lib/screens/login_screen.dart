@@ -1,13 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/forgot_password_screen.dart';
 import 'package:grocery_app/screens/cashier_login_screen.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/services/auth.dart';
+import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
+
+import 'cashier_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -119,7 +123,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         //_text2(),
                         _signUpButton(),
                         const SizedBox(height: 25.0),
-                        _cashierLoginButton(),
                       ],
                     ),
                   ),
@@ -267,11 +270,23 @@ class _LoginScreenState extends State<LoginScreen> {
               _rememberedEmail = _email;
               _rememberedPassword = _password;
             }
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => (MaterialApp(
-                        theme: ThemeData.light(), home: HomeScreen(user)))));
+            if(user.type == Type.customer) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => (MaterialApp(
+                          theme: ThemeData.light(), home: HomeScreen(user)))));
+            }
+            else if(user.type == Type.cashier) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => (MaterialApp(
+                          theme: ThemeData.light(), home: CashierHomeScreen(user)))));
+            }
+          }
+          else {
+
           }
         },
         padding: const EdgeInsets.all(12.0),
@@ -319,7 +334,7 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoading = true;
         });
         try {
-          AppUser user = signInWithGoogle() as AppUser;
+          AppUser user = await signInWithGoogle() ;
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => HomeScreen(user)));
         } catch (e) {
@@ -384,36 +399,6 @@ class _LoginScreenState extends State<LoginScreen> {
             width: 35,
           ),
           Text('Don\'t you have an account? SIGN UP',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-              )),
-        ],
-      ),
-    );
-  }
-
-  OutlinedButton _cashierLoginButton() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: CashierLoginScreen()))));
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            width: 80,
-          ),
-          Text('Click for Cashier Login',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'OpenSans',

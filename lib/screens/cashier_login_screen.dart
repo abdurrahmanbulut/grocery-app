@@ -10,7 +10,8 @@ import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
 
 class CashierLoginScreen extends StatefulWidget {
-  const CashierLoginScreen({Key? key}) : super(key: key);
+  final AppUser user;
+  const CashierLoginScreen(this.user,{Key? key}) : super(key: key);
 
   @override
   _CashierLoginScreenState createState() => _CashierLoginScreenState();
@@ -266,7 +267,7 @@ class _CashierLoginScreenState extends State<CashierLoginScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => (MaterialApp(
-                        theme: ThemeData.light(), home: CashierHomeScreen()))));
+                        theme: ThemeData.light(), home: CashierHomeScreen(user)))));
           }
         },
         padding: const EdgeInsets.all(12.0),

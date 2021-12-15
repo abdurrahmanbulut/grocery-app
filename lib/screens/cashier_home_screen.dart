@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cashier_order_screen.dart';
 import 'package:grocery_app/screens/cashier_search_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
 
 class CashierHomeScreen extends StatefulWidget {
-  const CashierHomeScreen({Key? key}) : super(key: key);
+  final AppUser user;
+  const CashierHomeScreen(this.user,{Key? key}) : super(key: key);
 
   @override
   _CashierHomeScreenState createState() => _CashierHomeScreenState();
