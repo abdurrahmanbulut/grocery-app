@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/forgot_password_screen.dart';
 import 'package:grocery_app/screens/cashier_home_screen.dart';
@@ -11,7 +12,8 @@ import 'package:grocery_app/screens/register_screen.dart';
 
 class CashierLoginScreen extends StatefulWidget {
   final AppUser user;
-  const CashierLoginScreen(this.user,{Key? key}) : super(key: key);
+  final List<CategoryProduct> categories;
+  const CashierLoginScreen(this.user,this.categories,{Key? key}) : super(key: key);
 
   @override
   _CashierLoginScreenState createState() => _CashierLoginScreenState();
@@ -267,7 +269,7 @@ class _CashierLoginScreenState extends State<CashierLoginScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => (MaterialApp(
-                        theme: ThemeData.light(), home: CashierHomeScreen(user)))));
+                        theme: ThemeData.light(), home: CashierHomeScreen(user,widget.categories)))));
           }
         },
         padding: const EdgeInsets.all(12.0),
@@ -317,7 +319,7 @@ class _CashierLoginScreenState extends State<CashierLoginScreen> {
         try {
           AppUser user = signInWithGoogle() as AppUser;
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(user)));
+              MaterialPageRoute(builder: (context) => HomeScreen(user,widget.categories)));
         } catch (e) {
           if (e is FirebaseAuthException) {
             throw e;

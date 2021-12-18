@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cashier_order_screen.dart';
 import 'package:grocery_app/screens/cashier_search_screen.dart';
@@ -6,7 +7,8 @@ import 'package:grocery_app/screens/login_screen.dart';
 
 class CashierHomeScreen extends StatefulWidget {
   final AppUser user;
-  const CashierHomeScreen(this.user,{Key? key}) : super(key: key);
+  final List<CategoryProduct> categories;
+  const CashierHomeScreen(this.user,this.categories,{Key? key}) : super(key: key);
 
   @override
   _CashierHomeScreenState createState() => _CashierHomeScreenState();
@@ -35,7 +37,7 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
             ),
             onPressed: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const LoginScreen()));
+                  MaterialPageRoute(builder: (context) => LoginScreen(widget.categories)));
             },
           )
         ],

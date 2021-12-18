@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/account_screen.dart';
 import 'package:grocery_app/screens/campaigns_screen.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/category/category_page.dart';
 import 'package:grocery_app/screens/search_screen.dart';
+import 'package:grocery_app/services/database.dart';
 import 'search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final AppUser user;
+  final List<CategoryProduct> categories;
 
-
-  const HomeScreen(this.user, {Key? key}) : super(key: key);
+  const HomeScreen(this.user, this.categories,{Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -19,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+
 
   void onTapped(int index) {
     setState(() {
@@ -29,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BottomNavBar(widget.user),
+      body: BottomNavBar(widget.user,widget.categories),
     );
   }
 }
@@ -77,11 +80,11 @@ class _PromotionListState extends State<PromotionList> {
 
 /// This is the stateful widget that the main application instantiates.
 class BottomNavBar extends StatefulWidget {
-
+  final List<CategoryProduct> categories;
   final AppUser user;
 
 
-  const BottomNavBar(this.user, {Key? key}) : super(key: key);
+  const BottomNavBar(this.user,this.categories ,{Key? key}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -92,16 +95,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = [];
 
-
   @override
   void initState() {
     super.initState();
     _widgetOptions = <Widget>[
-      CategoryPage(widget.user),
+      CategoryPage(widget.user,widget.categories),
       SearchPage(widget.user),
       CartScreen(widget.user),
       Campaigns(widget.user),
-      AccountScreen(widget.user)
+      AccountScreen(widget.user,widget.categories)
     ];
   }
 

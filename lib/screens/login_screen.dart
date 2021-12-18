@@ -4,17 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/forgot_password_screen.dart';
-import 'package:grocery_app/screens/cashier_login_screen.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/services/auth.dart';
-import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
 
 import 'cashier_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final List<CategoryProduct> categories;
+  const LoginScreen(this.categories,{Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -275,14 +274,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => (MaterialApp(
-                          theme: ThemeData.light(), home: HomeScreen(user)))));
+                          theme: ThemeData.light(), home: HomeScreen(user,widget.categories)))));
             }
             else if(user.type == Type.cashier) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => (MaterialApp(
-                          theme: ThemeData.light(), home: CashierHomeScreen(user)))));
+                          theme: ThemeData.light(), home: CashierHomeScreen(user,widget.categories)))));
             }
           }
           else {
@@ -336,7 +335,7 @@ class _LoginScreenState extends State<LoginScreen> {
         try {
           AppUser user = await signInWithGoogle() ;
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(user)));
+              MaterialPageRoute(builder: (context) => HomeScreen(user,widget.categories)));
         } catch (e) {
           if (e is FirebaseAuthException) {
             throw e;
@@ -390,7 +389,7 @@ class _LoginScreenState extends State<LoginScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: RegisterScreen()))));
+                    theme: ThemeData.light(), home: RegisterScreen(widget.categories)))));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

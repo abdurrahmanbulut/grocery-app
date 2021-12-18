@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grocery_app/services/database.dart';
 
@@ -36,15 +37,15 @@ class Product {
     };
   }
 
-  Product.fromSnapshot(DataSnapshot snapshot) :
-        pid = snapshot.key!,
-        name = snapshot.value["name"]!,
-        image = snapshot.value["image"]!,
-        price = snapshot.value["price"]!,
-        desc = snapshot.value["desc"]!,
-        discount = snapshot.value["discount"]!,
-        count = snapshot.value["count"]!,
-        id = snapshot.value["id"]!;
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+    json["name"],
+    json["image"],
+    json["price"].toDouble(),
+    json["desc"],
+    json["discount"].toDouble(),
+    json["count"],
+    json["id"],
+  );
 }
 
 class SubCategory {
@@ -87,38 +88,33 @@ class SubCategory {
     };
   }
 
-  SubCategory.fromSnapshot(DataSnapshot snapshot) :
-        id = snapshot.key!,
-        name = snapshot.value["name"]!,
-        productList = snapshot.value["productList"];
+  factory SubCategory.fromJson(Map<String, dynamic> json) => SubCategory(
+    json["name"],
+    List<Product>.from(json["productList"].map((i) => Product.fromJson(i))),
+  );
+
 }
 
-class Category {
+class CategoryProduct {
   DatabaseReference dataId = databaseReference;
   String id = '';
   String name;
   String image;
   List<SubCategory> subCategories = [];
 
-  Category(this.name,this.image,this.subCategories);
+  CategoryProduct(this.name,this.image);
 
   get size => subCategories.length;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Category &&
+      other is CategoryProduct &&
           runtimeType == other.runtimeType &&
           name == other.name;
 
   @override
   int get hashCode => name.hashCode;
-
-  Category.fromSnapshot(DataSnapshot snapshot) :
-        id = snapshot.key!,
-        image = snapshot.value["image"]!,
-        name = snapshot.value["name"]!,
-        subCategories = snapshot.value["subCategories"];
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> subCategories =  this.subCategories.map((i) => i.toJson()).toList();
@@ -138,93 +134,20 @@ class Category {
   }
 }
 
-
-
-Category createCategory(record) {
+CategoryProduct createCategory(record) {
   Map<String, dynamic> attributes = {
     'name':'',
     'image':'',
-    'subCategories':[]
+    'subCategories': []
   };
-
   record.forEach((key, value) => {attributes[key] = value});
-
-  Category category = Category(attributes['name'],attributes['image'],List.from(attributes['subCategories']));
+  CategoryProduct category = CategoryProduct(attributes['name'],attributes['image']);
+  String jsonString = jsonEncode(attributes['subCategories']);
+  var list = json.decode(jsonString) as List;
+  category.subCategories = list.map((i)=>SubCategory.fromJson(i)).toList();
   return category;
 }
 
-List<Product> sodaList = [
-  Product("1Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("2Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01 ),
-  Product("3Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("4Coca Cola", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
-];
-SubCategory soda = SubCategory("Soda", sodaList);
-
-List<Product> teaList = [
-  Product("1Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("2Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("3Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("4Tea", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
-];
-SubCategory tea = SubCategory("Cold Tea & Coffee", teaList);
-
-List<Product> ayranList = [
-  Product("1Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("2Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("3Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("4Ayran", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
-];
-SubCategory ayran = SubCategory("Ayran", ayranList);
-
-List<Product> coffeeList = [
-  Product("1Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("2Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("3Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("4Coffee", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
-];
-SubCategory coffee = SubCategory("Coffee", coffeeList);
-
-List<Product> juiceList = [
-  Product("1Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("2Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("3Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("4Fruit Juice", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
-];
-SubCategory juice = SubCategory("Fruit Juice", juiceList);
-
-List<SubCategory> beveragesub = [
-  soda,tea,ayran,coffee,juice
-];
-
-List<Product> chocolateList = [
-  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("2Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("3Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("4Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01)
-];
-SubCategory choco = SubCategory("Chocolate", chocolateList);
-
-
-List<SubCategory> snacksub = [
-  choco,tea,ayran,coffee,juice
-];
-
-List<Category> categories = [
-  Category("Beverage","assets/images/products/img01.png",beveragesub),
-  Category("Snack","assets/images/products/img01.png",snacksub),
-  Category("Ice-cream","assets/images/products/img01.png",beveragesub),
-  Category("Water","assets/images/products/img01.png",beveragesub),
-  Category("Milk & Breakfast","assets/images/products/img01.png",beveragesub),
-  Category("Fruit & Vegetables","assets/images/products/img01.png",beveragesub),
-  Category("Bread","assets/images/products/img01.png",beveragesub),
-  Category("Convenience Food","assets/images/products/img01.png",beveragesub),
-  Category("Staple Food","assets/images/products/img01.png",beveragesub),
-  Category("Fit & Form","assets/images/products/img01.png",beveragesub),
-  Category("Personal Care","assets/images/products/img01.png",beveragesub),
-  Category("Home Care","assets/images/products/img01.png",beveragesub),
-  Category("Cosmetics","assets/images/products/img01.png",beveragesub),
-];
 
 List<Product> demoProducts = [
   Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
@@ -247,6 +170,10 @@ class Cart {
       'numOfItem':numOfItem
     };
   }
+  factory Cart.fromJson(Map<String, dynamic> json) => Cart(
+      product: json["product"],
+      numOfItem: json["numOfItem"]
+  );
 }
 
 // Demo data for our cart

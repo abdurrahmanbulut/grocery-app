@@ -33,7 +33,7 @@ Future<List<AppUser>> getAllUsers() async {
   return users;
 }
 
-DatabaseReference saveCategory(Category category) {
+DatabaseReference saveCategory(CategoryProduct category) {
   var id = databaseReference.child('categories/').push();
   id.set(category.toJson());
   return id;
@@ -43,17 +43,17 @@ Query getCategoryQuery() {
   return databaseReference.child('categories/');
 }
 
-void updateCategory(Category category, DatabaseReference id) {
+void updateCategory(CategoryProduct category, DatabaseReference id) {
   id.update(category.toJson());
 }
 
-Future<List<Category>> getAllCategories() async {
+Future<List<CategoryProduct>> getAllCategories() async {
   DataSnapshot dataSnapshot = await databaseReference.child('categories/').once();
-  List<Category> categories = [];
+  List<CategoryProduct> categories = [];
   if (dataSnapshot.value != null) {
     dataSnapshot.value.forEach((key, value) {
-      Category category = createCategory(value);
-      category.setId(databaseReference.child('categories/' + category.name));
+      CategoryProduct category = createCategory(value);
+      category.setId(databaseReference.child('categories/' + key));
       categories.add(category);
     });
   }

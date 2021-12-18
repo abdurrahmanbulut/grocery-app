@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:grocery_app/model/data_model.dart';
@@ -56,6 +58,16 @@ class AppUser{
   @override
   int get hashCode => email.hashCode;
 
+  factory AppUser.fromJson(Map<String, dynamic> json) => AppUser(
+    json["uid"],
+    json["name"],
+    json["image"],
+    json["email"],
+    json["password"],
+    json["phoneNumber"],
+    intToType(json["type"]),
+  );
+
 }
 
 enum Type {
@@ -80,6 +92,13 @@ class ShoppingCard{
       'month':month
     };
   }
+
+  factory ShoppingCard.fromJson(Map<String, dynamic> json) => ShoppingCard(
+    json["number"],
+    json["cvs"],
+    json["year"],
+    json["month"]
+  );
 }
 
 class Order{
@@ -87,7 +106,7 @@ class Order{
   String id;
   List<Product> products = [];
 
-  Order(this.time, this.id);
+  Order(this.time, this.id,this.products);
 
   Map<String, dynamic> toJson() {
     List<Map> products =  this.products.map((i) => i.toJson()).toList();
@@ -97,6 +116,11 @@ class Order{
       'products':products
     };
   }
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
+      json["time"],
+      json["id"],
+      List<Product>.from(json["products"].map((i) => Product.fromJson(i))),
+  );
 }
 
 AppUser createUser(record) {
@@ -118,9 +142,15 @@ AppUser createUser(record) {
   AppUser user = AppUser(attributes['uid'], attributes['name'],
       attributes['image'],attributes['email'],
       attributes['password'],attributes['phoneNumber'],intToType(attributes['type']));
-  user.cards = List.from(attributes['cards']);
-  user.prevOrders = List.from(attributes['prevOrders']);
-  user.carts = List.from(attributes['carts']);
+  String jsonCard = jsonEncode(attributes['cards']);
+  String jsonOrder = jsonEncode(attributes['prevOrders']);
+  String jsonCart = jsonEncode(attributes['carts']);
+  var cardList = json.decode(jsonCard) as List;
+  var orderList = json.decode(jsonOrder) as List;
+  var cartList = json.decode(jsonCart) as List;
+  user.cards = cardList.map((i)=>ShoppingCard.fromJson(i)).toList();
+  user.prevOrders = orderList.map((i)=>Order.fromJson(i)).toList();
+  user.carts = cartList.map((i)=>Cart.fromJson(i)).toList();
   return user;
 }
 

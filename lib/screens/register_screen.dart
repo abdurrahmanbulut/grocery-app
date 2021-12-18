@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grocery_app/services/database.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/services/auth.dart';
@@ -9,7 +9,8 @@ import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/utilities/extensions.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+  final List<CategoryProduct> categories;
+  const RegisterScreen(this.categories,{Key? key}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -204,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             MaterialPageRoute(
                                 builder: (context) => (MaterialApp(
                                     theme: ThemeData.light(),
-                                    home: HomeScreen(user)))));
+                                    home: HomeScreen(user,widget.categories)))));
                       }
                     },
                     padding: const EdgeInsets.all(12.0),

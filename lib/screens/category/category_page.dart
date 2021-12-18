@@ -6,9 +6,10 @@ import 'components/product_card.dart';
 
 class CategoryPage extends StatefulWidget {
   final AppUser user;
+  final List<CategoryProduct> categories;
 
 
-  CategoryPage(this.user);
+  CategoryPage(this.user,this.categories);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
@@ -33,7 +34,7 @@ class _CategoryPageState extends State<CategoryPage> {
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: GridView.builder(
                 shrinkWrap: true,
-                itemCount: categories.length,
+                itemCount: widget.categories.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
                   mainAxisSpacing: 20.0,
@@ -58,7 +59,7 @@ class _CategoryPageState extends State<CategoryPage> {
               width: 700,
               height: 60,
               child: Center(
-                child: Text(categories[childIndex].name,
+                child: Text(widget.categories[childIndex].name,
                     style: Theme.of(context).textTheme.headline5!),
               ),
             ),
@@ -68,14 +69,14 @@ class _CategoryPageState extends State<CategoryPage> {
           height: 25,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: categories[childIndex].size,
+              itemCount: widget.categories[childIndex].size,
               itemBuilder: (context, index) => buildCategory(index)),
         ),
         Expanded(
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: GridView.builder(
-                  itemCount: categories[childIndex]
+                  itemCount: widget.categories[childIndex]
                       .subCategories[selectedIndex]
                       .productList
                       .length,
@@ -86,7 +87,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                   shrinkWrap: true,
                   itemBuilder: (context, index) => ProductCard(
-                        product: categories[childIndex]
+                        product: widget.categories[childIndex]
                             .subCategories[selectedIndex]
                             .productList[index],
                         press: () {},
@@ -109,12 +110,12 @@ class _CategoryPageState extends State<CategoryPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: Image.asset(categories[categoryIndex].image),
+            child: Image.asset(widget.categories[categoryIndex].image),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 5.0),
             child: Text(
-              categories[categoryIndex].name,
+              widget.categories[categoryIndex].name,
               style: TextStyle(color: Colors.black54),
             ),
           ),
@@ -138,7 +139,7 @@ class _CategoryPageState extends State<CategoryPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[  
                 Text(
-                  categories[childIndex].subCategories[index].name,
+                  widget.categories[childIndex].subCategories[index].name,
                   style: selectedIndex == index
                       ? const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.black)
