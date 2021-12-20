@@ -122,6 +122,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         //_text2(),
                         _signUpButton(),
                         const SizedBox(height: 25.0),
+                        _testCustomerLogin(),
+                        const SizedBox(height: 25.0),
+                        _testCashierLogin(),
                       ],
                     ),
                   ),
@@ -398,6 +401,74 @@ class _LoginScreenState extends State<LoginScreen> {
             width: 35,
           ),
           Text('Don\'t you have an account? SIGN UP',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'OpenSans',
+              )),
+        ],
+      ),
+    );
+  }
+  Widget _testCustomerLogin() {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        primary: Colors.white,
+        backgroundColor: Colors.white,
+        side: const BorderSide(color: Colors.black, width: 2),
+      ),
+      onPressed: () async {
+        String _testEmail = 'metegoncaq@gmail.com';
+        String _testPassword = '123456789';
+        AppUser user = await signInWithEmail(_testEmail, _testPassword);
+        if (auth.currentUser!.email == _testEmail) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => (MaterialApp(
+                      theme: ThemeData.light(), home: HomeScreen(user,widget.categories)))));
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: const [
+          SizedBox(
+            width: 80,
+          ),
+          Text('Customer Test Sign In',
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: 'OpenSans',
+              )),
+        ],
+      ),
+    );
+  }
+  Widget _testCashierLogin() {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        primary: Colors.white,
+        backgroundColor: Colors.white,
+        side: const BorderSide(color: Colors.black, width: 2),
+      ),
+      onPressed: () async {
+        String _testEmail = 'dogukaanguleer@gmail.com';
+        String _testPassword = '123456';
+        AppUser user = await signInWithEmail(_testEmail, _testPassword);
+        if (auth.currentUser!.email == _testEmail) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => (MaterialApp(
+                      theme: ThemeData.light(), home: CashierHomeScreen(user,widget.categories)))));
+        }
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: const [
+          SizedBox(
+            width: 80,
+          ),
+          Text('Cashier Test Sign In',
               style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'OpenSans',

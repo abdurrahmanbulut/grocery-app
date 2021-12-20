@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cashier_order_screen.dart';
-import 'package:grocery_app/screens/cashier_search_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
+import 'package:grocery_app/screens/search_screen.dart';
 
 class CashierHomeScreen extends StatefulWidget {
   final AppUser user;
@@ -52,7 +52,7 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
         controller: pageController,
         children: [
           Container(child: CashierOrderScreen()),
-          Container(child: CashierSearchScreen()),
+          Container(child: SearchPage(widget.user,widget.categories)),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

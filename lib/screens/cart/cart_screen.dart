@@ -8,9 +8,10 @@ import 'package:grocery_app/screens/cart/components/cart_card.dart';
 
 class CartScreen extends StatelessWidget {
   final AppUser user;
+  final List<CategoryProduct> categories;
   static String routeName = "/cart";
 
-  const CartScreen(this.user,{Key? key}) : super(key: key);
+  const CartScreen(this.user,this.categories,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

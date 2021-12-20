@@ -1,60 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
-import 'package:searchfield/searchfield.dart';
+import 'package:grocery_app/services/database.dart';
+import 'package:grocery_app/utilities/constants.dart';
+import 'category/components/product_card.dart';
 
 class SearchPage extends StatefulWidget {
   final AppUser user;
+  final List<CategoryProduct> categories;
 
-  SearchPage(this.user, {Key? key}) : super(key: key);
+  const SearchPage(this.user,this.categories, {Key? key}) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
+  List<Product> filteredProducts = [];
+  List<String> suggestions = ['cola','coffee','snack'];
+  var keyword = ValueNotifier<String>('');
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+  @override
+  void initState() {
+    super.initState();
+    filteredProducts = getFilteredProducts(widget.categories, keyword.value);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
-      child: SearchField(
-        hint: "Search Item",
-        searchInputDecoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.black.withOpacity(0.8),
-            ),
-            borderRadius: BorderRadius.circular(10.0),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 20.0),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30.0,
           ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.black.withOpacity(0.8),
+          width: 400.0,
+          decoration: kBoxDecorationStyle,
+          child: TextFormField(
+            controller: _searchController,
+            keyboardType: TextInputType.emailAddress,
+            style: const TextStyle(
+              color: Colors.black,
+              fontFamily: 'OpenSans',
             ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.red),
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              contentPadding: EdgeInsets.only(top: 13.0),
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.amber,
+              ),
+              hintText: 'Search Product',
+              hintStyle: kLabelStyle,
+            ),
+            onChanged: (value) {
+              setState(() {
+                keyword.value = value;
+                filteredProducts =
+                      getFilteredProducts(widget.categories, keyword.value);
+              });
+            },
           ),
         ),
-        maxSuggestionsInViewPort: 8,
-        itemHeight: 50,
-        searchStyle: TextStyle(
-          fontSize: 18,
-          color: Colors.black.withOpacity(0.8),
+        const SizedBox(height: 20.0),
+        ValueListenableBuilder(
+          valueListenable: keyword,
+          builder: (context, value, widget) {
+            return productListCreate();
+          },
         ),
-        suggestions: const [
-          'apple',
-          'pepsi',
-          'bread',
-          'biskrem',
-          'coffee',
-          'tea',
-          'sugar',
-          'milk'
-        ],
-        onTap: (x) {
-          print(x);
-        },
-      ),
+      ],
+    );
+  }
+  Widget productListCreate(){
+    return Expanded(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: GridView.builder(
+              itemCount: filteredProducts.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 20.0,
+                childAspectRatio: 0.75,
+              ),
+              shrinkWrap: true,
+              itemBuilder: (context, index) => ProductCard(
+                product: filteredProducts[index],
+                press: () {},
+              ))),
     );
   }
 }

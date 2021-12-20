@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/campaign/campaign_class.dart';
 import 'dart:developer';
 class Campaigns extends StatefulWidget {
   final AppUser user;
-  const Campaigns(this.user,{Key? key}) : super(key: key);
+  final List<CategoryProduct> categories;
+  const Campaigns(this.user,this.categories,{Key? key}) : super(key: key);
 
   @override
   _CampaignsState createState() => _CampaignsState();

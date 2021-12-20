@@ -219,6 +219,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           decoration: kBoxDecorationStyle,
           height: 70.0,
           child: TextFormField(
+            keyboardType: TextInputType.emailAddress,
             autovalidateMode: AutovalidateMode.always,
             validator: (input) => input!.isValidEmail() ? null : "Email is invalid",
             controller: _emailController,
@@ -258,6 +259,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           decoration: kBoxDecorationStyle,
           height: 70.0,
           child: TextFormField(
+            keyboardType: TextInputType.number,
             autovalidateMode: AutovalidateMode.always,
             validator: (input) => (input!.isPhoneNumber()) ? null : "Phone number is invalid",
             controller: _phoneController,
@@ -296,6 +298,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           decoration: kBoxDecorationStyle,
           height: 70.0,
           child: TextField(
+            keyboardType: TextInputType.name,
             controller: _nameController,
             style: const TextStyle(
               color: Colors.black,

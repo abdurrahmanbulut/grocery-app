@@ -46,6 +46,10 @@ class Product {
     json["count"],
     json["id"],
   );
+
+  bool contains(String keyword) {
+    return (name.toUpperCase().contains(keyword.toUpperCase()));
+  }
 }
 
 class SubCategory {

@@ -59,3 +59,27 @@ Future<List<CategoryProduct>> getAllCategories() async {
   }
   return categories;
 }
+
+List<Product> getAllProducts(List<CategoryProduct> categories){
+  List<Product> products = [];
+  categories.forEach((element) {
+    element.subCategories.forEach((subElement) {
+      subElement.productList.forEach((productElement) {
+        products.add(productElement);
+      });
+    });
+  });
+  return products;
+}
+
+
+List<Product> getFilteredProducts(List<CategoryProduct> categories,String keyword) {
+  List<Product> products = getAllProducts(categories);
+  List<Product> filteredProducts = [];
+  products.forEach((element) {
+    if(element.contains(keyword)) {
+      filteredProducts.add(element);
+    }
+  });
+  return filteredProducts;
+}

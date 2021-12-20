@@ -100,9 +100,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
     super.initState();
     _widgetOptions = <Widget>[
       CategoryPage(widget.user,widget.categories),
-      SearchPage(widget.user),
-      CartScreen(widget.user),
-      Campaigns(widget.user),
+      SearchPage(widget.user,widget.categories),
+      CartScreen(widget.user,widget.categories),
+      Campaigns(widget.user,widget.categories),
       AccountScreen(widget.user,widget.categories)
     ];
   }
