@@ -37,6 +37,7 @@ class _BodyState extends State<Body> {
               setState(() {
                 widget.user.carts.removeAt(index);
                 widget.user.sumCart();
+                widget.user.update();
               });
             },
             background: Container(

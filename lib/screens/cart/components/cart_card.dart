@@ -89,6 +89,7 @@ class _CartCardState extends State<CartCard> {
                         setState(() {
                           widget.user.carts[widget.cartIndex].numOfItem++;
                           widget.user.sumCart();
+                          widget.user.update();
                         });
                       }),
                     IconButton(
@@ -100,6 +101,7 @@ class _CartCardState extends State<CartCard> {
                             widget.user.carts[widget.cartIndex].numOfItem--;
                           }
                           widget.user.sumCart();
+                          widget.user.update();
                         });
                       }),
                     ])

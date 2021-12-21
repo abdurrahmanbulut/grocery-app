@@ -73,6 +73,7 @@ class _ProductCardState extends State<ProductCard> {
                       }
                     }
                     widget.user.sumCart();
+                    widget.user.update();
                   });
                 }),
             Text((index == -1)? '0' : widget.user.carts[index].numOfItem.toString(),
@@ -98,6 +99,7 @@ class _ProductCardState extends State<ProductCard> {
                       widget.user.carts[index].numOfItem++;
                     }
                     widget.user.sumCart();
+                    widget.user.update();
                   });
                 }),
           ],

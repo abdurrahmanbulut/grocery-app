@@ -152,16 +152,6 @@ CategoryProduct createCategory(record) {
   return category;
 }
 
-
-List<Product> demoProducts = [
-  Product("1Chocolate Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 01),
-  Product("qqq Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 02),
-  Product("22222 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 03),
-  Product("3 Bar", "assets/images/products/img01.png", 10, "cola desc", 0, 0, 04),
-
-];
-
-
 class Cart {
   final Product product;
   int numOfItem = 0;
@@ -170,12 +160,12 @@ class Cart {
 
   Map<String, dynamic> toJson() {
     return {
-      'product': product,
+      'product': product.toJson(),
       'numOfItem':numOfItem
     };
   }
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
-      product: json["product"],
+      product: Product.fromJson(json["product"]),
       numOfItem: json["numOfItem"]
   );
 }
