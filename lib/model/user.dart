@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 
 import '../services/database.dart';
@@ -16,6 +17,7 @@ class AppUser{
   String password;
   String phoneNumber;
   Type type;
+  ValueNotifier<double> sumOfCart = ValueNotifier<double>(0);
   List<ShoppingCard> cards = [];
   List<Order> prevOrders = [];
   List<Cart> carts = [];
@@ -68,6 +70,38 @@ class AppUser{
     intToType(json["type"]),
   );
 
+  bool cartContains(Product product) {
+    if(carts.isEmpty) {
+      return false;
+    }
+    int index = -1;
+    for(int i=0;i<carts.length;i++) {
+      if(carts[i].product == product) {
+        index = i;
+      }
+    }
+    if(index != -1) {
+      return true;
+    }
+    return false;
+  }
+
+  int indexCart(Product product) {
+    int index = -1;
+    for(int i=0;i<carts.length;i++) {
+      if(carts[i].product == product) {
+        index = i;
+      }
+    }
+    return index;
+  }
+
+  void sumCart(){
+    sumOfCart.value = 0;
+    for (int i = 0; i < carts.length; i++) {
+      sumOfCart.value += (carts[i].product.price * carts[i].numOfItem);
+    }
+  }
 }
 
 enum Type {

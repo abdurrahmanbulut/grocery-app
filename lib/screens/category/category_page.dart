@@ -91,6 +91,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             .subCategories[selectedIndex]
                             .productList[index],
                         press: () {},
+                        user: widget.user,
                       ))),
         ),
         

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
+import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/cart/components/cart_card.dart';
 
 class ProductCard extends StatefulWidget {
+  final AppUser user;
   final Product product;
   final Function press;
 
-  const ProductCard({Key? key, required this.product, required this.press})
+  const ProductCard({Key? key, required this.product, required this.press,required this.user})
       : super(key: key);
 
   @override
@@ -15,6 +17,8 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  int index = -1;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,12 +61,21 @@ class _ProductCardState extends State<ProductCard> {
                 tooltip: 'Decrease amount',
                 onPressed: () {
                   setState(() {
-                    if (widget.product.count > 0) {
-                      widget.product.count--;
+                    if(widget.user.cartContains(widget.product)) {
+                      index = widget.user.indexCart(widget.product);
                     }
+                    if (index != -1) {
+                      if(widget.user.carts[index].numOfItem >1) {
+                        widget.user.carts[index].numOfItem--;
+                      }
+                      else if(widget.user.carts[index].numOfItem == 1){
+                        widget.user.carts.removeAt(index);
+                      }
+                    }
+                    widget.user.sumCart();
                   });
                 }),
-            Text(widget.product.count.toString(),
+            Text((index == -1)? '0' : widget.user.carts[index].numOfItem.toString(),
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
@@ -75,17 +88,29 @@ class _ProductCardState extends State<ProductCard> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
-                    widget.product.count++;
-                    Cart(
-                        product: widget.product,
-                        numOfItem: widget.product.count);
-                    print(widget.product.count);
-                    CheckOurCard();
+                    if(widget.user.cartContains(widget.product)) {
+                      index = widget.user.indexCart(widget.product);
+                    }
+                    if (index == -1) {
+                      widget.user.carts.add(Cart(product: widget.product, numOfItem: 1));
+                    }
+                    else {
+                      widget.user.carts[index].numOfItem++;
+                    }
+                    widget.user.sumCart();
                   });
                 }),
           ],
         ),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if(widget.user.cartContains(widget.product)) {
+      index = widget.user.indexCart(widget.product);
+    }
   }
 }

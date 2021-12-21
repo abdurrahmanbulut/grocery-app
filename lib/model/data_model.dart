@@ -164,7 +164,7 @@ List<Product> demoProducts = [
 
 class Cart {
   final Product product;
-  int numOfItem;
+  int numOfItem = 0;
 
   Cart({required this.product, required this.numOfItem});
 
@@ -182,12 +182,6 @@ class Cart {
 
 // Demo data for our cart
 
-List<Cart> demoCarts = [
-  Cart(product: demoProducts[0], numOfItem: 4),
-  Cart(product: demoProducts[1], numOfItem: 1),
-  Cart(product: demoProducts[2], numOfItem: 1),
-
-];
 
 
 

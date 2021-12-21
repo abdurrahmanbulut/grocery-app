@@ -1,25 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/components/body.dart';
-import 'package:grocery_app/screens/cart/components/cart_card.dart';
 
 class CartScreen extends StatelessWidget {
   final AppUser user;
   final List<CategoryProduct> categories;
   static String routeName = "/cart";
 
-  const CartScreen(this.user,this.categories,{Key? key}) : super(key: key);
+  CartScreen(this.user,this.categories,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppBar(context),
-      body: Body(),
-      bottomNavigationBar: const CheckOurCard(),
+      body: Body(user),
+      bottomNavigationBar: CheckOurCard(user),
     );
   }
 
@@ -34,11 +32,17 @@ class CartScreen extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          Text(
-            "(${demoCarts.length} items)",
-              style: const TextStyle(fontSize: 15,color: Colors.black)
-            //style: Theme.of(context).textTheme.caption,
-          ),
+          ValueListenableBuilder(
+            valueListenable: user.sumOfCart,
+            builder: (context, value, widget) {
+              return Text(
+                  "(${user.carts.length} items)",
+                  style: const TextStyle(fontSize: 15,color: Colors.black)
+                //style: Theme.of(context).textTheme.caption,
+              );
+            },
+          )
+          ,
         ],
       ),
     );
@@ -46,7 +50,8 @@ class CartScreen extends StatelessWidget {
 }
 
 class CheckOurCard extends StatefulWidget {
-  const CheckOurCard({
+  final AppUser user;
+  CheckOurCard(this.user,{
     Key? key,
   }) : super(key: key);
 
@@ -55,63 +60,51 @@ class CheckOurCard extends StatefulWidget {
 }
 
 class _CheckOurCardState extends State<CheckOurCard> {
+
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double sum = 0;
-    setState(() {
-      for (int i = 0; i < demoCarts.length; i++) {
-        sum += (demoCarts[i].product.price * demoCarts[i].numOfItem);
-      }
-    });
-    print("  wqqq " + sum.toString());
+    return ValueListenableBuilder(
+      valueListenable: widget.user.sumOfCart,
+      builder: (context, value, widget) {
+        return checkedCard();
+      },
+    );
+  }
+  Widget checkedCard() {
+    widget.user.sumCart();
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
       height: 140,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, -15),
+              offset: const Offset(0, -15),
               blurRadius: 20,
               color: Colors.grey.withOpacity(0.15),
             )
           ]),
       child: Column(
         children: [
-          Row(
-            children: [
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: SvgPicture.asset("assets/icons/discount.svg"),
-              ),
-              const Spacer(),
-
-              const Text("Add voucher code"),
-
-              const SizedBox(
-                width: 10,
-              ),
-              const Icon(Icons.arrow_forward_ios,
-                  size: 12, color: Colors.amber),
-            ],
-          ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-               Text.rich(TextSpan(text: "Total:\n", children: [
+              Text.rich(TextSpan(text: "Total:\n", children: [
                 TextSpan(
-                    text:"\$$sum",
-                    style: TextStyle(fontSize: 22, color: Colors.black))
+                    text:"\$${widget.user.sumOfCart.value}",
+                    style: const TextStyle(fontSize: 22, color: Colors.black))
               ])),
               SizedBox(
                   width: 200,

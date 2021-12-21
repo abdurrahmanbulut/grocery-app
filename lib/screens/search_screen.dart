@@ -96,6 +96,7 @@ class _SearchPageState extends State<SearchPage> {
               itemBuilder: (context, index) => ProductCard(
                 product: filteredProducts[index],
                 press: () {},
+                user: widget.user,
               ))),
     );
   }
