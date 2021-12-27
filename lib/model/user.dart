@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
+import 'package:grocery_app/model/notification.dart';
 
 import '../services/database.dart';
 
@@ -21,6 +22,7 @@ class AppUser{
   List<ShoppingCard> cards = [];
   List<Order> prevOrders = [];
   List<Cart> carts = [];
+  List<UserNotification> notifications = [];
 
 
   AppUser(this.uid, this.name, this.image, this.email,
@@ -30,6 +32,7 @@ class AppUser{
     List<Map> cards =  this.cards.map((i) => i.toJson()).toList();
     List<Map> prevOrders =  this.prevOrders.map((i) => i.toJson()).toList();
     List<Map> carts =  this.carts.map((i) => i.toJson()).toList();
+    List<Map> notifications =  this.notifications.map((i) => i.toJson()).toList();
     return {
       'uid': uid,
       'name':name,
@@ -40,7 +43,8 @@ class AppUser{
       'type': (type == Type.customer)? 0 : 1,
       'cards':cards,
       'prevOrders':prevOrders,
-      'carts':carts
+      'carts':carts,
+      'notifications':notifications
     };
   }
 
@@ -102,6 +106,22 @@ class AppUser{
       sumOfCart.value += (carts[i].product.price * carts[i].numOfItem);
     }
   }
+
+  bool isNewNotification() {
+    bool returnBool = false;
+    notifications.forEach((element) {
+      if (!element.isSeen) {
+        returnBool = true;
+      }
+    });
+    return returnBool;
+  }
+
+  void setNotifications() {
+    notifications.forEach((element) {
+      element.isSeen = true;
+    });
+  }
 }
 
 enum Type {
@@ -145,13 +165,13 @@ class Order{
   Map<String, dynamic> toJson() {
     List<Map> products =  this.products.map((i) => i.toJson()).toList();
     return {
-      'time': time,
+      'time': time.toIso8601String(),
       'id':id,
       'products':products
     };
   }
   factory Order.fromJson(Map<String, dynamic> json) => Order(
-      json["time"],
+      DateTime.tryParse(json['time']) as DateTime,
       json["id"],
       List<Product>.from(json["products"].map((i) => Product.fromJson(i))),
   );
@@ -168,7 +188,8 @@ AppUser createUser(record) {
     'type':'',
     'cards':[],
     'prevOrders':[],
-    'carts':[]
+    'carts':[],
+    'notifications':[]
   };
 
   record.forEach((key, value) => {attributes[key] = value});
@@ -179,12 +200,15 @@ AppUser createUser(record) {
   String jsonCard = jsonEncode(attributes['cards']);
   String jsonOrder = jsonEncode(attributes['prevOrders']);
   String jsonCart = jsonEncode(attributes['carts']);
+  String jsonNotification = jsonEncode(attributes['notifications']);
   var cardList = json.decode(jsonCard) as List;
   var orderList = json.decode(jsonOrder) as List;
   var cartList = json.decode(jsonCart) as List;
+  var notificationList = json.decode(jsonNotification) as List;
   user.cards = cardList.map((i)=>ShoppingCard.fromJson(i)).toList();
   user.prevOrders = orderList.map((i)=>Order.fromJson(i)).toList();
   user.carts = cartList.map((i)=>Cart.fromJson(i)).toList();
+  user.notifications = notificationList.map((i)=>UserNotification.fromJson(i)).toList();
   return user;
 }
 

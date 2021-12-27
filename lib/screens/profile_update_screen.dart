@@ -104,7 +104,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     const SizedBox(height: 15.0),
                     nameSurname(),
                     const SizedBox(height: 15.0),
-                    email(),
+                    (widget.user.password.isNotEmpty)?email(): Container(),
                     const SizedBox(height: 15.0),
                     phoneNumber(),
                     const SizedBox(height: 20.0),

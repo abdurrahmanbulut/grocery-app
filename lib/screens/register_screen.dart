@@ -200,6 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if(_email.isValidEmail() && _password.isValidPassword() && _password == _confirm) {
                         AppUser user = await createUserWithEmail(_email, _password);
                         user = await signInWithEmail(_email, _password);
+                        user = await checkUser(user);
                         Navigator.push(
                             context,
                             MaterialPageRoute(

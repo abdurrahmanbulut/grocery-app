@@ -35,6 +35,7 @@ dependencies:
   after_layout: ^1.1.0
   shared_preferences: ^2.0.8
   image_picker: ^0.8.4+4
+  path_provider: ^2.0.8
 
 dev_dependencies:
   flutter_test:

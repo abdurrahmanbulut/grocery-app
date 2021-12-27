@@ -2,13 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_app/model/data_model.dart';
+import 'package:grocery_app/model/notification.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/forgot_password_screen.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/services/auth.dart';
+import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
-
+import 'package:grocery_app/utilities/google_sign_in.dart';
 import 'cashier_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,29 +27,34 @@ class _LoginScreenState extends State<LoginScreen> {
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String _email = '', _password = '';
-  String _rememberedEmail = '', _rememberedPassword = '';
+  GoogleSignInProvider googleSignInProvider = GoogleSignInProvider();
+  Remember remember = Remember('', '');
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  late final UserCredential _userCredential;
 
+  _asyncGetRemember() async {
+    remember = await getRemember();
+  }
   @override
   void initState() {
+    _asyncGetRemember();
+
     super.initState();
     logout();
-    if (_rememberMe) {
+    if (remember.email != '' && remember.password != '') {
       _emailController.value = _emailController.value.copyWith(
-        text: _rememberedEmail,
+        text: remember.email,
         selection: TextSelection(
-            baseOffset: _rememberedEmail.length,
-            extentOffset: _rememberedEmail.length),
+            baseOffset: remember.email.length,
+            extentOffset: remember.email.length),
         composing: TextRange.empty,
       );
       _passwordController.value = _passwordController.value.copyWith(
-        text: _rememberedPassword,
+        text: remember.password,
         selection: TextSelection(
-            baseOffset: _rememberedPassword.length,
-            extentOffset: _rememberedPassword.length),
+            baseOffset: remember.password.length,
+            extentOffset: remember.password.length),
         composing: TextRange.empty,
       );
     }
@@ -245,8 +252,6 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 setState(() {
                   _rememberMe = value!;
-                  _rememberedEmail = '';
-                  _rememberedPassword = '';
                 });
               },
             ),
@@ -269,10 +274,13 @@ class _LoginScreenState extends State<LoginScreen> {
           AppUser user = await signInWithEmail(_email, _password);
           if (auth.currentUser!.email == _email) {
             if (_rememberMe) {
-              _rememberedEmail = _email;
-              _rememberedPassword = _password;
+              await saveRemember(Remember(_email,_password));
+            }
+            else {
+              await saveRemember(Remember('',''));
             }
             if(user.type == Type.customer) {
+              user = await checkUser(user);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -280,6 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           theme: ThemeData.light(), home: HomeScreen(user,widget.categories)))));
             }
             else if(user.type == Type.cashier) {
+              user = await checkUser(user);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -336,9 +345,10 @@ class _LoginScreenState extends State<LoginScreen> {
           isLoading = true;
         });
         try {
-          AppUser user = await signInWithGoogle() ;
+          AppUser user = await googleSignInProvider.googleLogIn() ;
+          AppUser updatedUser = await checkUser(user);
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(user,widget.categories)));
+              MaterialPageRoute(builder: (context) => HomeScreen(updatedUser,widget.categories)));
         } catch (e) {
           if (e is FirebaseAuthException) {
             throw e;

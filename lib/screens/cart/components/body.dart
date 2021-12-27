@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/model/data_model.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/model/user.dart';
 import 'cart_card.dart';

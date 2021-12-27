@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.amber,
                   height: 0,
                 )),
-            passwordButton(context),
+            (widget.user.password.isNotEmpty)? passwordButton(context) : Container(),
           ],
         ),
       ],

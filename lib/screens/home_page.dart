@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
@@ -6,7 +7,9 @@ import 'package:grocery_app/screens/campaigns_screen.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/category/category_page.dart';
 import 'package:grocery_app/screens/search_screen.dart';
+import 'package:grocery_app/services/auth.dart';
 import 'package:grocery_app/services/database.dart';
+import 'notification_screen.dart';
 import 'search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -93,22 +96,28 @@ class BottomNavBar extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
+  bool isClicked = false;
   static List<Widget> _widgetOptions = [];
+  AppUser updatedUser = AppUser('', '', '', '', '', '', Type.none);
+  List<CategoryProduct> categories = [];
 
   @override
   void initState() {
     super.initState();
+    updatedUser = widget.user;
+    categories = widget.categories;
     _widgetOptions = <Widget>[
-      CategoryPage(widget.user,widget.categories),
-      SearchPage(widget.user,widget.categories),
-      CartScreen(widget.user,widget.categories),
-      Campaigns(widget.user,widget.categories),
-      AccountScreen(widget.user,widget.categories)
+      CategoryPage(updatedUser,categories),
+      SearchPage(updatedUser,categories),
+      CartScreen(updatedUser,categories),
+      Campaigns(updatedUser,categories),
+      AccountScreen(updatedUser,categories),
     ];
   }
 
   void _onItemTapped(int index) {
     setState(() {
+      isClicked = false;
       _selectedIndex = index;
     });
   }
@@ -123,9 +132,34 @@ class _BottomNavBarState extends State<BottomNavBar> {
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
+        actions: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isClicked = !isClicked;
+                    widget.user.setNotifications();
+                    widget.user.update();
+                  });
+                },
+                child: (widget.user.isNewNotification())?
+                    Icon(
+                      Icons.add_alert,
+                      size: 26.0,
+                      color: (isClicked)? Colors.white : Colors.black,
+                    )
+                    :Icon(
+                      Icons.add_alert_outlined,
+                      size: 26.0,
+                      color: (isClicked)? Colors.white : Colors.black,
+                    ),
+              )
+          ),
+        ],
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: (!isClicked)? _widgetOptions.elementAt(_selectedIndex) : NotificationPage(updatedUser),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

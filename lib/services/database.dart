@@ -1,10 +1,16 @@
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final databaseReference =
 FirebaseDatabase.instance.reference();
+const String kFileName = 'remember.json';
 
 DatabaseReference saveUser(AppUser user) {
   var id = databaseReference.child('users/').push();
@@ -83,3 +89,77 @@ List<Product> getFilteredProducts(List<CategoryProduct> categories,String keywor
   });
   return filteredProducts;
 }
+
+Future<String> get _localPath async {
+  final directory = await getApplicationDocumentsDirectory();
+
+  return directory.path;
+}
+
+Future<File> get _localFile async {
+  final path = await _localPath;
+  return File('$path/$kFileName');
+}
+
+Future saveRemember( Remember remember) async {
+  final _filePath = await _localFile;
+
+  Map<String, dynamic>  _newJson;
+
+  bool exist = await _filePath.exists();
+
+  if(!exist) {
+    await _filePath.create();
+    _newJson = remember.toMap();
+  } else {
+    _newJson =
+    json.decode(_filePath.readAsStringSync());
+    _newJson.addAll(remember.toMap());
+  }
+  String _jsonString = json.encode(_newJson);
+  print(_jsonString);
+  _filePath.writeAsString(_jsonString);
+}
+
+Future<Remember> getRemember() async {
+  final _filePath = await _localFile;
+
+  bool _fileExists = await _filePath.exists();
+
+  Map<String, dynamic>  _json;
+  if (_fileExists) {
+    try {
+      String _jsonString = await _filePath.readAsString();
+
+      _json = jsonDecode(_jsonString);
+      print(_json);
+      return Remember.fromMap(_json);
+    } catch (e) {
+      print('Tried reading _file error: $e');
+    }
+  }
+  return Remember('', '');
+}
+
+
+class Remember{
+  String email;
+  String password;
+
+  Remember(this.email, this.password);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'email': email,
+      'password': password
+    };
+  }
+
+  factory Remember.fromMap(Map<String, dynamic> map) {
+    return Remember(
+         map['email'],
+         map['password']
+    );
+  }
+}
+

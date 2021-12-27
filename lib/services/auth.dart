@@ -5,30 +5,13 @@ import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/model/user.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-final GoogleSignIn googleSignIn = GoogleSignIn();
-
-Future<AppUser> signInWithGoogle() async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
-
-  // Create a new credential
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth?.accessToken,
-    idToken: googleAuth?.idToken,
-  );
-
-  // Once signed in, return the UserCredential
-  UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-  String? _email = userCredential.user!.email;
-  return AppUser(userCredential.user!.uid, '', '', _email!, '', '', Type.customer);
-}
 
 Future<AppUser> signInWithEmail(String _email,String _password) async {
   final List<AppUser> users = await getAllUsers();
   AppUser user = AppUser('', '', '', _email, _password, '', Type.customer);
+  if(users.isEmpty) {
+    return user;
+  }
   for (var element in users) {
     if(element.email == user.email) {
       user = element;
@@ -36,6 +19,20 @@ Future<AppUser> signInWithEmail(String _email,String _password) async {
     }
   }
   await _auth.signInWithEmailAndPassword(email: _email, password: _password);
+  return user;
+}
+
+Future checkUser(AppUser user) async {
+  final List<AppUser> users = await getAllUsers();
+  if(users.isEmpty) {
+    return user;
+  }
+  for (var element in users) {
+    if(element.email == user.email) {
+      user = element;
+      break;
+    }
+  }
   return user;
 }
 
@@ -47,8 +44,6 @@ Future<AppUser> createUserWithEmail(String _email,String _password) async {
 }
 
 Future logout() async {
-
-  await googleSignIn.disconnect();
   FirebaseAuth.instance.signOut();
 }
 
@@ -60,7 +55,7 @@ Future passwordChange(AppUser appUser,String _password) async {
 }
 
 Future emailChange(AppUser appUser,String _email) async {
-  appUser.password = _email;
+  appUser.email = _email;
   appUser.update();
   User? user = _auth.currentUser;
   user!.updateEmail(_email);
