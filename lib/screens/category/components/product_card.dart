@@ -17,24 +17,32 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  int index = -1;
-
+  ValueNotifier<int> valueNotifier = ValueNotifier<int>(-1);
   @override
   Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: valueNotifier,
+      builder: (context, value, widget) {
+        return card();
+      },
+    );
+  }
+
+  Widget card() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-      (widget.product.count != 0)?
+        (widget.product.count != 0)?
         Expanded(
           child:  Container(
-            padding: const EdgeInsets.all(1.5),
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Image.asset(widget.product.image)
+              padding: const EdgeInsets.all(1.5),
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Image.asset(widget.product.image)
           ),
         ) :
         Expanded(
@@ -82,21 +90,22 @@ class _ProductCardState extends State<ProductCard> {
                 onPressed: () {
                   setState(() {
                     if(widget.user.cartContains(widget.product)) {
-                      index = widget.user.indexCart(widget.product);
+                      valueNotifier.value = widget.user.indexCart(widget.product);
                     }
-                    if (index != -1) {
-                      if(widget.user.carts[index].numOfItem >1) {
-                        widget.user.carts[index].numOfItem--;
+                    if (valueNotifier.value != -1) {
+                      if(widget.user.carts[valueNotifier.value].numOfItem >1) {
+                        widget.user.carts[valueNotifier.value].numOfItem--;
                       }
-                      else if(widget.user.carts[index].numOfItem == 1){
-                        widget.user.carts.removeAt(index);
+                      else if(widget.user.carts[valueNotifier.value].numOfItem == 1){
+                        widget.user.carts.removeAt(valueNotifier.value);
+                        valueNotifier.value = -1;
                       }
                     }
                     widget.user.sumCart();
                     widget.user.update();
                   });
                 }),
-            Text((index == -1)? '0' : widget.user.carts[index].numOfItem.toString(),
+            Text((valueNotifier.value == -1)? '0' : widget.user.carts[valueNotifier.value].numOfItem.toString(),
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
@@ -109,14 +118,18 @@ class _ProductCardState extends State<ProductCard> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
+                    if(widget.user.indexCart(widget.product) == -1) {
+                      valueNotifier.value = -1;
+                    }
                     if(widget.user.cartContains(widget.product)) {
-                      index = widget.user.indexCart(widget.product);
+                      valueNotifier.value = widget.user.indexCart(widget.product);
                     }
-                    if (index == -1 && widget.product.count>1) {
+                    if (valueNotifier.value == -1 && widget.product.count>1) {
                       widget.user.carts.add(Cart(product: widget.product, numOfItem: 1));
+                      valueNotifier.value = widget.user.indexCart(widget.product);
                     }
-                    else if(widget.product.count>widget.user.carts[index].numOfItem+1){
-                      widget.user.carts[index].numOfItem++;
+                    else if(widget.product.count>widget.user.carts[valueNotifier.value].numOfItem+1){
+                      widget.user.carts[valueNotifier.value].numOfItem++;
                     }
                     widget.user.sumCart();
                     widget.user.update();
@@ -132,7 +145,10 @@ class _ProductCardState extends State<ProductCard> {
   void initState() {
     super.initState();
     if(widget.user.cartContains(widget.product)) {
-      index = widget.user.indexCart(widget.product);
+      valueNotifier.value = widget.user.indexCart(widget.product);
+    }
+    else {
+      valueNotifier.value = -1;
     }
   }
 }
