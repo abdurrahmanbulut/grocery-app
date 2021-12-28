@@ -29,13 +29,14 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   Widget card() {
+    valueNotifier.value = widget.user.indexCart(widget.product);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         (widget.product.count != 0)?
         Expanded(
           child:  Container(
-              padding: const EdgeInsets.all(1.5),
+              padding: const EdgeInsets.only(left: 0.5),
               height: 100,
               width: 100,
               decoration: BoxDecoration(
@@ -47,40 +48,48 @@ class _ProductCardState extends State<ProductCard> {
         ) :
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(1.5),
-            width: 80,
-            height: 80,
+            padding: const EdgeInsets.only(left: 0.5),
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: ExactAssetImage(widget.product.image),
-                fit: BoxFit.cover,
+                fit: BoxFit.scaleDown,
               ),
             ),
             child: Positioned.fill(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
-                child: Container(color: Colors.white.withOpacity(0.5)),
+                child: Container(
+                    color: Colors.white.withOpacity(0.5)
+                ),
               ),
             ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          padding:  EdgeInsets.only(
+              left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+              right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
+          ),
           child: Text(
             widget.product.name,
             style: const TextStyle(color: Colors.black),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(2.0),
+          padding: EdgeInsets.only(
+              left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+              right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
+          ),
           child: Text(
             widget.product.price.toString() + " TL",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
             IconButton(
                 alignment: Alignment.centerLeft,
                 icon: const Icon(Icons.remove),
@@ -105,13 +114,13 @@ class _ProductCardState extends State<ProductCard> {
                     widget.user.update();
                   });
                 }),
-            Text((valueNotifier.value == -1)? '0' : widget.user.carts[valueNotifier.value].numOfItem.toString(),
+            Text((valueNotifier.value != -1 && widget.user.cartContains(widget.product))? widget.user.carts[valueNotifier.value].numOfItem.toString() : '0',
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
                     color: Colors.black)),
             IconButton(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.centerRight,
                 icon: const Icon(Icons.add),
                 tooltip: 'Increase amount',
                 iconSize: 20,

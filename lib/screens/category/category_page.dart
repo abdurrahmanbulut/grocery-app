@@ -114,10 +114,10 @@ class _CategoryPageState extends State<CategoryPage> {
             child: Image.asset(widget.categories[categoryIndex].image),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 5.0),
+            padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Text(
               widget.categories[categoryIndex].name,
-              style: TextStyle(color: Colors.black54),
+              style: const TextStyle(color: Colors.black54),
             ),
           ),
         ],
