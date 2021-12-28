@@ -7,8 +7,7 @@ import 'package:grocery_app/screens/campaigns_screen.dart';
 import 'package:grocery_app/screens/cart/cart_screen.dart';
 import 'package:grocery_app/screens/category/category_page.dart';
 import 'package:grocery_app/screens/search_screen.dart';
-import 'package:grocery_app/services/auth.dart';
-import 'package:grocery_app/services/database.dart';
+import 'package:badges/badges.dart';
 import 'notification_screen.dart';
 import 'search_screen.dart';
 
@@ -134,7 +133,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         centerTitle: true,
         actions: <Widget>[
           Padding(
-              padding: const EdgeInsets.only(right: 20.0),
+              padding: const EdgeInsets.only(right: 20.0,top: 10),
               child: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -143,17 +142,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     widget.user.update();
                   });
                 },
-                child: (widget.user.isNewNotification())?
-                    Icon(
-                      Icons.add_alert,
-                      size: 26.0,
-                      color: (isClicked)? Colors.white : Colors.black,
-                    )
-                    :Icon(
-                      Icons.add_alert_outlined,
-                      size: 26.0,
-                      color: (isClicked)? Colors.white : Colors.black,
-                    ),
+                child: Badge(
+                  badgeContent: Text(widget.user.numberOfNewNotifications().toString()),
+                  child: Icon(
+                        Icons.add_alert,
+                        size: 26.0,
+                        color: (isClicked)? Colors.white : Colors.black,
+                      ),
+                ),
               )
           ),
         ],

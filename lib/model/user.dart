@@ -122,6 +122,15 @@ class AppUser{
       element.isSeen = true;
     });
   }
+  int numberOfNewNotifications() {
+    int count = 0;
+    notifications.forEach((element) {
+      if (!element.isSeen) {
+        count++;
+      }
+    });
+    return count;
+  }
 }
 
 enum Type {
