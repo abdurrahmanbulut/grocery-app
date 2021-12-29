@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
   final AppUser user;
-  const ProfileUpdateScreen(this.user,{Key? key}) : super(key: key);
+  const ProfileUpdateScreen(this.user, {Key? key}) : super(key: key);
 
   @override
   _ProfileUpdateScreenState createState() => _ProfileUpdateScreenState();
@@ -29,24 +29,27 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   @override
   void initState() {
     super.initState();
-      _emailController.value = _emailController.value.copyWith(
-        text: widget.user.email,
-        selection:
-        TextSelection(baseOffset: widget.user.email.length, extentOffset: widget.user.email.length),
-        composing: TextRange.empty,
-      );
-      _nameController.value = _nameController.value.copyWith(
-        text: widget.user.name,
-        selection:
-        TextSelection(baseOffset: widget.user.name.length, extentOffset: widget.user.name.length),
-        composing: TextRange.empty,
-      );
-      _phoneController.value = _phoneController.value.copyWith(
-        text: widget.user.phoneNumber,
-        selection:
-        TextSelection(baseOffset: widget.user.phoneNumber.length, extentOffset: widget.user.phoneNumber.length),
-        composing: TextRange.empty,
-      );
+    _emailController.value = _emailController.value.copyWith(
+      text: widget.user.email,
+      selection: TextSelection(
+          baseOffset: widget.user.email.length,
+          extentOffset: widget.user.email.length),
+      composing: TextRange.empty,
+    );
+    _nameController.value = _nameController.value.copyWith(
+      text: widget.user.name,
+      selection: TextSelection(
+          baseOffset: widget.user.name.length,
+          extentOffset: widget.user.name.length),
+      composing: TextRange.empty,
+    );
+    _phoneController.value = _phoneController.value.copyWith(
+      text: widget.user.phoneNumber,
+      selection: TextSelection(
+          baseOffset: widget.user.phoneNumber.length,
+          extentOffset: widget.user.phoneNumber.length),
+      composing: TextRange.empty,
+    );
   }
 
   @override
@@ -104,7 +107,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     const SizedBox(height: 15.0),
                     nameSurname(),
                     const SizedBox(height: 15.0),
-                    (widget.user.password.isNotEmpty)?email(): Container(),
+                    (widget.user.password.isNotEmpty) ? email() : Container(),
                     const SizedBox(height: 15.0),
                     phoneNumber(),
                     const SizedBox(height: 20.0),
@@ -131,7 +134,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: (widget.user.image.isEmpty)? const AssetImage('assets/images/1.jpg') : Image.network(widget.user.image).image,
+              image: (widget.user.image.isEmpty)
+                  ? const AssetImage('assets/images/1.jpg')
+                  : Image.network(widget.user.image).image,
               fit: BoxFit.fill,
             ),
             shape: BoxShape.circle,
@@ -159,11 +164,12 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       child: const Icon(Icons.edit, color: Colors.white),
       onPressed: () async {
         final ImagePicker _picker = ImagePicker();
-        final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+        final XFile? image =
+            await _picker.pickImage(source: ImageSource.gallery);
         setState(() {
           _imageFile = File(image!.path);
         });
-        uploadImageToFirebase(context,_imageFile,widget.user);
+        uploadImageToFirebase(context, _imageFile, widget.user);
       },
     );
   }
@@ -174,21 +180,17 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       width: double.infinity,
       child: RaisedButton(
         onPressed: () {
-          if(_name.isNotEmpty) {
+          if (_name.isNotEmpty) {
             widget.user.name = _name;
           }
-          if(_phone.isNotEmpty && _phone.isPhoneNumber()) {
+          if (_phone.isNotEmpty && _phone.isPhoneNumber()) {
             widget.user.phoneNumber = _phone;
           }
-          if(_email.isNotEmpty && _email.isValidEmail()) {
+          if (_email.isNotEmpty && _email.isValidEmail()) {
             emailChange(widget.user, _email);
           }
           widget.user.update();
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => (MaterialApp(
-                      theme: ThemeData.light(), home: ProfileScreen(widget.user)))));
+          Navigator.of(context).pop();
         },
         padding: const EdgeInsets.all(12.0),
         shape: RoundedRectangleBorder(
@@ -221,7 +223,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             autovalidateMode: AutovalidateMode.always,
-            validator: (input) => input!.isValidEmail() ? null : "Email is invalid",
+            validator: (input) =>
+                input!.isValidEmail() ? null : "Email is invalid",
             controller: _emailController,
             obscureText: false,
             style: const TextStyle(
@@ -261,7 +264,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           child: TextFormField(
             keyboardType: TextInputType.number,
             autovalidateMode: AutovalidateMode.always,
-            validator: (input) => (input!.isPhoneNumber()) ? null : "Phone number is invalid",
+            validator: (input) =>
+                (input!.isPhoneNumber()) ? null : "Phone number is invalid",
             controller: _phoneController,
             style: const TextStyle(
               color: Colors.black,
@@ -324,7 +328,4 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       ],
     );
   }
-
-
 }
-
