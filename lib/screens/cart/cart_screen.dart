@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/components/body.dart';
+import 'package:grocery_app/screens/payment_screen.dart';
 
 class CartScreen extends StatelessWidget {
   final AppUser user;
   final List<CategoryProduct> categories;
   static String routeName = "/cart";
 
-  CartScreen(this.user,this.categories,{Key? key}) : super(key: key);
+  CartScreen(this.user, this.categories, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +36,12 @@ class CartScreen extends StatelessWidget {
           ValueListenableBuilder(
             valueListenable: user.sumOfCart,
             builder: (context, value, widget) {
-              return Text(
-                  "(${user.carts.length} items)",
-                  style: const TextStyle(fontSize: 15,color: Colors.black)
-                //style: Theme.of(context).textTheme.caption,
-              );
+              return Text("(${user.carts.length} items)",
+                  style: const TextStyle(fontSize: 15, color: Colors.black)
+                  //style: Theme.of(context).textTheme.caption,
+                  );
             },
-          )
-          ,
+          ),
         ],
       ),
     );
@@ -51,7 +50,8 @@ class CartScreen extends StatelessWidget {
 
 class CheckOurCard extends StatefulWidget {
   final AppUser user;
-  CheckOurCard(this.user,{
+  CheckOurCard(
+    this.user, {
     Key? key,
   }) : super(key: key);
 
@@ -60,8 +60,6 @@ class CheckOurCard extends StatefulWidget {
 }
 
 class _CheckOurCardState extends State<CheckOurCard> {
-
-
   @override
   void initState() {
     super.initState();
@@ -76,6 +74,7 @@ class _CheckOurCardState extends State<CheckOurCard> {
       },
     );
   }
+
   Widget checkedCard() {
     widget.user.sumCart();
     return Container(
@@ -97,13 +96,12 @@ class _CheckOurCardState extends State<CheckOurCard> {
           const SizedBox(
             height: 40,
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text.rich(TextSpan(text: "Total:\n", children: [
                 TextSpan(
-                    text:"\$${widget.user.sumOfCart.value}",
+                    text: "\$${widget.user.sumOfCart.value}",
                     style: const TextStyle(fontSize: 22, color: Colors.black))
               ])),
               SizedBox(
@@ -111,11 +109,12 @@ class _CheckOurCardState extends State<CheckOurCard> {
                   height: 50,
                   child: OutlinedButton(
                       onPressed: () {
-                        print("pressed");
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PaymentScreen(widget.user)));
                       },
                       child: const Text(
                         "Check Out",
-                        style: TextStyle(fontSize: 18,color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.amber,

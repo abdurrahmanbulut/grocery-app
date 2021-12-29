@@ -29,6 +29,10 @@ dependencies:
   # State Management
   provider: ^5.0.0
 
+  # QR Scan
+  qr_code_scanner: ^0.5.2
+  qr_flutter: ^4.0.0
+
   cupertino_icons: ^1.0.2
   animated_splash_screen: ^1.1.0
   introduction_screen: ^2.1.0

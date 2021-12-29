@@ -4,11 +4,13 @@ import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cashier_order_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/screens/search_screen.dart';
+import 'package:grocery_app/screens/cashier_qr_scan_screen.dart';
 
 class CashierHomeScreen extends StatefulWidget {
   final AppUser user;
   final List<CategoryProduct> categories;
-  const CashierHomeScreen(this.user,this.categories,{Key? key}) : super(key: key);
+  const CashierHomeScreen(this.user, this.categories, {Key? key})
+      : super(key: key);
 
   @override
   _CashierHomeScreenState createState() => _CashierHomeScreenState();
@@ -29,6 +31,13 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => QRScreenWidget()));
+          },
+          icon: Icon(Icons.qr_code_2_outlined),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -36,8 +45,8 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => LoginScreen(widget.categories)));
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => LoginScreen(widget.categories)));
             },
           )
         ],
@@ -52,7 +61,7 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
         controller: pageController,
         children: [
           Container(child: CashierOrderScreen()),
-          Container(child: SearchPage(widget.user,widget.categories)),
+          Container(child: SearchPage(widget.user, widget.categories)),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

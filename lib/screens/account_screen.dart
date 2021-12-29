@@ -13,7 +13,7 @@ import 'dart:io';
 class AccountScreen extends StatefulWidget {
   final AppUser user;
   final List<CategoryProduct> categories;
-  const AccountScreen(this.user,this.categories, {Key? key}) : super(key: key);
+  const AccountScreen(this.user, this.categories, {Key? key}) : super(key: key);
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -184,8 +184,10 @@ class _AccountScreenState extends State<AccountScreen> {
                     color: Colors.red)),
             onPressed: () {
               auth.signOut();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen(widget.categories)));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LoginScreen(widget.categories)));
             },
           ),
           const SizedBox(height: 80.0),

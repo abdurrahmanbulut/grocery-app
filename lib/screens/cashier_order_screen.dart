@@ -29,6 +29,7 @@ class _CashierOrderScreenState extends State<CashierOrderScreen> {
       },
       children: _data.map<ExpansionPanel>((Item item) {
         return ExpansionPanel(
+          canTapOnHeader: true,
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
               title: Text(item.headerValue),
