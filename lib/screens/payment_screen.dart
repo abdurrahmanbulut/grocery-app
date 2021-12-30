@@ -6,11 +6,13 @@ import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/components/body.dart';
 import 'package:grocery_app/screens/cart/components/cart_card.dart';
+import 'package:grocery_app/screens/home_page.dart';
 
 class PaymentScreen extends StatefulWidget {
   final AppUser user;
+  final List<CategoryProduct> categories;
 
-  PaymentScreen(this.user, {Key? key}) : super(key: key);
+  PaymentScreen(this.user, this.categories, {Key? key}) : super(key: key);
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -159,8 +161,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
             width: double.infinity,
             child: RaisedButton(
               onPressed: () {
-                //for (var i = 0; i < count; i++)
-                //(widget.user.prevOrders).add(widget.user.carts);
+                Order order = Order(DateTime.now(), DateTime.now().toString(), widget.user.carts);
+                widget.user.carts = [];
+                widget.user.prevOrders.add(order);
+                widget.user.update();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => HomeScreen(widget.user,widget.categories)));
               },
               padding: const EdgeInsets.all(12.0),
               shape: RoundedRectangleBorder(

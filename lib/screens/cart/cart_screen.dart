@@ -18,7 +18,7 @@ class CartScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: buildAppBar(context),
       body: Body(user),
-      bottomNavigationBar: CheckOurCard(user),
+      bottomNavigationBar: CheckOurCard(user,categories),
     );
   }
 
@@ -50,10 +50,9 @@ class CartScreen extends StatelessWidget {
 
 class CheckOurCard extends StatefulWidget {
   final AppUser user;
-  CheckOurCard(
-    this.user, {
-    Key? key,
-  }) : super(key: key);
+  final List<CategoryProduct> categories;
+
+  CheckOurCard(this.user,this.categories,{Key? key,}) : super(key: key);
 
   @override
   State<CheckOurCard> createState() => _CheckOurCardState();
@@ -110,7 +109,7 @@ class _CheckOurCardState extends State<CheckOurCard> {
                   child: OutlinedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PaymentScreen(widget.user)));
+                            builder: (context) => PaymentScreen(widget.user,widget.categories)));
                       },
                       child: const Text(
                         "Check Out",

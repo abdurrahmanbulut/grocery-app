@@ -154,19 +154,19 @@ class ShoppingCard {
 class Order {
   DateTime time;
   String id;
-  List<Product> products = [];
+  List<Cart> carts = [];
 
-  Order(this.time, this.id, this.products);
+  Order(this.time, this.id, this.carts);
 
   Map<String, dynamic> toJson() {
-    List<Map> products = this.products.map((i) => i.toJson()).toList();
-    return {'time': time.toIso8601String(), 'id': id, 'products': products};
+    List<Map> carts = this.carts.map((i) => i.toJson()).toList();
+    return {'time': time.toIso8601String(), 'id': id, 'carts': carts};
   }
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         DateTime.tryParse(json['time']) as DateTime,
         json["id"],
-        List<Product>.from(json["products"].map((i) => Product.fromJson(i))),
+        List<Cart>.from(json["carts"].map((i) => Cart.fromJson(i))),
       );
 }
 
