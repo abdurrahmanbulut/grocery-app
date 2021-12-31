@@ -163,3 +163,30 @@ class Remember{
   }
 }
 
+DatabaseReference saveOrder(Order order) {
+  var id = databaseReference.child('orders/').push();
+  id.set(order.toJson());
+  return id;
+}
+
+Query getOrderQuery() {
+  return databaseReference.child('orders/');
+}
+
+void updateOrder(Order order, DatabaseReference id) {
+  id.update(order.toJson());
+}
+
+Future<List<Order>> getAllOrders() async {
+  DataSnapshot dataSnapshot = await databaseReference.child('orders/').once();
+  List<Order> orders = [];
+  if (dataSnapshot.value != null) {
+    dataSnapshot.value.forEach((key, value) {
+      Order order = createOrder(value);
+      order.setId(databaseReference.child('orders/' + key));
+      orders.add(order);
+    });
+  }
+  return orders;
+}
+

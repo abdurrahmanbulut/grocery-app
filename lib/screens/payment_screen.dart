@@ -7,6 +7,7 @@ import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/cart/components/body.dart';
 import 'package:grocery_app/screens/cart/components/cart_card.dart';
 import 'package:grocery_app/screens/home_page.dart';
+import 'package:grocery_app/services/database.dart';
 
 class PaymentScreen extends StatefulWidget {
   final AppUser user;
@@ -161,10 +162,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
             width: double.infinity,
             child: RaisedButton(
               onPressed: () {
-                Order order = Order(DateTime.now(), DateTime.now().toString(), widget.user.carts);
+                Order order = Order(DateTime.now(), DateTime.now().toString(),widget.user.uid, widget.user.carts);
                 widget.user.carts = [];
                 widget.user.prevOrders.add(order);
                 widget.user.update();
+                order.setId(saveOrder(order));
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => HomeScreen(widget.user,widget.categories)));
               },

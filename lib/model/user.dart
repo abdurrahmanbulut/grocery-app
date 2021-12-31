@@ -152,22 +152,33 @@ class ShoppingCard {
 }
 
 class Order {
+  DatabaseReference dataId = databaseReference;
   DateTime time;
   String id;
+  String buyerId;
   List<Cart> carts = [];
 
-  Order(this.time, this.id, this.carts);
+  Order(this.time, this.id,this.buyerId, this.carts);
 
   Map<String, dynamic> toJson() {
     List<Map> carts = this.carts.map((i) => i.toJson()).toList();
-    return {'time': time.toIso8601String(), 'id': id, 'carts': carts};
+    return {'time': time.toIso8601String(), 'id': id, 'buyerId': buyerId,'carts': carts};
   }
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
         DateTime.tryParse(json['time']) as DateTime,
         json["id"],
+        json["buyerId"],
         List<Cart>.from(json["carts"].map((i) => Cart.fromJson(i))),
       );
+
+  void update() {
+    updateOrder(this, dataId);
+  }
+
+  void setId(DatabaseReference id) {
+    dataId = id;
+  }
 }
 
 AppUser createUser(record) {
@@ -209,6 +220,27 @@ AppUser createUser(record) {
   user.notifications =
       notificationList.map((i) => UserNotification.fromJson(i)).toList();
   return user;
+}
+
+Order createOrder(record) {
+  Map<String, dynamic> attributes = {
+    'time': '',
+    'id': '',
+    'uid': '',
+    'carts': []
+  };
+
+  record.forEach((key, value) => {attributes[key] = value});
+
+
+  String jsonCart = jsonEncode(attributes['carts']);
+  var cartList = json.decode(jsonCart) as List;
+  Order order = Order(
+      DateTime.tryParse(attributes['time']) as DateTime,
+      attributes['id'],
+      attributes['uid'],
+      cartList.map((i) => Cart.fromJson(i)).toList());
+  return order;
 }
 
 Type intToType(int type) {
