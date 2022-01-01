@@ -280,7 +280,6 @@ class _LoginScreenState extends State<LoginScreen> {
               await saveRemember(Remember('',''));
             }
             if(user.type == Type.customer) {
-              user = await checkUser(user);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -288,7 +287,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           theme: ThemeData.light(), home: HomeScreen(user,widget.categories)))));
             }
             else if(user.type == Type.cashier) {
-              user = await checkUser(user);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -346,9 +344,8 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         try {
           AppUser user = await googleSignInProvider.googleLogIn() ;
-          AppUser updatedUser = await checkUser(user);
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(updatedUser,widget.categories)));
+              MaterialPageRoute(builder: (context) => HomeScreen(user,widget.categories)));
         } catch (e) {
           if (e is FirebaseAuthException) {
             throw e;
