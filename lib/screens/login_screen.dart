@@ -15,7 +15,7 @@ import 'cashier_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final List<CategoryProduct> categories;
-  const LoginScreen(this.categories,{Key? key}) : super(key: key);
+  const LoginScreen(this.categories, {Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -24,6 +24,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
   bool isLoading = false;
+  bool _isObscure = true;
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String _email = '', _password = '';
@@ -31,11 +32,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Remember remember = Remember('', '');
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  String? error = null;
 
   _asyncGetRemember() async {
     remember = await getRemember();
   }
+
   @override
   void initState() {
     _asyncGetRemember();
@@ -105,35 +107,46 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 65.0,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const SizedBox(height: 5.0),
-                        _buildEmailTF(), // email widget
-                        const SizedBox(
-                          height: 15.0,
+                  child: Column(
+                    children: [
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            ShowAlert(),
+                            const SizedBox(
+                              width: 60,
+                              height: 45,
+                            ),
+
+                            const Text(
+                              "Welcome To Grocery!",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 5.0),
+                            _buildEmailTF(), // email widget
+                            const SizedBox(
+                              height: 15.0,
+                            ),
+                            _buildPasswordTF(),
+                            _buildForgotPasswordBtn(),
+                            _buildRememberMeCheckbox(),
+                            _buildLoginBtn(),
+                            _or(),
+                            googleButton(),
+                            const SizedBox(height: 25.0),
+                            //_text2(),
+                            _signUpButton(),
+                            const SizedBox(height: 25.0),
+                            _testCustomerLogin(),
+                            const SizedBox(height: 25.0),
+                            _testCashierLogin(),
+                            const SizedBox(height: 25.0),
+                          ],
                         ),
-                        _buildPasswordTF(),
-                        _buildForgotPasswordBtn(),
-                        _buildRememberMeCheckbox(),
-                        _buildLoginBtn(),
-                        _or(),
-                        googleButton(),
-                        const SizedBox(height: 25.0),
-                        //_text2(),
-                        _signUpButton(),
-                        const SizedBox(height: 25.0),
-                        _testCustomerLogin(),
-                        const SizedBox(height: 25.0),
-                        _testCashierLogin(),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               )
@@ -153,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
+          width: 300,
           child: TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -190,9 +204,10 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 50.0,
+          width: 300,
           child: TextFormField(
             controller: _passwordController,
-            obscureText: true,
+            obscureText: _isObscure,
             style: const TextStyle(
               color: Colors.black,
               fontFamily: 'OpenSans',
@@ -266,38 +281,52 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginBtn() {
+    int i = 0;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
-      width: double.infinity,
+      width: 300,
       child: RaisedButton(
         onPressed: () async {
-          AppUser user = await signInWithEmail(_email, _password);
-          if (auth.currentUser!.email == _email) {
-            if (_rememberMe) {
-              await saveRemember(Remember(_email,_password));
+          try {
+            AppUser user = await signInWithEmail(_email, _password);
+            if (auth.currentUser!.email == _email) {
+              if (_rememberMe) {
+                await saveRemember(Remember(_email, _password));
+              } else {
+                await saveRemember(Remember('', ''));
+              }
+              if (user.type == Type.customer) {
+                user = await checkUser(user);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>  HomeScreen(user, widget.categories)));
+              } else if (user.type == Type.cashier) {
+                user = await checkUser(user);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => 
+                                CashierHomeScreen(user, widget.categories)));
+              }
             }
-            else {
-              await saveRemember(Remember('',''));
-            }
-            if(user.type == Type.customer) {
-              user = await checkUser(user);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => (MaterialApp(
-                          theme: ThemeData.light(), home: HomeScreen(user,widget.categories)))));
-            }
-            else if(user.type == Type.cashier) {
-              user = await checkUser(user);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => (MaterialApp(
-                          theme: ThemeData.light(), home: CashierHomeScreen(user,widget.categories)))));
-            }
-          }
-          else {
-
+          } on FirebaseAuthException catch (e) {
+            setState(() {
+              print(e.message);
+              switch (e.message) {
+                case 'There is no user record corresponding to this identifier. The user may have been deleted.':
+                  error = e.message;
+                  break;
+                case 'The password is invalid or the user does not have a password.':
+                  error = e.message;
+                  break;
+                case 'Given String is empty or null':
+                  error = "Email or password can not be empty!";
+                  break;
+                default:
+                  error = "Error";
+              }
+            });
           }
         },
         padding: const EdgeInsets.all(12.0),
@@ -319,6 +348,45 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Widget ShowAlert() {
+    if (error != null) {
+      return Container(
+        color: Colors.red,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Icon(Icons.error_outline),
+            ),
+            Expanded(
+              child: Text(
+                error.toString(),
+                maxLines: 3,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    print("object");
+                    error = null;
+                  });
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+    return SizedBox(
+      height: 0,
+    );
+  }
+
   Widget _or() {
     return Column(
       children: const <Widget>[
@@ -333,158 +401,175 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  OutlinedButton googleButton() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () async {
-        setState(() {
-          isLoading = true;
-        });
-        try {
-          AppUser user = await googleSignInProvider.googleLogIn() ;
-          AppUser updatedUser = await checkUser(user);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen(updatedUser,widget.categories)));
-        } catch (e) {
-          if (e is FirebaseAuthException) {
-            throw e;
+  Container googleButton() {
+    return Container(
+      width: 300,
+      height: 50,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          primary: Colors.white,
+          backgroundColor: Colors.white,
+          side: const BorderSide(color: Colors.black, width: 2),
+        ),
+        onPressed: () async {
+          setState(() {
+            isLoading = true;
+          });
+          try {
+            AppUser user = await googleSignInProvider.googleLogIn();
+            AppUser updatedUser = await checkUser(user);
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        HomeScreen(updatedUser, widget.categories)));
+          } catch (e) {
+            if (e is FirebaseAuthException) {
+              throw e;
+            }
           }
-        }
-        setState(() {
-          isLoading = false;
-        });
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            margin: const EdgeInsets.all(7.0),
-            height: 25.0,
-            width: 25.0,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/logos/google.jpg'),
-                fit: BoxFit.fill,
+          setState(() {
+            isLoading = false;
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(7.0),
+              height: 25.0,
+              width: 25.0,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/logos/google.jpg'),
+                  fit: BoxFit.fill,
+                ),
+                shape: BoxShape.circle,
               ),
-              shape: BoxShape.circle,
             ),
-          ),
-          const SizedBox(
-            width: 58,
-          ),
-          const Text(
-            "Sign In with Google",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 13.0,
-              fontWeight: FontWeight.normal,
-              fontFamily: 'OpenSans',
+            const SizedBox(
+              width: 58,
             ),
-          )
-        ],
+            const Text(
+              "Sign In with Google",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 13.0,
+                fontWeight: FontWeight.normal,
+                fontFamily: 'OpenSans',
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  OutlinedButton _signUpButton() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => (MaterialApp(
-                    theme: ThemeData.light(), home: RegisterScreen(widget.categories)))));
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            width: 35,
-          ),
-          Text('Don\'t you have an account? SIGN UP',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-              )),
-        ],
-      ),
-    );
-  }
-  Widget _testCustomerLogin() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () async {
-        String _testEmail = 'metegoncaq@gmail.com';
-        String _testPassword = '123456789';
-        AppUser user = await signInWithEmail(_testEmail, _testPassword);
-        if (auth.currentUser!.email == _testEmail) {
+  Container _signUpButton() {
+    return Container(
+      height: 50.0,
+      width: 300,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          primary: Colors.white,
+          backgroundColor: Colors.white,
+          side: const BorderSide(color: Colors.black, width: 2),
+        ),
+        onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => (MaterialApp(
-                      theme: ThemeData.light(), home: HomeScreen(user,widget.categories)))));
-        }
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            width: 80,
-          ),
-          Text('Customer Test Sign In',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-              )),
-        ],
+                  builder: (context) =>  RegisterScreen(widget.categories)));
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: const [
+            SizedBox(
+              width: 30,
+            ),
+            Text('Don\'t you have an account? SIGN UP',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'OpenSans',
+                )),
+          ],
+        ),
       ),
     );
   }
-  Widget _testCashierLogin() {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        primary: Colors.white,
-        backgroundColor: Colors.white,
-        side: const BorderSide(color: Colors.black, width: 2),
-      ),
-      onPressed: () async {
-        String _testEmail = 'dogukaanguleer@gmail.com';
-        String _testPassword = '123456';
-        AppUser user = await signInWithEmail(_testEmail, _testPassword);
-        if (auth.currentUser!.email == _testEmail) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => (MaterialApp(
-                      theme: ThemeData.light(), home: CashierHomeScreen(user,widget.categories)))));
-        }
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: const [
-          SizedBox(
-            width: 80,
+
+  Container _testCustomerLogin() {
+    return Container(
+        height: 50.0,
+        width: 300,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            primary: Colors.white,
+            backgroundColor: Colors.white,
+            side: const BorderSide(color: Colors.black, width: 2),
           ),
-          Text('Cashier Test Sign In',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'OpenSans',
-              )),
-        ],
-      ),
-    );
+          onPressed: () async {
+            String _testEmail = 'metegoncaq@gmail.com';
+            String _testPassword = '123456789';
+            AppUser user = await signInWithEmail(_testEmail, _testPassword);
+            if (auth.currentUser!.email == _testEmail) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomeScreen(user, widget.categories)));
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              SizedBox(
+                width: 80,
+              ),
+              Text('Customer Test Sign In',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'OpenSans',
+                  )),
+            ],
+          ),
+        ));
   }
+
+  Container _testCashierLogin() {
+    return Container(
+        height: 50.0,
+        width: 300,
+        child: OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            primary: Colors.white,
+            backgroundColor: Colors.white,
+            side: const BorderSide(color: Colors.black, width: 2),
+          ),
+          onPressed: () async {
+            String _testEmail = 'dogukaanguleer@gmail.com';
+            String _testPassword = '123456';
+            AppUser user = await signInWithEmail(_testEmail, _testPassword);
+            if (auth.currentUser!.email == _testEmail) {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  CashierHomeScreen(user, widget.categories)));
+            }
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              SizedBox(
+                width: 80,
+              ),
+              Text('Cashier Test Sign In',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'OpenSans',
+                  )),
+            ],
+          ),
+        ),);
+  }
+  
 }
