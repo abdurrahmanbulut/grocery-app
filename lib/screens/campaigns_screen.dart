@@ -3,10 +3,11 @@ import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/campaign/campaign_class.dart';
 import 'dart:developer';
+
 class Campaigns extends StatefulWidget {
   final AppUser user;
   final List<CategoryProduct> categories;
-  const Campaigns(this.user,this.categories,{Key? key}) : super(key: key);
+  const Campaigns(this.user, this.categories, {Key? key}) : super(key: key);
 
   @override
   _CampaignsState createState() => _CampaignsState();
@@ -14,9 +15,9 @@ class Campaigns extends StatefulWidget {
 
 class _CampaignsState extends State<Campaigns> {
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.amberAccent,
       body: ListView(
         scrollDirection: Axis.vertical,
         addAutomaticKeepAlives: true,
@@ -33,18 +34,32 @@ class _CampaignsState extends State<Campaigns> {
   }
 
   Container buildCampaignContainer(int numberOfCampaing) {
+
     return Container(
         margin: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Colors.white,
         ),
-        child: Column(
-          children: [
-            Center(
-              child: Image.asset(campaigns[numberOfCampaing].image,height: 300,    width: 300,),
-            ),          
-            TextButton(
+        child: Container(
+          color: Colors.amberAccent,
+          child: 
+            TextButton.icon(
+              icon: Image.asset(
+                campaigns[numberOfCampaing].image,
+                height: 250,
+                width: 250,
+              ),
+              label: Column(
+                children: const[
+                  Text(
+                    "\nClick here for details",
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -53,12 +68,8 @@ class _CampaignsState extends State<Campaigns> {
                           SecondRoute(data: numberOfCampaing)),
                 );
               },
-              child: const Text(
-                "Click here for details!",
-                style: TextStyle(color: Colors.black),
-              ),
-            )
-          ],
+            ),
+          
         ));
   }
 }
@@ -99,13 +110,14 @@ Container printingCampaign(int numberOfCampaing) {
       ),
       child: Column(
         children: [
-          Center(child: Image.asset(campaigns[numberOfCampaing].image)),
+          Center(child: Image.asset(campaigns[numberOfCampaing].image,width: 300,height: 300,)),
           Text(campaigns[numberOfCampaing].title,
-              style:
-                  const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              style: const TextStyle(
+                  color: Colors.black, fontWeight: FontWeight.bold)),
           Text(
             campaigns[numberOfCampaing].description,
-            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ],
       ));
