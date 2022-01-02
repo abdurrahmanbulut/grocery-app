@@ -4,13 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/home_page.dart';
+import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/services/auth.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/utilities/extensions.dart';
 
 class RegisterScreen extends StatefulWidget {
   final List<CategoryProduct> categories;
-  const RegisterScreen(this.categories,{Key? key}) : super(key: key);
+  const RegisterScreen(this.categories, {Key? key}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -18,14 +19,12 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool isLoading = false;
+  bool _isObscure = true;
   final auth = FirebaseAuth.instance;
-  String _confirm = '',
-      _email = '',
-      _password = '';
+  String _confirm = '', _email = '', _password = '';
   final TextEditingController _confirmController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: Colors.amber,
         title: const Text('Sign Up',
             style:
-            TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
+                TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
       ),
       body: registerPageBody(),
@@ -85,7 +84,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 70.0,
                       child: TextFormField(
                         autovalidateMode: AutovalidateMode.always,
-                        validator: (input) => input!.isValidEmail() ? null : "Email is invalid",
+                        validator: (input) =>
+                            input!.isValidEmail() ? null : "Email is invalid",
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
@@ -124,20 +124,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 70.0,
                       child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          validator: (input) => input!.isValidPassword() ? null : "Password should have 6-10 character.",
+                          validator: (input) => input!.isValidPassword()
+                              ? null
+                              : "Password should have 6-10 character.",
                           controller: _passwordController,
-                          obscureText: true,
+                          obscureText: _isObscure,
                           style: const TextStyle(
                             color: Colors.black,
                             fontFamily: 'OpenSans',
                           ),
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             contentPadding: EdgeInsets.only(top: 13.0),
                             prefixIcon: Icon(
                               Icons.lock,
                               color: Colors.amber,
                             ),
+                            suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.amber,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscure = !_isObscure;
+                                  });
+                                }),
                             hintText: 'Password',
                             hintStyle: kHintTextStyle,
                           ),
@@ -145,8 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             setState(() {
                               _password = value;
                             });
-                          }
-                      ),
+                          }),
                     ),
                   ],
                 ),
@@ -163,7 +176,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: 70.0,
                       child: TextFormField(
                           autovalidateMode: AutovalidateMode.always,
-                          validator: (input) => (input == _password) ? null : "Does not match with password",
+                          validator: (input) => (input == _password)
+                              ? null
+                              : "Does not match with password",
                           controller: _confirmController,
                           obscureText: true,
                           style: const TextStyle(
@@ -184,8 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             setState(() {
                               _confirm = value;
                             });
-                          }
-                      ),
+                          }),
                     ),
                   ],
                 ), // email widget
@@ -197,16 +211,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   width: double.infinity,
                   child: RaisedButton(
                     onPressed: () async {
-                      if(_email.isValidEmail() && _password.isValidPassword() && _password == _confirm) {
-                        AppUser user = await createUserWithEmail(_email, _password);
+                      if (_email.isValidEmail() &&
+                          _password.isValidPassword() &&
+                          _password == _confirm) {
+                        AppUser user =
+                            await createUserWithEmail(_email, _password);
                         user = await signInWithEmail(_email, _password);
                         user = await checkUser(user);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => (MaterialApp(
-                                    theme: ThemeData.light(),
-                                    home: HomeScreen(user,widget.categories)))));
+                        Navigator.pushReplacement<void, void>(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                HomeScreen(user, widget.categories),
+                          ),
+                        );
                       }
                     },
                     padding: const EdgeInsets.all(12.0),
