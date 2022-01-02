@@ -184,7 +184,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     color: Colors.red)),
             onPressed: () {
               auth.signOut();
-              Navigator.push(
+              Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => LoginScreen(widget.categories)));
