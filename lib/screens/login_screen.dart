@@ -281,7 +281,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginBtn() {
-    int i = 0;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15.0),
       width: 300,
@@ -306,7 +305,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => 
+                        builder: (context) =>
                                 CashierHomeScreen(user, widget.categories)));
               }
             }
@@ -571,5 +570,5 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),);
   }
-  
+
 }

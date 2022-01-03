@@ -137,7 +137,7 @@ class _ProductCardState extends State<ProductCard> {
                       widget.user.carts.add(Cart(product: widget.product, numOfItem: 1));
                       valueNotifier.value = widget.user.indexCart(widget.product);
                     }
-                    else if(widget.product.count>widget.user.carts[valueNotifier.value].numOfItem+1){
+                    else if(widget.product.count>widget.user.carts[valueNotifier.value].numOfItem){
                       widget.user.carts[valueNotifier.value].numOfItem++;
                     }
                     widget.user.sumCart();

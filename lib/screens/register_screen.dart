@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: Colors.amber,
         title: const Text('Sign Up',
             style:
-                TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
+            TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
       ),
       body: registerPageBody(),

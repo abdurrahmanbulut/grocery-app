@@ -87,7 +87,7 @@ class _CartCardState extends State<CartCard> {
                       tooltip: 'Increase amount',
                       onPressed: () {
                         setState(() {
-                          if(widget.user.carts[widget.cartIndex].product.count>widget.user.carts[widget.cartIndex].numOfItem+1) {
+                          if(widget.user.carts[widget.cartIndex].product.count>widget.user.carts[widget.cartIndex].numOfItem) {
                             widget.user.carts[widget.cartIndex].numOfItem++;
                           }
                           widget.user.sumCart();
