@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
@@ -12,7 +11,7 @@ import 'package:grocery_app/screens/search_screen.dart';
 import 'package:badges/badges.dart';
 import 'notification_screen.dart';
 import 'search_screen.dart';
-import 'package:carousel_pro/carousel_pro.dart';
+import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 class HomeScreen extends StatefulWidget {
   final AppUser user;
