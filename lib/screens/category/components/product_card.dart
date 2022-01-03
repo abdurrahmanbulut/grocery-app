@@ -2,14 +2,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
-import 'package:grocery_app/model/user.dart';
+import 'package:grocery_app/services/database.dart';
 
 class ProductCard extends StatefulWidget {
-  final AppUser user;
   final Product product;
   final Function press;
 
-  const ProductCard({Key? key, required this.product, required this.press,required this.user})
+  const ProductCard({Key? key, required this.product, required this.press})
       : super(key: key);
 
   @override
@@ -29,7 +28,7 @@ class _ProductCardState extends State<ProductCard> {
   }
 
   Widget card() {
-    valueNotifier.value = widget.user.indexCart(widget.product);
+    valueNotifier.value = appUser.indexCart(widget.product);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -98,23 +97,23 @@ class _ProductCardState extends State<ProductCard> {
                 tooltip: 'Decrease amount',
                 onPressed: () {
                   setState(() {
-                    if(widget.user.cartContains(widget.product)) {
-                      valueNotifier.value = widget.user.indexCart(widget.product);
+                    if(appUser.cartContains(widget.product)) {
+                      valueNotifier.value = appUser.indexCart(widget.product);
                     }
                     if (valueNotifier.value != -1) {
-                      if(widget.user.carts[valueNotifier.value].numOfItem >1) {
-                        widget.user.carts[valueNotifier.value].numOfItem--;
+                      if(appUser.carts[valueNotifier.value].numOfItem >1) {
+                        appUser.carts[valueNotifier.value].numOfItem--;
                       }
-                      else if(widget.user.carts[valueNotifier.value].numOfItem == 1){
-                        widget.user.carts.removeAt(valueNotifier.value);
+                      else if(appUser.carts[valueNotifier.value].numOfItem == 1){
+                        appUser.carts.removeAt(valueNotifier.value);
                         valueNotifier.value = -1;
                       }
                     }
-                    widget.user.sumCart();
-                    widget.user.update();
+                    appUser.sumCart();
+                    appUser.update();
                   });
                 }),
-            Text((valueNotifier.value != -1 && widget.user.cartContains(widget.product))? widget.user.carts[valueNotifier.value].numOfItem.toString() : '0',
+            Text((valueNotifier.value != -1 && appUser.cartContains(widget.product))? appUser.carts[valueNotifier.value].numOfItem.toString() : '0',
                 style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.normal,
@@ -127,21 +126,21 @@ class _ProductCardState extends State<ProductCard> {
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
-                    if(widget.user.indexCart(widget.product) == -1) {
+                    if(appUser.indexCart(widget.product) == -1) {
                       valueNotifier.value = -1;
                     }
-                    if(widget.user.cartContains(widget.product)) {
-                      valueNotifier.value = widget.user.indexCart(widget.product);
+                    if(appUser.cartContains(widget.product)) {
+                      valueNotifier.value = appUser.indexCart(widget.product);
                     }
                     if (valueNotifier.value == -1 && widget.product.count>1) {
-                      widget.user.carts.add(Cart(product: widget.product, numOfItem: 1));
-                      valueNotifier.value = widget.user.indexCart(widget.product);
+                      appUser.carts.add(Cart(product: widget.product, numOfItem: 1));
+                      valueNotifier.value = appUser.indexCart(widget.product);
                     }
-                    else if(widget.product.count>widget.user.carts[valueNotifier.value].numOfItem){
-                      widget.user.carts[valueNotifier.value].numOfItem++;
+                    else if(widget.product.count>appUser.carts[valueNotifier.value].numOfItem){
+                      appUser.carts[valueNotifier.value].numOfItem++;
                     }
-                    widget.user.sumCart();
-                    widget.user.update();
+                    appUser.sumCart();
+                    appUser.update();
                   });
                 }),
           ],
@@ -153,8 +152,8 @@ class _ProductCardState extends State<ProductCard> {
   @override
   void initState() {
     super.initState();
-    if(widget.user.cartContains(widget.product)) {
-      valueNotifier.value = widget.user.indexCart(widget.product);
+    if(appUser.cartContains(widget.product)) {
+      valueNotifier.value = appUser.indexCart(widget.product);
     }
     else {
       valueNotifier.value = -1;

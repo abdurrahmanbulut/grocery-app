@@ -6,6 +6,7 @@ import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/services/auth.dart';
+import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/utilities/extensions.dart';
 
@@ -214,15 +215,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (_email.isValidEmail() &&
                           _password.isValidPassword() &&
                           _password == _confirm) {
-                        AppUser user =
+                        appUser =
                             await createUserWithEmail(_email, _password);
-                        user = await signInWithEmail(_email, _password);
-                        user = await checkUser(user);
+                        appUser = await signInWithEmail(_email, _password);
+                        AppUser checkedUser = await checkUser(appUser);
+                        checkedUser.setId(appUser.dataId);
+                        appUser = checkedUser;
                         Navigator.pushReplacement<void, void>(
                           context,
                           MaterialPageRoute<void>(
                             builder: (BuildContext context) =>
-                                HomeScreen(user, widget.categories),
+                                HomeScreen(widget.categories),
                           ),
                         );
                       }

@@ -1,13 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/profile_screen.dart';
 import 'package:grocery_app/services/auth.dart';
+import 'package:grocery_app/services/database.dart';
 
 class PasswordChangeScreen extends StatefulWidget {
-  final AppUser user;
-  const PasswordChangeScreen(this.user,{Key? key}) : super(key: key);
+  const PasswordChangeScreen({Key? key}) : super(key: key);
 
   @override
   _PasswordChangeScreenState createState() => _PasswordChangeScreenState();
@@ -216,15 +214,15 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
       width: double.infinity,
       child: RaisedButton(
         onPressed: () {
-        if(widget.user.password == _current) {
+        if(appUser.password == _current) {
           if(_new == _confirm) {
-            passwordChange(widget.user,_new);
+            passwordChange(appUser,_new);
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => (MaterialApp(
                           theme: ThemeData.light(),
-                          home: ProfileScreen(widget.user)))));
+                          home: ProfileScreen()))));
             }
           }
         },

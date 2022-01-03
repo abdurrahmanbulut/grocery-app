@@ -1,20 +1,15 @@
 import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_app/services/cloud.dart';
-import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/services/auth.dart';
+import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
-import 'package:grocery_app/screens/profile_screen.dart';
 import 'package:grocery_app/utilities/extensions.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
-  final AppUser user;
-  const ProfileUpdateScreen(this.user, {Key? key}) : super(key: key);
+  const ProfileUpdateScreen( {Key? key}) : super(key: key);
 
   @override
   _ProfileUpdateScreenState createState() => _ProfileUpdateScreenState();
@@ -30,24 +25,24 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   void initState() {
     super.initState();
     _emailController.value = _emailController.value.copyWith(
-      text: widget.user.email,
+      text: appUser.email,
       selection: TextSelection(
-          baseOffset: widget.user.email.length,
-          extentOffset: widget.user.email.length),
+          baseOffset: appUser.email.length,
+          extentOffset: appUser.email.length),
       composing: TextRange.empty,
     );
     _nameController.value = _nameController.value.copyWith(
-      text: widget.user.name,
+      text: appUser.name,
       selection: TextSelection(
-          baseOffset: widget.user.name.length,
-          extentOffset: widget.user.name.length),
+          baseOffset: appUser.name.length,
+          extentOffset: appUser.name.length),
       composing: TextRange.empty,
     );
     _phoneController.value = _phoneController.value.copyWith(
-      text: widget.user.phoneNumber,
+      text: appUser.phoneNumber,
       selection: TextSelection(
-          baseOffset: widget.user.phoneNumber.length,
-          extentOffset: widget.user.phoneNumber.length),
+          baseOffset: appUser.phoneNumber.length,
+          extentOffset: appUser.phoneNumber.length),
       composing: TextRange.empty,
     );
   }
@@ -107,7 +102,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     const SizedBox(height: 15.0),
                     nameSurname(),
                     const SizedBox(height: 15.0),
-                    (widget.user.password.isNotEmpty) ? email() : Container(),
+                    (appUser.password.isNotEmpty) ? email() : Container(),
                     const SizedBox(height: 15.0),
                     phoneNumber(),
                     const SizedBox(height: 20.0),
@@ -134,9 +129,9 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: (widget.user.image.isEmpty)
+              image: (appUser.image.isEmpty)
                   ? const AssetImage('assets/images/1.jpg')
-                  : Image.network(widget.user.image).image,
+                  : Image.network(appUser.image).image,
               fit: BoxFit.fill,
             ),
             shape: BoxShape.circle,
@@ -169,7 +164,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         setState(() {
           _imageFile = File(image!.path);
         });
-        uploadImageToFirebase(context, _imageFile, widget.user);
+        uploadImageToFirebase(context, _imageFile, appUser);
       },
     );
   }
@@ -181,15 +176,15 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       child: RaisedButton(
         onPressed: () {
           if (_name.isNotEmpty) {
-            widget.user.name = _name;
+            appUser.name = _name;
           }
           if (_phone.isNotEmpty && _phone.isPhoneNumber()) {
-            widget.user.phoneNumber = _phone;
+            appUser.phoneNumber = _phone;
           }
           if (_email.isNotEmpty && _email.isValidEmail()) {
-            emailChange(widget.user, _email);
+            emailChange(appUser, _email);
           }
-          widget.user.update();
+          appUser.update();
           Navigator.of(context).pop();
         },
         padding: const EdgeInsets.all(12.0),

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
-import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/contact_screen.dart';
 import 'package:grocery_app/screens/credit_cards_screen.dart';
 import 'package:grocery_app/screens/favorites_screen.dart';
@@ -11,9 +10,8 @@ import 'package:grocery_app/screens/profile_screen.dart';
 import 'dart:io';
 
 class AccountScreen extends StatefulWidget {
-  final AppUser user;
   final List<CategoryProduct> categories;
-  const AccountScreen(this.user, this.categories, {Key? key}) : super(key: key);
+  const AccountScreen( this.categories, {Key? key}) : super(key: key);
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -39,7 +37,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ProfileScreen(widget.user)));
+                        builder: (context) => ProfileScreen()));
               },
               icon: const Icon(
                 Icons.person,

@@ -299,21 +299,22 @@ class _LoginScreenState extends State<LoginScreen> {
       child: RaisedButton(
         onPressed: () async {
           try {
-            AppUser user = await signInWithEmail(_email, _password);
+            appUser = await signInWithEmail(_email, _password);
             if (auth.currentUser!.email == _email) {
-              if (user.type == Type.customer) {
-                user = await checkUser(user);
+              AppUser checkedUser = await checkUser(appUser);
+              checkedUser.setId(appUser.dataId);
+              appUser = checkedUser;
+              if (appUser.type == Type.customer) {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  HomeScreen(user, widget.categories)));
-              } else if (user.type == Type.cashier) {
-                user = await checkUser(user);
+                        builder: (context) =>  HomeScreen( widget.categories)));
+              } else if (appUser.type == Type.cashier) {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                                CashierHomeScreen(user, widget.categories)));
+                                CashierHomeScreen(widget.categories)));
               }
             }
           } on FirebaseAuthException catch (e) {
@@ -422,13 +423,15 @@ class _LoginScreenState extends State<LoginScreen> {
             isLoading = true;
           });
           try {
-            AppUser user = await googleSignInProvider.googleLogIn();
-            AppUser updatedUser = await checkUser(user);
+            appUser = await googleSignInProvider.googleLogIn();
+            AppUser checkedUser = await checkUser(appUser);
+            checkedUser.setId(appUser.dataId);
+            appUser = checkedUser;
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        HomeScreen(updatedUser, widget.categories)));
+                        HomeScreen( widget.categories)));
           } catch (e) {
             if (e is FirebaseAuthException) {
               throw e;
@@ -522,7 +525,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomeScreen(user, widget.categories)));
+                      builder: (context) => HomeScreen( widget.categories)));
             }
           },
           child: Row(
@@ -559,7 +562,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) =>  CashierHomeScreen(user, widget.categories)));
+                      builder: (context) =>  CashierHomeScreen(widget.categories)));
             }
           },
           child: Row(

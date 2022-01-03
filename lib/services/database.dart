@@ -1,16 +1,11 @@
-
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final databaseReference =
 FirebaseDatabase.instance.reference();
-const String kFileName = 'remember.json';
+AppUser appUser = AppUser('', '', '', '', '', '', Type.none);
+
 
 DatabaseReference saveUser(AppUser user) {
   var id = databaseReference.child('users/').push();

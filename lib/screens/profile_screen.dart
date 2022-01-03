@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/screens/password_change_screen.dart';
 import 'package:grocery_app/screens/profile_update_screen.dart';
+import 'package:grocery_app/services/database.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final AppUser user;
-  const ProfileScreen(this.user,{Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -16,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ValueNotifier<AppUser> valueNotifier = ValueNotifier<AppUser>(appUser);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -38,14 +38,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             CircleAvatar(
               radius: 70,
               child: ClipOval(
-                child: (widget.user.image.isEmpty)? Image.asset(
+                child: (appUser.image.isEmpty)? Image.asset(
                   'assets/images/1.jpg',
                   height: 150,
                   width: 150,
                   fit: BoxFit.cover,
                 ) :
                 Image.network(
-                  widget.user.image,
+                  appUser.image,
                   height: 150,
                   width: 150,
                   fit: BoxFit.cover,
@@ -63,11 +63,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const Icon(Icons.assignment, color: Colors.amber, size: 24),
                   Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: (widget.user.name.isEmpty)? const Text(
+                    child: (appUser.name.isEmpty)? const Text(
                       '   Name Surname',
                       style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ) : Text(
-                      '   '+ widget.user.name,
+                      '   '+ appUser.name,
                       style: const TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ),
                   )
@@ -97,7 +97,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: Text(
-                    '   '+ widget.user.email,
+                    '   '+ appUser.email,
                     style: const TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ),
                   )
@@ -120,11 +120,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const Icon(Icons.phone, color: Colors.amber, size: 24),
                   Padding(
                     padding: const EdgeInsets.all(14.0),
-                    child: (widget.user.phoneNumber.isEmpty)? const Text(
+                    child: (appUser.phoneNumber.isEmpty)? const Text(
                       '   Phone Number',
                       style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ): Text(
-                      '   '+ widget.user.phoneNumber,
+                      '   '+ appUser.phoneNumber,
                       style: const TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ),
                   )
@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   color: Colors.amber,
                   height: 0,
                 )),
-            (widget.user.password.isNotEmpty)? passwordButton(context) : Container(),
+            (appUser.password.isNotEmpty)? passwordButton(context) : Container(),
           ],
         ),
       ],
@@ -156,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.fromLTRB(40.0, 0.0, 19.22, 0.0),
       onPressed: () {
         Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ProfileUpdateScreen(widget.user)));
+            MaterialPageRoute(builder: (context) => ProfileUpdateScreen())).then((value) {setState(() {});});
       },
       child: Row(children: const [
         Icon(Icons.edit, color: Colors.amber, size: 24),
@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PasswordChangeScreen(widget.user)));
+                builder: (context) => PasswordChangeScreen()));
       },
       child: Row(children: const [
         Icon(Icons.lock_rounded, color: Colors.amber, size: 24),
@@ -194,7 +194,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ]),
     );
   }
-
   @override
   void initState() {
     super.initState();

@@ -1,19 +1,13 @@
-import 'dart:ui';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
-import 'package:grocery_app/screens/cart/components/body.dart';
-import 'package:grocery_app/screens/cart/components/cart_card.dart';
 import 'package:grocery_app/screens/home_page.dart';
 import 'package:grocery_app/services/database.dart';
 
 class PaymentScreen extends StatefulWidget {
-  final AppUser user;
   final List<CategoryProduct> categories;
 
-  PaymentScreen(this.user, this.categories, {Key? key}) : super(key: key);
+  PaymentScreen(this.categories, {Key? key}) : super(key: key);
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
@@ -64,7 +58,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   Widget payment_Screen() {
-    var count = widget.user.carts.length;
+    var count = appUser.carts.length;
     return ListView(
       children: [
         const SizedBox(height: 50.0),
@@ -141,7 +135,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             children: [
               for (var i = 0; i < count; i++)
                 Text(
-                    "${widget.user.carts[i].product.name} \$${widget.user.carts[i].product.price} x ${widget.user.carts[i].numOfItem}",
+                    "${appUser.carts[i].product.name} \$${appUser.carts[i].product.price} x ${appUser.carts[i].numOfItem}",
                     style: TextStyle(fontSize: 16, color: Colors.black)),
             ],
           ),
@@ -150,7 +144,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Total Cost: \$${widget.user.sumOfCart.value}",
+            "Total Cost: \$${appUser.sumOfCart.value}",
             style: TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -162,13 +156,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             width: double.infinity,
             child: RaisedButton(
               onPressed: () {
-                Order order = Order(DateTime.now(), DateTime.now().toString(),widget.user.uid, widget.user.carts);
-                widget.user.carts = [];
-                widget.user.prevOrders.add(order);
-                widget.user.update();
+                Order order = Order(DateTime.now(), DateTime.now().toString(),appUser.uid, appUser.carts);
+                appUser.carts = [];
+                appUser.prevOrders.add(order);
+                appUser.update();
                 order.setId(saveOrder(order));
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => HomeScreen(widget.user,widget.categories)));
+                    builder: (context) => HomeScreen(widget.categories)));
               },
               padding: const EdgeInsets.all(12.0),
               shape: RoundedRectangleBorder(

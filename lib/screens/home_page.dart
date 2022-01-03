@@ -9,15 +9,15 @@ import 'package:grocery_app/screens/category/category_page.dart';
 import 'package:grocery_app/screens/orderstatus_screen.dart';
 import 'package:grocery_app/screens/search_screen.dart';
 import 'package:badges/badges.dart';
+import 'package:grocery_app/services/database.dart';
 import 'notification_screen.dart';
 import 'search_screen.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 
 class HomeScreen extends StatefulWidget {
-  final AppUser user;
   final List<CategoryProduct> categories;
 
-  const HomeScreen(this.user, this.categories, {Key? key}) : super(key: key);
+  const HomeScreen(this.categories, {Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BottomNavBar(widget.user, widget.categories),
+        body: BottomNavBar(widget.categories),
       );
   }
 }
@@ -110,9 +110,8 @@ class _PromotionListState extends State<PromotionList> {
 /// This is the stateful widget that the main application instantiates.
 class BottomNavBar extends StatefulWidget {
   final List<CategoryProduct> categories;
-  final AppUser user;
 
-  const BottomNavBar(this.user, this.categories, {Key? key}) : super(key: key);
+  const BottomNavBar(this.categories, {Key? key}) : super(key: key);
 
   @override
   State<BottomNavBar> createState() => new _BottomNavBarState();
@@ -129,14 +128,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     super.initState();
-    updatedUser = widget.user;
     categories = widget.categories;
     _widgetOptions = <Widget>[
-      CategoryPage(updatedUser, categories),
-      SearchPage(updatedUser, categories),
-      CartScreen(updatedUser, categories),
-      Campaigns(updatedUser, categories),
-      AccountScreen(updatedUser, categories),
+      CategoryPage(categories),
+      SearchPage(categories),
+      CartScreen(categories),
+      Campaigns(categories),
+      AccountScreen(categories),
     ];
   }
 
@@ -197,13 +195,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     onTap: () {
                       setState(() {
                         isClicked = !isClicked;
-                        widget.user.setNotifications();
-                        widget.user.update();
+                        appUser.setNotifications();
+                        appUser.update();
                       });
                     },
                     child: Badge(
                       badgeContent: Text(
-                          widget.user.numberOfNewNotifications().toString()),
+                          appUser.numberOfNewNotifications().toString()),
                       child: Icon(
                         Icons.add_alert,
                         size: 26.0,

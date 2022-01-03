@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/model/user.dart';
+import 'package:grocery_app/services/database.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {
-  final AppUser user;
-  const Body(this.user,{Key? key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -14,7 +14,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<AppUser> valueNotifier = ValueNotifier<AppUser>(widget.user);
+    ValueNotifier<AppUser> valueNotifier = ValueNotifier<AppUser>(appUser);
     return ValueListenableBuilder(
       valueListenable: valueNotifier,
       builder: (context, value, widget) {
@@ -26,17 +26,17 @@ class _BodyState extends State<Body> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ListView.builder(
-        itemCount: widget.user.carts.length,
+        itemCount: appUser.carts.length,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(widget.user.carts[index].product.name.toString()),
+            key: Key(appUser.carts[index].product.name.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {
-                widget.user.carts.removeAt(index);
-                widget.user.sumCart();
-                widget.user.update();
+                appUser.carts.removeAt(index);
+                appUser.sumCart();
+                appUser.update();
               });
             },
             background: Container(

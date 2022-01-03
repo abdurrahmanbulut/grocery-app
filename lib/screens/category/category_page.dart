@@ -5,11 +5,10 @@ import '../home_page.dart';
 import 'components/product_card.dart';
 
 class CategoryPage extends StatefulWidget {
-  final AppUser user;
   final List<CategoryProduct> categories;
 
 
-  CategoryPage(this.user,this.categories);
+  CategoryPage(this.categories);
 
   @override
   _CategoryPageState createState() => _CategoryPageState();
@@ -90,8 +89,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         product: widget.categories[childIndex]
                             .subCategories[selectedIndex]
                             .productList[index],
-                        press: () {},
-                        user: widget.user,
+                        press: () {}
                       ))),
         ),
         
