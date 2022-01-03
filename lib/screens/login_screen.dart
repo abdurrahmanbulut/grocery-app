@@ -11,6 +11,7 @@ import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
 import 'package:grocery_app/screens/register_screen.dart';
 import 'package:grocery_app/utilities/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'cashier_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,44 +23,57 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _rememberMe = false;
+  bool _isChecked = false;
   bool isLoading = false;
   bool _isObscure = true;
   final auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String _email = '', _password = '';
   GoogleSignInProvider googleSignInProvider = GoogleSignInProvider();
-  Remember remember = Remember('', '');
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String? error = null;
 
-  _asyncGetRemember() async {
-    remember = await getRemember();
+  void _handleRemeberme(bool value) {
+    _isChecked = value;
+    SharedPreferences.getInstance().then(
+          (prefs) {
+        prefs.setBool("remember_me", value);
+        prefs.setString('email', _emailController.text);
+        prefs.setString('password', _passwordController.text);
+      },
+    );
+    setState(() {
+      _isChecked = value;
+    });
+  }
+
+  Future<void> _loadUserEmailPassword() async {
+    try {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      String rememberedEmail = (_prefs.getString("email") != null) ? _prefs.getString("email") as String: "";
+      String rememberedPassword = (_prefs.getString("password") != null)? _prefs.getString("password") as String: "";
+      bool _rememberMe = (_prefs.getBool("remember_me") != null)? _prefs.getBool("remember_me") as bool : false;
+      if (_rememberMe) {
+        setState(() {
+          _isChecked = true;
+        });
+        _emailController.text = rememberedEmail.isNotEmpty ? rememberedEmail :  "";
+        _passwordController.text = rememberedPassword.isNotEmpty ? rememberedPassword : "";
+        _email = rememberedEmail.isNotEmpty ? rememberedEmail :  "";
+        _password = rememberedPassword.isNotEmpty ? rememberedPassword : "";
+      }
+    }
+    catch(e) {
+      print(e);
+    }
   }
 
   @override
   void initState() {
-    _asyncGetRemember();
-
+    _loadUserEmailPassword();
     super.initState();
     logout();
-    if (remember.email != '' && remember.password != '') {
-      _emailController.value = _emailController.value.copyWith(
-        text: remember.email,
-        selection: TextSelection(
-            baseOffset: remember.email.length,
-            extentOffset: remember.email.length),
-        composing: TextRange.empty,
-      );
-      _passwordController.value = _passwordController.value.copyWith(
-        text: remember.password,
-        selection: TextSelection(
-            baseOffset: remember.password.length,
-            extentOffset: remember.password.length),
-        composing: TextRange.empty,
-      );
-    }
   }
 
   @override
@@ -261,13 +275,11 @@ class _LoginScreenState extends State<LoginScreen> {
           Theme(
             data: ThemeData(unselectedWidgetColor: Colors.amber),
             child: Checkbox(
-              value: _rememberMe,
+              value: _isChecked,
               checkColor: Colors.white,
               activeColor: Colors.amber,
               onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
+                _handleRemeberme(value!);
               },
             ),
           ),
@@ -289,11 +301,6 @@ class _LoginScreenState extends State<LoginScreen> {
           try {
             AppUser user = await signInWithEmail(_email, _password);
             if (auth.currentUser!.email == _email) {
-              if (_rememberMe) {
-                await saveRemember(Remember(_email, _password));
-              } else {
-                await saveRemember(Remember('', ''));
-              }
               if (user.type == Type.customer) {
                 user = await checkUser(user);
                 Navigator.pushReplacement(
