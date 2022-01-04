@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/notification.dart';
@@ -17,6 +16,7 @@ class AppUser {
   String password;
   String phoneNumber;
   Type type;
+  double wallet;
   ValueNotifier<double> sumOfCart = ValueNotifier<double>(0);
   List<ShoppingCard> cards = [];
   List<Order> prevOrders = [];
@@ -24,7 +24,7 @@ class AppUser {
   List<UserNotification> notifications = [];
 
   AppUser(this.uid, this.name, this.image, this.email, this.password,
-      this.phoneNumber, this.type);
+      this.phoneNumber, this.type,this.wallet);
 
   Map<String, dynamic> toJson() {
     List<Map> cards = this.cards.map((i) => i.toJson()).toList();
@@ -40,6 +40,7 @@ class AppUser {
       'password': password,
       'phoneNumber': phoneNumber,
       'type': (type == Type.customer) ? 0 : 1,
+      'wallet': wallet,
       'cards': cards,
       'prevOrders': prevOrders,
       'carts': carts,
@@ -71,6 +72,7 @@ class AppUser {
         json["password"],
         json["phoneNumber"],
         intToType(json["type"]),
+        json["wallet"]
       );
 
   bool cartContains(Product product) {
@@ -190,6 +192,7 @@ AppUser createUser(record) {
     'password': '',
     'phoneNumber': '',
     'type': '',
+    'wallet':'',
     'cards': [],
     'prevOrders': [],
     'carts': [],
@@ -205,7 +208,9 @@ AppUser createUser(record) {
       attributes['email'],
       attributes['password'],
       attributes['phoneNumber'],
-      intToType(attributes['type']));
+      intToType(attributes['type']),
+      attributes['wallet'].toDouble()
+  );
   String jsonCard = jsonEncode(attributes['cards']);
   String jsonOrder = jsonEncode(attributes['prevOrders']);
   String jsonCart = jsonEncode(attributes['carts']);

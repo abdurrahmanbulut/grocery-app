@@ -122,7 +122,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   bool isClicked = false;
   static List<Widget> _widgetOptions = [];
-  AppUser updatedUser = AppUser('', '', '', '', '', '', Type.none);
+  AppUser updatedUser = AppUser('', '', '', '', '', '', Type.none,0);
   List<CategoryProduct> categories = [];
 
   @override

@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/model/user.dart';
 
@@ -8,7 +6,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<AppUser> signInWithEmail(String _email,String _password) async {
   final List<AppUser> users = await getAllUsers();
-  AppUser user = AppUser('', '', '', _email, _password, '', Type.customer);
+  AppUser user = AppUser('', '', '', _email, _password, '', Type.customer,0.0);
   if(users.isEmpty) {
     return user;
   }
@@ -38,7 +36,7 @@ Future checkUser(AppUser user) async {
 
 Future<AppUser> createUserWithEmail(String _email,String _password) async {
   UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
-  AppUser user = AppUser(userCredential.user!.uid, '', '', _email, _password, '', Type.customer);
+  AppUser user = AppUser(userCredential.user!.uid, '', '', _email, _password, '', Type.customer,0.0);
   user.setId(saveUser(user));
   return user;
 }

@@ -1,10 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grocery_app/model/data_model.dart';
+import 'package:grocery_app/model/promotion.dart';
 import 'package:grocery_app/model/user.dart';
 
 final databaseReference =
 FirebaseDatabase.instance.reference();
-AppUser appUser = AppUser('', '', '', '', '', '', Type.none);
+AppUser appUser = AppUser('', '', '', '', '', '', Type.none,0.0);
 
 
 DatabaseReference saveUser(AppUser user) {
@@ -110,5 +111,17 @@ Future<List<Order>> getAllOrders() async {
     });
   }
   return orders;
+}
+
+Future<List<Promotion>> getAllPromotions() async {
+  DataSnapshot dataSnapshot = await databaseReference.child('promotions/').once();
+  List<Promotion> promotions = [];
+  if (dataSnapshot.value != null) {
+    dataSnapshot.value.forEach((key, value) {
+      Promotion order = createPromotion(value);
+      promotions.add(order);
+    });
+  }
+  return promotions;
 }
 

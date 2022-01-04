@@ -14,7 +14,7 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   Future<AppUser> googleLogIn() async {
     final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return AppUser('', '', '', '', '', '', Type.none);
+    if (googleUser == null) return AppUser('', '', '', '', '', '', Type.none,0);
     _user = googleUser;
 
     final googleAuth = await googleUser.authentication;
@@ -27,10 +27,10 @@ class GoogleSignInProvider extends ChangeNotifier {
     UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
     notifyListeners();
     if(userCredential.user == null){
-      return AppUser('', '', '', '', '', '', Type.none);
+      return AppUser('', '', '', '', '', '', Type.none,0);
     }
     final List<AppUser> users = await getAllUsers();
-    AppUser user = AppUser(userCredential.user!.uid, '', '', userCredential.user!.email as String, '', '', Type.customer);
+    AppUser user = AppUser(userCredential.user!.uid, '', '', userCredential.user!.email as String, '', '', Type.customer,0);
     for (var element in users) {
       if(element.email == user.email) {
         user = element;
