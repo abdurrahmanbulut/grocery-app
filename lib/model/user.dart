@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/notification.dart';
+import 'package:grocery_app/model/wallet_transaction.dart';
 
 import '../services/database.dart';
 
@@ -22,6 +23,7 @@ class AppUser {
   List<Order> prevOrders = [];
   List<Cart> carts = [];
   List<UserNotification> notifications = [];
+  List<WalletTransaction> walletTransactions = [];
 
   AppUser(this.uid, this.name, this.image, this.email, this.password,
       this.phoneNumber, this.type,this.wallet);
@@ -32,6 +34,8 @@ class AppUser {
     List<Map> carts = this.carts.map((i) => i.toJson()).toList();
     List<Map> notifications =
         this.notifications.map((i) => i.toJson()).toList();
+    List<Map> walletTransactions =
+      this.walletTransactions.map((i) => i.toJson()).toList();
     return {
       'uid': uid,
       'name': name,
@@ -44,7 +48,8 @@ class AppUser {
       'cards': cards,
       'prevOrders': prevOrders,
       'carts': carts,
-      'notifications': notifications
+      'notifications': notifications,
+      'walletTransactions': walletTransactions
     };
   }
 
@@ -196,7 +201,8 @@ AppUser createUser(record) {
     'cards': [],
     'prevOrders': [],
     'carts': [],
-    'notifications': []
+    'notifications': [],
+    'walletTransactions': []
   };
 
   record.forEach((key, value) => {attributes[key] = value});
@@ -215,15 +221,18 @@ AppUser createUser(record) {
   String jsonOrder = jsonEncode(attributes['prevOrders']);
   String jsonCart = jsonEncode(attributes['carts']);
   String jsonNotification = jsonEncode(attributes['notifications']);
+  String jsonWalletTransactions = jsonEncode(attributes['walletTransactions']);
   var cardList = json.decode(jsonCard) as List;
   var orderList = json.decode(jsonOrder) as List;
   var cartList = json.decode(jsonCart) as List;
   var notificationList = json.decode(jsonNotification) as List;
+  var walletTransactionsList = json.decode(jsonWalletTransactions) as List;
   user.cards = cardList.map((i) => ShoppingCard.fromJson(i)).toList();
   user.prevOrders = orderList.map((i) => Order.fromJson(i)).toList();
   user.carts = cartList.map((i) => Cart.fromJson(i)).toList();
   user.notifications =
       notificationList.map((i) => UserNotification.fromJson(i)).toList();
+  user.walletTransactions = walletTransactionsList.map((i) => WalletTransaction.fromJson(i)).toList();
   return user;
 }
 

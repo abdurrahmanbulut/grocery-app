@@ -1,11 +1,43 @@
+import 'dart:math';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/promotion.dart';
 import 'package:grocery_app/model/user.dart';
+import 'package:grocery_app/model/wallet_transaction.dart';
 
 final databaseReference =
 FirebaseDatabase.instance.reference();
 AppUser appUser = AppUser('', '', '', '', '', '', Type.none,0.0);
+
+Future<String> generateOrderCode() async {
+  List<Order> orders = await getAllOrders();
+  Random rnd;
+  String code;
+  bool check = false;
+  do {
+    check = false;
+    rnd = Random();
+    code = (100000 + rnd.nextInt(899999)).toString();
+    orders.forEach((element) {
+      if(element.id == code) {
+        check = true;
+      }
+    });
+  }while(check);
+  return code;
+}
+
+Future<AppUser> getUserWithUid(String _uid) async {
+  AppUser user = AppUser('', '', '', '', '', '', Type.none, 0);
+  List<AppUser> users = await getAllUsers();
+  users.forEach((element) {
+    if(element.uid == _uid) {
+      user = element;
+    }
+  });
+  return user;
+}
 
 
 DatabaseReference saveUser(AppUser user) {
@@ -125,3 +157,24 @@ Future<List<Promotion>> getAllPromotions() async {
   return promotions;
 }
 
+DatabaseReference saveWallet(WalletTransaction walletTransaction) {
+  var id = databaseReference.child('walletTransactions/').push();
+  id.set(walletTransaction.toJson());
+  return id;
+}
+
+void updateWallet(WalletTransaction walletTransaction, DatabaseReference id) {
+  id.update(walletTransaction.toJson());
+}
+
+Future<List<WalletTransaction>> getAllWalletTransactions() async {
+  DataSnapshot dataSnapshot = await databaseReference.child('walletTransactions/').once();
+  List<WalletTransaction> walletTransactions = [];
+  if (dataSnapshot.value != null) {
+    dataSnapshot.value.forEach((key, value) {
+      WalletTransaction walletTransaction = createWalletTransaction(value);
+      walletTransactions.add(walletTransaction);
+    });
+  }
+  return walletTransactions;
+}
