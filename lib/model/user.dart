@@ -26,7 +26,7 @@ class AppUser {
   List<WalletTransaction> walletTransactions = [];
 
   AppUser(this.uid, this.name, this.image, this.email, this.password,
-      this.phoneNumber, this.type,this.wallet);
+      this.phoneNumber, this.type, this.wallet);
 
   Map<String, dynamic> toJson() {
     List<Map> cards = this.cards.map((i) => i.toJson()).toList();
@@ -35,7 +35,7 @@ class AppUser {
     List<Map> notifications =
         this.notifications.map((i) => i.toJson()).toList();
     List<Map> walletTransactions =
-      this.walletTransactions.map((i) => i.toJson()).toList();
+        this.walletTransactions.map((i) => i.toJson()).toList();
     return {
       'uid': uid,
       'name': name,
@@ -70,15 +70,14 @@ class AppUser {
   int get hashCode => email.hashCode;
 
   factory AppUser.fromJson(Map<String, dynamic> json) => AppUser(
-        json["uid"],
-        json["name"],
-        json["image"],
-        json["email"],
-        json["password"],
-        json["phoneNumber"],
-        intToType(json["type"]),
-        json["wallet"]
-      );
+      json["uid"],
+      json["name"],
+      json["image"],
+      json["email"],
+      json["password"],
+      json["phoneNumber"],
+      intToType(json["type"]),
+      json["wallet"]);
 
   bool cartContains(Product product) {
     if (carts.isEmpty) {
@@ -111,6 +110,15 @@ class AppUser {
     for (int i = 0; i < carts.length; i++) {
       sumOfCart.value += (carts[i].product.price * carts[i].numOfItem);
     }
+  }
+
+  double sumOrder(int index) {
+    double sumofOrder = 0.0;
+    for (int i = 0; i < prevOrders[index].carts.length; i++) {
+      sumofOrder += (prevOrders[index].carts[i].product.price *
+          prevOrders[index].carts[i].numOfItem);
+    }
+    return sumofOrder;
   }
 
   bool isNewNotification() {
@@ -165,11 +173,16 @@ class Order {
   String buyerId;
   List<Cart> carts = [];
 
-  Order(this.time, this.id,this.buyerId, this.carts);
+  Order(this.time, this.id, this.buyerId, this.carts);
 
   Map<String, dynamic> toJson() {
     List<Map> carts = this.carts.map((i) => i.toJson()).toList();
-    return {'time': time.toIso8601String(), 'id': id, 'buyerId': buyerId,'carts': carts};
+    return {
+      'time': time.toIso8601String(),
+      'id': id,
+      'buyerId': buyerId,
+      'carts': carts
+    };
   }
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -197,7 +210,7 @@ AppUser createUser(record) {
     'password': '',
     'phoneNumber': '',
     'type': '',
-    'wallet':'',
+    'wallet': '',
     'cards': [],
     'prevOrders': [],
     'carts': [],
@@ -215,8 +228,7 @@ AppUser createUser(record) {
       attributes['password'],
       attributes['phoneNumber'],
       intToType(attributes['type']),
-      attributes['wallet'].toDouble()
-  );
+      attributes['wallet'].toDouble());
   String jsonCard = jsonEncode(attributes['cards']);
   String jsonOrder = jsonEncode(attributes['prevOrders']);
   String jsonCart = jsonEncode(attributes['carts']);
@@ -232,7 +244,8 @@ AppUser createUser(record) {
   user.carts = cartList.map((i) => Cart.fromJson(i)).toList();
   user.notifications =
       notificationList.map((i) => UserNotification.fromJson(i)).toList();
-  user.walletTransactions = walletTransactionsList.map((i) => WalletTransaction.fromJson(i)).toList();
+  user.walletTransactions =
+      walletTransactionsList.map((i) => WalletTransaction.fromJson(i)).toList();
   return user;
 }
 
@@ -245,7 +258,6 @@ Order createOrder(record) {
   };
 
   record.forEach((key, value) => {attributes[key] = value});
-
 
   String jsonCart = jsonEncode(attributes['carts']);
   var cartList = json.decode(jsonCart) as List;

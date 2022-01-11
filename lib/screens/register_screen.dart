@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: Colors.amber,
         title: const Text('Sign Up',
             style:
-            TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
+                TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
       ),
       body: registerPageBody(),
@@ -84,7 +84,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: kBoxDecorationStyle,
                       height: 70.0,
                       child: TextFormField(
-                        autovalidateMode: AutovalidateMode.always,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (input) =>
                             input!.isValidEmail() ? null : "Email is invalid",
                         controller: _emailController,
@@ -124,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: kBoxDecorationStyle,
                       height: 70.0,
                       child: TextFormField(
-                          autovalidateMode: AutovalidateMode.always,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (input) => input!.isValidPassword()
                               ? null
                               : "Password should have 6-10 character.",
@@ -176,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: kBoxDecorationStyle,
                       height: 70.0,
                       child: TextFormField(
-                          autovalidateMode: AutovalidateMode.always,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (input) => (input == _password)
                               ? null
                               : "Does not match with password",
@@ -215,8 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       if (_email.isValidEmail() &&
                           _password.isValidPassword() &&
                           _password == _confirm) {
-                        appUser =
-                            await createUserWithEmail(_email, _password);
+                        appUser = await createUserWithEmail(_email, _password);
                         appUser = await signInWithEmail(_email, _password);
                         AppUser checkedUser = await checkUser(appUser);
                         checkedUser.setId(appUser.dataId);
