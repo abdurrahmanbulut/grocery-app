@@ -9,7 +9,7 @@ import 'package:grocery_app/utilities/extensions.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileUpdateScreen extends StatefulWidget {
-  const ProfileUpdateScreen( {Key? key}) : super(key: key);
+  const ProfileUpdateScreen({Key? key}) : super(key: key);
 
   @override
   _ProfileUpdateScreenState createState() => _ProfileUpdateScreenState();
@@ -27,15 +27,13 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     _emailController.value = _emailController.value.copyWith(
       text: appUser.email,
       selection: TextSelection(
-          baseOffset: appUser.email.length,
-          extentOffset: appUser.email.length),
+          baseOffset: appUser.email.length, extentOffset: appUser.email.length),
       composing: TextRange.empty,
     );
     _nameController.value = _nameController.value.copyWith(
       text: appUser.name,
       selection: TextSelection(
-          baseOffset: appUser.name.length,
-          extentOffset: appUser.name.length),
+          baseOffset: appUser.name.length, extentOffset: appUser.name.length),
       composing: TextRange.empty,
     );
     _phoneController.value = _phoneController.value.copyWith(
@@ -217,7 +215,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           height: 70.0,
           child: TextFormField(
             keyboardType: TextInputType.emailAddress,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (input) =>
                 input!.isValidEmail() ? null : "Email is invalid",
             controller: _emailController,
@@ -258,7 +256,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           height: 70.0,
           child: TextFormField(
             keyboardType: TextInputType.number,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (input) =>
                 (input!.isPhoneNumber()) ? null : "Phone number is invalid",
             controller: _phoneController,

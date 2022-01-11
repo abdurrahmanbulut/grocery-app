@@ -15,6 +15,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  another_carousel_pro:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "835e0ab47f8251ef9f7e9b95c0a7654e87947f30"
+      url: "https://github.com/iamnabink/another_carousel_pro.git"
+    source: git
+    version: "1.0.0"
   async:
     dependency: transitive
     description:
@@ -36,13 +45,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  carousel_pro:
-    dependency: "direct main"
-    description:
-      name: carousel_pro
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   characters:
     dependency: transitive
     description:
@@ -162,6 +164,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.1"
+  firebase_messaging:
+    dependency: "direct main"
+    description:
+      name: firebase_messaging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "11.2.5"
+  firebase_messaging_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_messaging_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.5"
+  firebase_messaging_web:
+    dependency: transitive
+    description:
+      name: firebase_messaging_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.6"
   firebase_storage:
     dependency: "direct main"
     description:

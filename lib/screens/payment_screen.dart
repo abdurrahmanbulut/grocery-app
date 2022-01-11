@@ -43,15 +43,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
               style: TextStyle(color: Colors.black),
             ),
           ),
-          /* ValueListenableBuilder(
-            valueListenable: user.sumOfCart,
-            builder: (context, value, widget) {
-              return Text("(${user.carts.length} items)",
-                  style: const TextStyle(fontSize: 15, color: Colors.black)
-                  //style: Theme.of(context).textTheme.caption,
-                  );
-            },
-          ),*/
         ],
       ),
     );
@@ -109,7 +100,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               });
             }),
         RadioListTile(
-            title: Text('Credit Card'),
+            title: Text('In App Points (Balance: ${appUser.wallet}\$)'),
             activeColor: Colors.amber,
             value: 2,
             groupValue: _result,
@@ -156,13 +147,33 @@ class _PaymentScreenState extends State<PaymentScreen> {
             width: double.infinity,
             child: RaisedButton(
               onPressed: () {
-                Order order = Order(DateTime.now(), DateTime.now().toString(),appUser.uid, appUser.carts);
-                appUser.carts = [];
-                appUser.prevOrders.add(order);
-                appUser.update();
-                order.setId(saveOrder(order));
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => HomeScreen(widget.categories)));
+                if (appUser.sumOfCart.value != 0) {
+                  if (_result == 1) {
+                    Order order = Order(DateTime.now(),
+                        DateTime.now().toString(), appUser.uid, appUser.carts);
+                    appUser.carts = [];
+                    appUser.prevOrders.add(order);
+                    appUser.update();
+                    order.setId(saveOrder(order));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => HomeScreen(widget.categories)));
+                  } else if (_result == 2 && appUser.wallet != 0) {
+                    Order order = Order(DateTime.now(),
+                        DateTime.now().toString(), appUser.uid, appUser.carts);
+                    appUser.carts = [];
+                    appUser.prevOrders.add(order);
+                    appUser.update();
+                    order.setId(saveOrder(order));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => HomeScreen(widget.categories)));
+                  } else if (_result == 2 && appUser.wallet == 0) {
+                    showAlertDialogWalletBalance(context);
+                  } else {
+                    showAlertDialog(context);
+                  }
+                } else {
+                  showAlertDialogEmptyCart(context);
+                }
               },
               padding: const EdgeInsets.all(12.0),
               shape: RoundedRectangleBorder(
@@ -185,32 +196,76 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ],
     );
   }
-}
-/*
-Widget changeCardButton() {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 15.0),
-    width: double.infinity,
-    child: RaisedButton(
+
+  showAlertDialogWalletBalance(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
       onPressed: () {
-        
+        Navigator.of(context, rootNavigator: true).pop();
       },
-      padding: const EdgeInsets.all(12.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      color: Colors.amber,
-      child: const Text(
-        'Confirm Payment',
-        style: TextStyle(
-          color: Colors.white,
-          letterSpacing: 1.0,
-          fontSize: 18.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'OpenSans',
-        ),
-      ),
-    ),
-  );
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text('Insufficient Balance'),
+      content: Text("Please check your balance."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text('Payment Selection'),
+      content: Text("Please select a payment selection."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogEmptyCart(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text('Cart is empty'),
+      content: Text("Please fill your cart to be able to give order."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }
-*/
