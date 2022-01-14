@@ -520,7 +520,10 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () async {
             String _testEmail = 'metegoncaq@gmail.com';
             String _testPassword = '123456789';
-            AppUser user = await signInWithEmail(_testEmail, _testPassword);
+            appUser = await signInWithEmail(_testEmail, _testPassword);
+            AppUser checkedUser = await checkUser(appUser);
+            checkedUser.setId(appUser.dataId);
+            appUser = checkedUser;
             if (auth.currentUser!.email == _testEmail) {
               Navigator.pushReplacement(
                   context,
@@ -557,7 +560,10 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () async {
             String _testEmail = 'dogukaanguleer@gmail.com';
             String _testPassword = '123456';
-            AppUser user = await signInWithEmail(_testEmail, _testPassword);
+            appUser = await signInWithEmail(_testEmail, _testPassword);
+            AppUser checkedUser = await checkUser(appUser);
+            checkedUser.setId(appUser.dataId);
+            appUser = checkedUser;
             if (auth.currentUser!.email == _testEmail) {
               Navigator.pushReplacement(
                   context,

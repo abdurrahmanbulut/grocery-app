@@ -136,7 +136,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
             "Total Cost: \$${appUser.sumOfCart.value}",
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
@@ -146,11 +146,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             width: double.infinity,
             child: RaisedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (appUser.sumOfCart.value != 0) {
+                  String orderCode = await generateOrderCode();
                   if (_result == 1) {
                     Order order = Order(DateTime.now(),
-                        DateTime.now().toString(), appUser.uid, appUser.carts);
+                        orderCode, appUser.uid, appUser.carts);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.update();
@@ -159,7 +160,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         builder: (context) => HomeScreen(widget.categories)));
                   } else if (_result == 2 && appUser.wallet != 0) {
                     Order order = Order(DateTime.now(),
-                        DateTime.now().toString(), appUser.uid, appUser.carts);
+                        orderCode, appUser.uid, appUser.carts);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.update();

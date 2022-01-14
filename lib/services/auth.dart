@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/model/user.dart';
 
+import 'cloud.dart';
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<AppUser> signInWithEmail(String _email,String _password) async {
@@ -17,21 +19,25 @@ Future<AppUser> signInWithEmail(String _email,String _password) async {
     }
   }
   await _auth.signInWithEmailAndPassword(email: _email, password: _password);
+  user.image = await storage.ref().child('profiles').child(user.dataId.key).getDownloadURL();
   return user;
 }
 
 Future checkUser(AppUser user) async {
   final List<AppUser> users = await getAllUsers();
+  AppUser checkedUser = AppUser('', '', '', '', '', '', Type.none,0.0);
   if(users.isEmpty) {
     return user;
   }
   for (var element in users) {
     if(element.email == user.email) {
-      user = element;
+      checkedUser = element;
       break;
     }
   }
-  return user;
+  checkedUser.setId(user.dataId);
+  checkedUser.image = user.image;
+  return checkedUser;
 }
 
 Future<AppUser> createUserWithEmail(String _email,String _password) async {

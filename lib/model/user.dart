@@ -39,7 +39,6 @@ class AppUser {
     return {
       'uid': uid,
       'name': name,
-      'image': image,
       'email': email,
       'password': password,
       'phoneNumber': phoneNumber,
@@ -72,7 +71,7 @@ class AppUser {
   factory AppUser.fromJson(Map<String, dynamic> json) => AppUser(
       json["uid"],
       json["name"],
-      json["image"],
+      '',
       json["email"],
       json["password"],
       json["phoneNumber"],
@@ -205,7 +204,6 @@ AppUser createUser(record) {
   Map<String, dynamic> attributes = {
     'uid': '',
     'name': '',
-    'image': '',
     'email': '',
     'password': '',
     'phoneNumber': '',
@@ -223,7 +221,7 @@ AppUser createUser(record) {
   AppUser user = AppUser(
       attributes['uid'],
       attributes['name'],
-      attributes['image'],
+      '',
       attributes['email'],
       attributes['password'],
       attributes['phoneNumber'],
