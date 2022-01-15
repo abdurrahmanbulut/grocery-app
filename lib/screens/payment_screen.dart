@@ -151,7 +151,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   String orderCode = await generateOrderCode();
                   if (_result == 1) {
                     Order order = Order(DateTime.now(),
-                        orderCode, appUser.uid, appUser.carts);
+                        orderCode, appUser.uid, appUser.carts,OrderStatus.waiting);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.update();
@@ -160,7 +160,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         builder: (context) => HomeScreen(widget.categories)));
                   } else if (_result == 2 && appUser.wallet != 0) {
                     Order order = Order(DateTime.now(),
-                        orderCode, appUser.uid, appUser.carts);
+                        orderCode, appUser.uid, appUser.carts,OrderStatus.waiting);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.update();

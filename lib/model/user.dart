@@ -171,8 +171,9 @@ class Order {
   String id;
   String buyerId;
   List<Cart> carts = [];
+  OrderStatus status;
 
-  Order(this.time, this.id, this.buyerId, this.carts);
+  Order(this.time, this.id, this.buyerId, this.carts,this.status);
 
   Map<String, dynamic> toJson() {
     List<Map> carts = this.carts.map((i) => i.toJson()).toList();
@@ -180,7 +181,8 @@ class Order {
       'time': time.toIso8601String(),
       'id': id,
       'buyerId': buyerId,
-      'carts': carts
+      'carts': carts,
+      'status': statusToInt(status)
     };
   }
 
@@ -189,6 +191,7 @@ class Order {
         json["id"],
         json["buyerId"],
         List<Cart>.from(json["carts"].map((i) => Cart.fromJson(i))),
+        intToStatus(json["status"])
       );
 
   void update() {
@@ -199,6 +202,8 @@ class Order {
     dataId = id;
   }
 }
+
+enum OrderStatus { waiting, prepared, taken,canceled }
 
 AppUser createUser(record) {
   Map<String, dynamic> attributes = {
@@ -263,7 +268,9 @@ Order createOrder(record) {
       DateTime.tryParse(attributes['time']) as DateTime,
       attributes['id'],
       attributes['uid'],
-      cartList.map((i) => Cart.fromJson(i)).toList());
+      cartList.map((i) => Cart.fromJson(i)).toList(),
+      intToStatus(attributes['status'])
+  );
   return order;
 }
 
@@ -274,5 +281,29 @@ Type intToType(int type) {
     return Type.cashier;
   } else {
     return Type.none;
+  }
+}
+
+OrderStatus intToStatus(int status) {
+  if (status == 0) {
+    return OrderStatus.waiting;
+  } else if (status == 1) {
+    return OrderStatus.prepared;
+  } else if (status == 2) {
+    return OrderStatus.taken;
+  } else {
+    return OrderStatus.canceled;
+  }
+}
+
+int statusToInt(OrderStatus status) {
+  if (status == OrderStatus.waiting) {
+    return 0;
+  } else if (status == OrderStatus.prepared) {
+    return 1;
+  } else if (status == OrderStatus.taken) {
+    return 2;
+  } else {
+    return 3;
   }
 }
