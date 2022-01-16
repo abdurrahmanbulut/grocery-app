@@ -76,7 +76,7 @@ class _ProductCardState extends State<ProductCard> {
             style: const TextStyle(color: Colors.black),
           ),
         ),
-        Padding(
+        (widget.product.discount == 0)? Padding(
           padding: EdgeInsets.only(
               left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
               right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
@@ -84,6 +84,30 @@ class _ProductCardState extends State<ProductCard> {
           child: Text(
             widget.product.price.toString() + " TL",
             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ):
+        Padding(
+          padding: EdgeInsets.only(
+              left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+              right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
+          ),
+          child: RichText(
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: widget.product.price.toString() + "   ",
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+                TextSpan(
+                  text: (widget.product.price - (widget.product.price*widget.product.discount/100)).toString() + " TL",
+                  style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
         ),
         Row(
