@@ -145,6 +145,18 @@ class AppUser {
     });
     return count;
   }
+
+  bool contains(String keyword) {
+    return (email.toUpperCase().contains(keyword.toUpperCase()));
+  }
+
+  void addWallet(double value) {
+    wallet = wallet + value;
+  }
+
+  void decreaseWallet(double value) {
+    wallet = wallet - value;
+  }
 }
 
 enum Type { customer, cashier, none }
@@ -173,7 +185,7 @@ class Order {
   List<Cart> carts = [];
   OrderStatus status;
 
-  Order(this.time, this.id, this.buyerId, this.carts,this.status);
+  Order(this.time, this.id, this.buyerId, this.carts, this.status);
 
   Map<String, dynamic> toJson() {
     List<Map> carts = this.carts.map((i) => i.toJson()).toList();
@@ -187,12 +199,11 @@ class Order {
   }
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
-        DateTime.tryParse(json['time']) as DateTime,
-        json["id"],
-        json["buyerId"],
-        List<Cart>.from(json["carts"].map((i) => Cart.fromJson(i))),
-        intToStatus(json["status"])
-      );
+      DateTime.tryParse(json['time']) as DateTime,
+      json["id"],
+      json["buyerId"],
+      List<Cart>.from(json["carts"].map((i) => Cart.fromJson(i))),
+      intToStatus(json["status"]));
 
   void update() {
     updateOrder(this, dataId);
@@ -201,9 +212,13 @@ class Order {
   void setId(DatabaseReference id) {
     dataId = id;
   }
+
+  bool contains(String keyword) {
+    return (id.toUpperCase().contains(keyword.toUpperCase()));
+  }
 }
 
-enum OrderStatus { waiting, prepared, taken,canceled }
+enum OrderStatus { waiting, prepared, taken, canceled }
 
 AppUser createUser(record) {
   Map<String, dynamic> attributes = {
@@ -269,8 +284,7 @@ Order createOrder(record) {
       attributes['id'],
       attributes['uid'],
       cartList.map((i) => Cart.fromJson(i)).toList(),
-      intToStatus(attributes['status'])
-  );
+      intToStatus(attributes['status']));
   return order;
 }
 

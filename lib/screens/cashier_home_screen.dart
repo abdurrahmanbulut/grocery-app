@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
+import 'package:grocery_app/model/user.dart';
+import 'package:grocery_app/screens/cashier_addpoint_screen.dart';
 import 'package:grocery_app/screens/cashier_order_screen.dart';
+import 'package:grocery_app/screens/cashier_search_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
-import 'package:grocery_app/screens/search_screen.dart';
 import 'package:grocery_app/screens/cashier_qr_scan_screen.dart';
 
 class CashierHomeScreen extends StatefulWidget {
   final List<CategoryProduct> categories;
-  const CashierHomeScreen(this.categories, {Key? key})
+  final List<Order> orders;
+  final List<Order> TodaysOrders;
+  const CashierHomeScreen(this.categories, this.orders, this.TodaysOrders,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -82,8 +87,9 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
           body: PageView(
             controller: pageController,
             children: [
-              Container(child: CashierOrderScreen()),
-              Container(child: SearchPage(widget.categories)),
+              Container(child: CashierOrderScreen(widget.TodaysOrders)),
+              Container(child: CashierSearchPage(widget.orders)),
+              Container(child: AddPointPage()),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -91,6 +97,9 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.search), label: 'Search'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_balance_wallet_rounded),
+                  label: 'Add Point'),
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber,

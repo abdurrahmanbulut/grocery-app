@@ -6,9 +6,8 @@ import 'package:grocery_app/model/promotion.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/model/wallet_transaction.dart';
 
-final databaseReference =
-FirebaseDatabase.instance.reference();
-AppUser appUser = AppUser('', '', '', '', '', '', Type.none,0.0);
+final databaseReference = FirebaseDatabase.instance.reference();
+AppUser appUser = AppUser('', '', '', '', '', '', Type.none, 0.0);
 
 Future<String> generateOrderCode() async {
   List<Order> orders = await getAllOrders();
@@ -20,11 +19,11 @@ Future<String> generateOrderCode() async {
     rnd = Random();
     code = (100000 + rnd.nextInt(899999)).toString();
     orders.forEach((element) {
-      if(element.id == code) {
+      if (element.id == code) {
         check = true;
       }
     });
-  }while(check);
+  } while (check);
   return code;
 }
 
@@ -32,13 +31,12 @@ Future<AppUser> getUserWithUid(String _uid) async {
   AppUser user = AppUser('', '', '', '', '', '', Type.none, 0);
   List<AppUser> users = await getAllUsers();
   users.forEach((element) {
-    if(element.uid == _uid) {
+    if (element.uid == _uid) {
       user = element;
     }
   });
   return user;
 }
-
 
 DatabaseReference saveUser(AppUser user) {
   var id = databaseReference.child('users/').push();
@@ -82,7 +80,8 @@ void updateCategory(CategoryProduct category, DatabaseReference id) {
 }
 
 Future<List<CategoryProduct>> getAllCategories() async {
-  DataSnapshot dataSnapshot = await databaseReference.child('categories/').once();
+  DataSnapshot dataSnapshot =
+      await databaseReference.child('categories/').once();
   List<CategoryProduct> categories = [];
   if (dataSnapshot.value != null) {
     dataSnapshot.value.forEach((key, value) {
@@ -94,7 +93,7 @@ Future<List<CategoryProduct>> getAllCategories() async {
   return categories;
 }
 
-List<Product> getAllProducts(List<CategoryProduct> categories){
+List<Product> getAllProducts(List<CategoryProduct> categories) {
   List<Product> products = [];
   categories.forEach((element) {
     element.subCategories.forEach((subElement) {
@@ -106,16 +105,38 @@ List<Product> getAllProducts(List<CategoryProduct> categories){
   return products;
 }
 
-
-List<Product> getFilteredProducts(List<CategoryProduct> categories,String keyword) {
+List<Product> getFilteredProducts(
+    List<CategoryProduct> categories, String keyword) {
   List<Product> products = getAllProducts(categories);
   List<Product> filteredProducts = [];
   products.forEach((element) {
-    if(element.contains(keyword)) {
+    if (element.contains(keyword)) {
       filteredProducts.add(element);
     }
   });
   return filteredProducts;
+}
+
+List<Order> getFilteredOrders(String keyword, List<Order> orders) {
+  List<Order> filteredOrders = [];
+  orders.forEach((element) {
+    if (element.contains(keyword)) {
+      filteredOrders.add(element);
+    }
+  });
+  return filteredOrders;
+}
+
+Future<List<AppUser>> getFilteredUsers(String keyword) async {
+  List<AppUser> users = await getAllUsers();
+  List<AppUser> filteredUsers = [];
+
+  users.forEach((element) {
+    if (element.contains(keyword)) {
+      filteredUsers.add(element);
+    }
+  });
+  return filteredUsers;
 }
 
 DatabaseReference saveOrder(Order order) {
@@ -146,7 +167,8 @@ Future<List<Order>> getAllOrders() async {
 }
 
 Future<List<Promotion>> getAllPromotions() async {
-  DataSnapshot dataSnapshot = await databaseReference.child('promotions/').once();
+  DataSnapshot dataSnapshot =
+      await databaseReference.child('promotions/').once();
   List<Promotion> promotions = [];
   if (dataSnapshot.value != null) {
     dataSnapshot.value.forEach((key, value) {
@@ -168,7 +190,8 @@ void updateWallet(WalletTransaction walletTransaction, DatabaseReference id) {
 }
 
 Future<List<WalletTransaction>> getAllWalletTransactions() async {
-  DataSnapshot dataSnapshot = await databaseReference.child('walletTransactions/').once();
+  DataSnapshot dataSnapshot =
+      await databaseReference.child('walletTransactions/').once();
   List<WalletTransaction> walletTransactions = [];
   if (dataSnapshot.value != null) {
     dataSnapshot.value.forEach((key, value) {

@@ -150,24 +150,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 if (appUser.sumOfCart.value != 0) {
                   String orderCode = await generateOrderCode();
                   if (_result == 1) {
-                    Order order = Order(DateTime.now(),
-                        orderCode, appUser.uid, appUser.carts,OrderStatus.waiting);
+                    Order order = Order(DateTime.now(), orderCode, appUser.uid,
+                        appUser.carts, OrderStatus.waiting);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.update();
                     order.setId(saveOrder(order));
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => HomeScreen(widget.categories)));
-                  } else if (_result == 2 && appUser.wallet != 0) {
-                    Order order = Order(DateTime.now(),
-                        orderCode, appUser.uid, appUser.carts,OrderStatus.waiting);
+                  } else if (_result == 2 &&
+                      appUser.wallet >= appUser.sumOfCart.value) {
+                    Order order = Order(DateTime.now(), orderCode, appUser.uid,
+                        appUser.carts, OrderStatus.waiting);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
+                    appUser.decreaseWallet(appUser.sumOfCart.value);
                     appUser.update();
                     order.setId(saveOrder(order));
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => HomeScreen(widget.categories)));
-                  } else if (_result == 2 && appUser.wallet == 0) {
+                  } else if (_result == 2 &&
+                      appUser.wallet < appUser.sumOfCart.value) {
                     showAlertDialogWalletBalance(context);
                   } else {
                     showAlertDialog(context);
@@ -209,6 +212,31 @@ class _PaymentScreenState extends State<PaymentScreen> {
     AlertDialog alert = AlertDialog(
       title: Text('Insufficient Balance'),
       content: Text("Please check your balance."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogSuccessfullyPaid(BuildContext context) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => HomeScreen(widget.categories)));
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text('Successfully Paid'),
+      content: Text("Payment is successful"),
       actions: [
         okButton,
       ],
