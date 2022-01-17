@@ -182,6 +182,9 @@ class _AddPointToUserState extends State<AddPointToUser> {
                 print(widget.user.email);
                 print(auth.currentUser!.email);
                 widget.user.addWallet(AmountWillBeAdded);
+                widget.user.walletTransactions.add(walletTransaction);
+                appUser.walletTransactions.add(walletTransaction);
+                appUser.update();
                 widget.user.update();
                 showAlertDialog(context, AmountWillBeAdded, widget.user);
               },
