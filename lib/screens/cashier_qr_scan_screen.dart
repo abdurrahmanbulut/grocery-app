@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:grocery_app/screens/cashier_detailed_order_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:grocery_app/model/user.dart';
 
 class QRScreenWidget extends StatefulWidget {
-  const QRScreenWidget({Key? key}) : super(key: key);
+  List<Order> allOrders;
+  QRScreenWidget({required this.allOrders});
 
   @override
   _QRScreenWidgetState createState() => _QRScreenWidgetState();
@@ -83,8 +86,14 @@ class _QRScreenWidgetState extends State<QRScreenWidget> {
     this.controller = controller;
     final expectedCodes = recognisedCodes.map((e) => e.type);
     controller.scannedDataStream.listen((scanData) {
-      controller.pauseCamera();
-      if (expectedCodes.any((element) => scanData.code == element)) {}
+      int index = 3;
+      for (int i = 0; i < widget.allOrders.length; i++) {
+        if (widget.allOrders[i].id == scanData.code) index = i;
+      }
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DetailedOrderPage(
+                order: widget.allOrders[index],
+              )));
     });
   }
 

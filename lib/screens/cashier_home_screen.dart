@@ -60,8 +60,10 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
           appBar: AppBar(
             leading: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => QRScreenWidget()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => QRScreenWidget(
+                          allOrders: widget.orders,
+                        )));
               },
               icon: Icon(Icons.qr_code_2_outlined),
             ),

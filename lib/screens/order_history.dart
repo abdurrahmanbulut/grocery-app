@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
 import 'package:grocery_app/services/database.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class OrderHistory extends StatefulWidget {
   @override
@@ -150,7 +151,86 @@ class OrderHistoryDetailed extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.amber,
       ),
-      body: ListView.builder(
+      body: ListView(
+        children: [
+          SizedBox(height: 50),
+          Center(
+            child: Text(
+              "Items",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          for (int i = 0;
+              i < appUser.prevOrders[generalIndex].carts.length;
+              i++)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage(appUser
+                        .prevOrders[generalIndex].carts[i].product.image),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    appUser.prevOrders[generalIndex].carts[i].product.name,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(" x ", style: TextStyle(fontSize: 20)),
+                  Text(
+                      appUser.prevOrders[generalIndex].carts[i].numOfItem
+                          .toString(),
+                      style: TextStyle(fontSize: 20)),
+                  Text(" = ", style: TextStyle(fontSize: 20)),
+                  Text(
+                      (appUser.prevOrders[generalIndex].carts[i].numOfItem *
+                              appUser.prevOrders[generalIndex].carts[i].product
+                                  .price)
+                          .toString(),
+                      style: TextStyle(fontSize: 20)),
+                  Text("\$", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+            ),
+          SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+            child: Text("Total Price = ${appUser.sumOrder(generalIndex)}\$",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          SizedBox(height: 30),
+          Divider(
+            height: 2,
+            thickness: 1,
+            indent: 20,
+            endIndent: 20,
+            color: Colors.black,
+          ),
+          SizedBox(height: 40),
+          Center(
+            child: Text(
+              "QR Code",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 60),
+          Container(
+            alignment: Alignment.center,
+            child: QrImage(
+              data: appUser.prevOrders[generalIndex].id,
+              version: QrVersions.auto,
+              size: 150.0,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+/*
+ListView.builder(
           itemCount: appUser.prevOrders[generalIndex].carts.length,
           itemBuilder: (context, index) {
             var itemprice =
@@ -169,16 +249,4 @@ class OrderHistoryDetailed extends StatelessWidget {
               ),
             );
           }),
-    );
-  }
-}
-/*
-ListView(
-        children: [
-          SizedBox(height: 50),
-          for (int i = 0;
-              i < appUser.prevOrders[generalIndex].carts.length;
-              i++)
-            Text(appUser.prevOrders[generalIndex].carts[i].product.name)
-        ],
-      ),*/
+*/ 
