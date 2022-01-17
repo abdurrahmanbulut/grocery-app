@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/user.dart';
+import 'package:grocery_app/screens/cashier_detailed_order_screen.dart';
 import 'package:grocery_app/services/database.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,7 +25,7 @@ class _CashierOrderScreenState extends State<CashierOrderScreen> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) =>
-                      OrderHistoryDetailed(order: widget.orders[index])));
+                      DetailedOrderPage(order: widget.orders[index])));
             },
             child: ListTile(
               title: Text(widget.orders[index].id),
@@ -47,30 +48,6 @@ class Loading extends StatelessWidget {
                 SpinKitFadingCube(color: Colors.lightGreen[100], size: 50.0)));
   }
 }
-
-/*
-List<Item> generateItems(
-    int numberOfItems, AsyncSnapshot<List<Order>> AllOrders) {
-  return List<Item>.generate(numberOfItems, (index) {
-    return Item(
-      headerValue: '${AllOrders.data![index].id as String}',
-      expandedValue: '${AllOrders.data![index].buyerId}',
-      value: TextButton(
-        style: TextButton.styleFrom(
-          textStyle: const TextStyle(fontSize: 20),
-        ),
-        onPressed: () {},
-        child: const Text('Enabled'),
-      ),
-    );
-  });
-}*/
-/*
-AppUser GetUser(String BuyerID){
-AppUser buyerUser;
-List<AppUser> users = await getAllUsers();
-
-}*/
 
 class OrderHistoryDetailed extends StatelessWidget {
   Order order;
@@ -107,65 +84,3 @@ class OrderHistoryDetailed extends StatelessWidget {
     );
   }
 }
-
-/*
-              var now = new DateTime.now();
-              var formatter = new DateFormat('yyyy-MM-dd');
-              String formattedDate = formatter.format(now);
-              String tempDate = AllOrders.data![0].id.toString();
-              String date = tempDate.substring(0, 10);*/
-
-/*
-SingleChildScrollView(
-        child: FutureBuilder(
-            future: generateOrderCode(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Order>> AllOrders) {
-              List<Item> _data =
-                  generateItems(AllOrders.data!.length as int, AllOrders);
-              int generalIndex = 0;
-              var now = new DateTime.now();
-              var formatter = new DateFormat('yyyy-MM-dd');
-              String formattedDate = formatter.format(now);
-              String tempDate = AllOrders.data![0].id.toString() as String;
-              String date = tempDate.substring(0, 10);
-              int removeToWhere = 0;
-              for (int i = 0; i < AllOrders.data!.length as bool; i++) {
-                tempDate = AllOrders.data![i].id.toString() as String;
-                date = tempDate.substring(0, 10);
-                if (date != formattedDate) removeToWhere++;
-              }
-              _data.removeRange(0, removeToWhere);
-              return ExpansionPanelList(
-                expansionCallback: (int index, bool isExpanded) {
-                  setState(() {
-                    print('${_data[index].isExpanded} bbbbbbbbb');
-                    _data[index].isExpanded = !isExpanded;
-                    generalIndex = index;
-                    print('${_data[index].isExpanded} aaaaaa');
-                  });
-                },
-                children: _data.map<ExpansionPanel>((Item item) {
-                  print('${_data[0].isExpanded} cccccccc');
-                  return ExpansionPanel(
-                    canTapOnHeader: true,
-                    headerBuilder: (BuildContext context, bool isExpanded) {
-                      return ListTile(
-                        title: Text(item.headerValue),
-                      );
-                    },
-                    body: ListTile(
-                        title: Text(item.expandedValue),
-                        trailing: const Icon(Icons.info),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => OrderHistoryDetailed(
-                                    order: AllOrders.data![generalIndex],
-                                  )));
-                        }),
-                    isExpanded: item.isExpanded,
-                  );
-                }).toList(),
-              );
-            }));
-            */

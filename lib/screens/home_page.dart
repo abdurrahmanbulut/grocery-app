@@ -35,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BottomNavBar(widget.categories),
-      );
+      body: BottomNavBar(widget.categories),
+    );
   }
 }
 
@@ -122,7 +122,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   bool isClicked = false;
   static List<Widget> _widgetOptions = [];
-  AppUser updatedUser = AppUser('', '', '', '', '', '', Type.none,0);
+  AppUser updatedUser = AppUser('', '', '', '', '', '', Type.none, 0);
   List<CategoryProduct> categories = [];
 
   @override
@@ -179,9 +179,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
             leading: IconButton(
               onPressed: () {
+                print(appUser.prevOrders[appUser.prevOrders.length - 1].status);
+                print(appUser.prevOrders[appUser.prevOrders.length - 1].id);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OrderScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => OrderScreen(
+                          order: appUser
+                              .prevOrders[appUser.prevOrders.length - 1])),
                 );
               },
               icon: Icon(Icons.wallet_travel_rounded),
@@ -200,8 +205,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       });
                     },
                     child: Badge(
-                      badgeContent: Text(
-                          appUser.numberOfNewNotifications().toString()),
+                      badgeContent:
+                          Text(appUser.numberOfNewNotifications().toString()),
                       child: Icon(
                         Icons.add_alert,
                         size: 26.0,
@@ -235,3 +240,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ));
   }
 }
+/*print(current_step);
+                if (widget.order.status == OrderStatus.waiting)
+                  current_step = 0;
+                else if (widget.order.status == OrderStatus.prepared)
+                  current_step = 1;
+                else if (widget.order.status == OrderStatus.taken)
+                  current_step = 2;
+                print(current_step);*/

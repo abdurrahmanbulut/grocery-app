@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/model/user.dart';
 
 class OrderScreen extends StatefulWidget {
-  OrderScreen() : super();
+  Order order;
+  OrderScreen({required this.order}) : super();
 
   final String title = "Stepper Demo";
 
@@ -11,10 +13,18 @@ class OrderScreen extends StatefulWidget {
 
 class OrderScreenState extends State<OrderScreen> {
   //
-  static int current_step = 0;
+  int current_step = 0;
 
   @override
   Widget build(BuildContext context) {
+    if (widget.order.status == OrderStatus.waiting)
+      current_step = 0;
+    else if (widget.order.status == OrderStatus.prepared)
+      current_step = 1;
+    else if (widget.order.status == OrderStatus.taken) current_step = 2;
+    print(current_step);
+    print(widget.order.status);
+    print(widget.order.id);
     return Scaffold(
         // Appbar
         appBar: AppBar(
@@ -38,19 +48,6 @@ class OrderScreenState extends State<OrderScreen> {
           steps: getSteps(),
           type: StepperType.vertical,
           currentStep: current_step,
-          onStepContinue: () {
-            final LastStep = current_step == getSteps().length - 1;
-            if (LastStep) {
-              print('Complete');
-            } else {
-              setState(() => current_step += 1);
-            }
-          },
-          onStepCancel: current_step == 0
-              ? null
-              : () => setState(
-                    () => current_step -= 1,
-                  ),
         )));
   }
 
@@ -58,18 +55,30 @@ class OrderScreenState extends State<OrderScreen> {
         Step(
           state: current_step > 0 ? StepState.complete : StepState.indexed,
           title: Text('Waiting for order aprove'),
-          content: Container(child: Image(image: AssetImage("assets/images/order_confirm.jpg"),),),
+          content: Container(
+            child: Image(
+              image: AssetImage("assets/images/order_confirm.jpg"),
+            ),
+          ),
           isActive: current_step >= 0,
         ),
         Step(
           state: current_step > 1 ? StepState.complete : StepState.indexed,
           title: Text('Order is being prepared'),
-          content: Container(child: Image(image: AssetImage("assets/images/order_package.jpg"),),),
+          content: Container(
+            child: Image(
+              image: AssetImage("assets/images/order_package.jpg"),
+            ),
+          ),
           isActive: current_step >= 1,
         ),
         Step(
           title: Text('Order is ready to pick up!'),
-          content: Container(child: Image(image: AssetImage("assets/images/package_ready.png"),),),
+          content: Container(
+            child: Image(
+              image: AssetImage("assets/images/package_ready.png"),
+            ),
+          ),
           state: current_step > 2 ? StepState.complete : StepState.indexed,
           isActive: current_step >= 2,
         ),

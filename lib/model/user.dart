@@ -213,6 +213,14 @@ class Order {
     dataId = id;
   }
 
+  double sumOrder2() {
+    double sumofOrder = 0.0;
+    for (int i = 0; i < carts.length; i++) {
+      sumofOrder += (carts[i].product.price * carts[i].numOfItem);
+    }
+    return sumofOrder;
+  }
+
   bool contains(String keyword) {
     return (id.toUpperCase().contains(keyword.toUpperCase()));
   }
