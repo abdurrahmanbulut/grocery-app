@@ -13,6 +13,7 @@ import 'package:grocery_app/screens/register_screen.dart';
 import 'package:grocery_app/utilities/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cashier_home_screen.dart';
+import 'package:intl/intl.dart';
 
 class LoginScreen extends StatefulWidget {
   final List<CategoryProduct> categories;
@@ -37,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _handleRemeberme(bool value) {
     _isChecked = value;
     SharedPreferences.getInstance().then(
-          (prefs) {
+      (prefs) {
         prefs.setBool("remember_me", value);
         prefs.setString('email', _emailController.text);
         prefs.setString('password', _passwordController.text);
@@ -51,20 +52,27 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _loadUserEmailPassword() async {
     try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      String rememberedEmail = (_prefs.getString("email") != null) ? _prefs.getString("email") as String: "";
-      String rememberedPassword = (_prefs.getString("password") != null)? _prefs.getString("password") as String: "";
-      bool _rememberMe = (_prefs.getBool("remember_me") != null)? _prefs.getBool("remember_me") as bool : false;
+      String rememberedEmail = (_prefs.getString("email") != null)
+          ? _prefs.getString("email") as String
+          : "";
+      String rememberedPassword = (_prefs.getString("password") != null)
+          ? _prefs.getString("password") as String
+          : "";
+      bool _rememberMe = (_prefs.getBool("remember_me") != null)
+          ? _prefs.getBool("remember_me") as bool
+          : false;
       if (_rememberMe) {
         setState(() {
           _isChecked = true;
         });
-        _emailController.text = rememberedEmail.isNotEmpty ? rememberedEmail :  "";
-        _passwordController.text = rememberedPassword.isNotEmpty ? rememberedPassword : "";
-        _email = rememberedEmail.isNotEmpty ? rememberedEmail :  "";
+        _emailController.text =
+            rememberedEmail.isNotEmpty ? rememberedEmail : "";
+        _passwordController.text =
+            rememberedPassword.isNotEmpty ? rememberedPassword : "";
+        _email = rememberedEmail.isNotEmpty ? rememberedEmail : "";
         _password = rememberedPassword.isNotEmpty ? rememberedPassword : "";
       }
-    }
-    catch(e) {
+    } catch (e) {
       print(e);
     }
   }
@@ -308,13 +316,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>  HomeScreen( widget.categories)));
+                        builder: (context) => HomeScreen(widget.categories)));
               } else if (appUser.type == Type.cashier) {
+                List<Order> temporders = await getAllOrders();
+                List<Order> TodaysOrders = TodaysOrdersFunc(temporders);
+                List<Order> orders = await getAllOrders();
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                                CashierHomeScreen(widget.categories)));
+                        builder: (context) => CashierHomeScreen(
+                            widget.categories, orders, TodaysOrders)));
               }
             }
           } on FirebaseAuthException catch (e) {
@@ -430,8 +441,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        HomeScreen( widget.categories)));
+                    builder: (context) => HomeScreen(widget.categories)));
           } catch (e) {
             if (e is FirebaseAuthException) {
               throw e;
@@ -488,7 +498,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>  RegisterScreen(widget.categories)));
+                  builder: (context) => RegisterScreen(widget.categories)));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -528,7 +538,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => HomeScreen( widget.categories)));
+                      builder: (context) => HomeScreen(widget.categories)));
             }
           },
           child: Row(
@@ -549,42 +559,63 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Container _testCashierLogin() {
     return Container(
-        height: 50.0,
-        width: 300,
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            primary: Colors.white,
-            backgroundColor: Colors.white,
-            side: const BorderSide(color: Colors.black, width: 2),
-          ),
-          onPressed: () async {
-            String _testEmail = 'dogukaanguleer@gmail.com';
-            String _testPassword = '123456';
-            appUser = await signInWithEmail(_testEmail, _testPassword);
-            AppUser checkedUser = await checkUser(appUser);
-            checkedUser.setId(appUser.dataId);
-            appUser = checkedUser;
-            if (auth.currentUser!.email == _testEmail) {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>  CashierHomeScreen(widget.categories)));
-            }
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
-              SizedBox(
-                width: 80,
-              ),
-              Text('Cashier Test Sign In',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'OpenSans',
-                  )),
-            ],
-          ),
-        ),);
+      height: 50.0,
+      width: 300,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          primary: Colors.white,
+          backgroundColor: Colors.white,
+          side: const BorderSide(color: Colors.black, width: 2),
+        ),
+        onPressed: () async {
+          String _testEmail = 'dogukaanguleer@gmail.com';
+          String _testPassword = '123456';
+          appUser = await signInWithEmail(_testEmail, _testPassword);
+          AppUser checkedUser = await checkUser(appUser);
+          List<Order> temporders = await getAllOrders();
+          List<Order> TodaysOrders = TodaysOrdersFunc(temporders);
+          List<Order> orders = await getAllOrders();
+          checkedUser.setId(appUser.dataId);
+          appUser = checkedUser;
+          if (auth.currentUser!.email == _testEmail) {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CashierHomeScreen(
+                        widget.categories, orders, TodaysOrders)));
+          }
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: const [
+            SizedBox(
+              width: 80,
+            ),
+            Text('Cashier Test Sign In',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'OpenSans',
+                )),
+          ],
+        ),
+      ),
+    );
   }
+}
 
+List<Order> TodaysOrdersFunc(List<Order> orders) {
+  var now = new DateTime.now();
+  var formatter = new DateFormat('yyyy-MM-dd');
+  String formattedDate = formatter.format(now);
+  int count = 0;
+  for (int i = 0; i < orders.length; i++) {
+    String tempDate = orders[i].time.toString();
+    String date = tempDate.substring(0, 10);
+    if (date != formattedDate) {
+      count = i;
+    }
+  }
+  List<Order> AllOrders = orders;
+  AllOrders.removeRange(0, count + 1);
+  return AllOrders;
 }
