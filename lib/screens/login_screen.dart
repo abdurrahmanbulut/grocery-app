@@ -13,6 +13,7 @@ import 'package:grocery_app/screens/register_screen.dart';
 import 'package:grocery_app/utilities/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cashier_home_screen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:intl/intl.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -136,24 +137,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            ShowAlert(),
+                            SizedBox(height: 50, child: ShowAlert()),
                             const SizedBox(
-                              width: 60,
-                              height: 45,
+                              width: 65,
+                              height: 10,
                             ),
-
-                            const Text(
-                              "Welcome To Grocery!",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                            const SizedBox(height: 5.0),
+                            Center(child: buildAnimatedText(3)),
                             const SizedBox(height: 5.0),
                             _buildEmailTF(), // email widget
                             const SizedBox(
                               height: 15.0,
                             ),
                             _buildPasswordTF(),
-                            _buildForgotPasswordBtn(),
-                            _buildRememberMeCheckbox(),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 32,
+                                ),
+                                _buildRememberMeCheckbox(),
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                _buildForgotPasswordBtn(),
+                              ],
+                            ),
                             _buildLoginBtn(),
                             _or(),
                             googleButton(),
@@ -234,13 +242,23 @@ class _LoginScreenState extends State<LoginScreen> {
               color: Colors.black,
               fontFamily: 'OpenSans',
             ),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: OutlineInputBorder(),
               contentPadding: EdgeInsets.only(top: 13.0),
               prefixIcon: Icon(
                 Icons.lock,
                 color: Colors.amber,
               ),
+              suffixIcon: IconButton(
+                  icon: Icon(
+                    _isObscure ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.amber,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  }),
               hintText: 'Password',
               hintStyle: kHintTextStyle,
             ),
@@ -253,6 +271,83 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ],
     );
+  }
+
+  Widget buildAnimatedText(int num) {
+    if (num == 0) {
+      return SizedBox(
+        width: 250.0,
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            fontSize: 25,
+            color: Colors.amber,
+          ),
+          child: AnimatedTextKit(
+            repeatForever: true,
+            animatedTexts: [
+              WavyAnimatedText('Welcome to Grocery!'),
+            ],
+            onTap: () {
+              print("Tap Event");
+            },
+          ),
+        ),
+      );
+    } else if (num == 1) {
+      return SizedBox(
+        width: 250.0,
+        child: DefaultTextStyle(
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
+          child: AnimatedTextKit(
+            animatedTexts: [
+              FadeAnimatedText('do IT!'),
+              FadeAnimatedText('do it RIGHT!!'),
+              FadeAnimatedText('do it RIGHT NOW!!!'),
+            ],
+            onTap: () {
+              print("Tap Event");
+            },
+          ),
+        ),
+      );
+    } else if (num == 3) {
+      const colorizeColors = [
+        Colors.amber,
+        Colors.blue,
+        Colors.purple,
+        Colors.red,
+      ];
+
+      const colorizeTextStyle = TextStyle(
+        fontSize: 25.0,
+        fontFamily: 'Horizon',
+      );
+
+      return SizedBox(
+        width: 250.0,
+        child: AnimatedTextKit(
+          animatedTexts: [
+            ColorizeAnimatedText(
+              'Welcome to Grocery!',
+              textStyle: colorizeTextStyle,
+              colors: colorizeColors,
+            ),
+          ],
+          isRepeatingAnimation: true,
+          onTap: () {
+            print("Tap Event");
+          },
+        ),
+      );
+    } else {
+      return const SizedBox(
+        height: 0,
+      );
+    }
   }
 
   Widget _buildForgotPasswordBtn() {
@@ -284,7 +379,7 @@ class _LoginScreenState extends State<LoginScreen> {
             data: ThemeData(unselectedWidgetColor: Colors.amber),
             child: Checkbox(
               value: _isChecked,
-              checkColor: Colors.white,
+              checkColor: Colors.black,
               activeColor: Colors.amber,
               onChanged: (value) {
                 _handleRemeberme(value!);
@@ -333,13 +428,17 @@ class _LoginScreenState extends State<LoginScreen> {
               print(e.message);
               switch (e.message) {
                 case 'There is no user record corresponding to this identifier. The user may have been deleted.':
-                  error = e.message;
+                  error =
+                      "There is no user record corresponding to this identifiers";
                   break;
                 case 'The password is invalid or the user does not have a password.':
-                  error = e.message;
+                  error = "The password is invalid!";
                   break;
                 case 'Given String is empty or null':
                   error = "Email or password can not be empty!";
+                  break;
+                case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
+                  error = "There is a network error.Please try again later!";
                   break;
                 default:
                   error = "Error";
