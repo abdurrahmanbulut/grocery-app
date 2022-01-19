@@ -13,6 +13,9 @@ class PasswordChangeScreen extends StatefulWidget {
 
 class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
   String _current = '', _new = '', _confirm = '';
+  bool _isObscure = true;
+  bool _isObscure2 = true;
+  bool _isObscure3 = true;
   final TextEditingController _currentController = TextEditingController();
   final TextEditingController _newController = TextEditingController();
   final TextEditingController _confirmController = TextEditingController();
@@ -103,28 +106,37 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            controller: _currentController,
-            obscureText: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.only(top: 13.0),
-              prefixIcon: const Icon(
-                Icons.lock,
-                color: Colors.amber,
+              controller: _currentController,
+              obscureText: _isObscure,
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'OpenSans',
               ),
-              hintText: 'Current Password',
-              hintStyle: kHintTextStyle,
-            ),
-            onChanged: (value) {
-              setState(() {
-                _current = value;
-              });
-            }
-          ),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.only(top: 13.0),
+                prefixIcon: const Icon(
+                  Icons.lock,
+                  color: Colors.amber,
+                ),
+                hintText: 'Current Password',
+                hintStyle: kHintTextStyle,
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.amber,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    }),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _current = value;
+                });
+              }),
         ),
       ],
     );
@@ -142,28 +154,37 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            controller: _newController,
-            obscureText: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.only(top: 13.0),
-              prefixIcon: const Icon(
-                Icons.lock,
-                color: Colors.amber,
+              controller: _newController,
+              obscureText: _isObscure3,
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'OpenSans',
               ),
-              hintText: 'New Password',
-              hintStyle: kHintTextStyle,
-            ),
-            onChanged: (value) {
-              setState(() {
-                _new = value;
-              });
-            }
-          ),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.only(top: 13.0),
+                prefixIcon: const Icon(
+                  Icons.lock,
+                  color: Colors.amber,
+                ),
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure3 ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.amber,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure3 = !_isObscure3;
+                      });
+                    }),
+                hintText: 'New Password',
+                hintStyle: kHintTextStyle,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _new = value;
+                });
+              }),
         ),
       ],
     );
@@ -181,28 +202,37 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
           decoration: kBoxDecorationStyle,
           height: 50.0,
           child: TextField(
-            controller: _confirmController,
-            obscureText: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontFamily: 'OpenSans',
-            ),
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.only(top: 13.0),
-              prefixIcon: const Icon(
-                Icons.lock,
-                color: Colors.amber,
+              controller: _confirmController,
+              obscureText: _isObscure2,
+              style: const TextStyle(
+                color: Colors.black,
+                fontFamily: 'OpenSans',
               ),
-              hintText: 'Confirm Password',
-              hintStyle: kHintTextStyle,
-            ),
-            onChanged: (value) {
-              setState(() {
-                _confirm = value;
-              });
-            }
-          ),
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(),
+                contentPadding: const EdgeInsets.only(top: 13.0),
+                prefixIcon: const Icon(
+                  Icons.lock,
+                  color: Colors.amber,
+                ),
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      _isObscure2 ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.amber,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure2 = !_isObscure2;
+                      });
+                    }),
+                hintText: 'Confirm Password',
+                hintStyle: kHintTextStyle,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _confirm = value;
+                });
+              }),
         ),
       ],
     );
@@ -214,15 +244,14 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
       width: double.infinity,
       child: RaisedButton(
         onPressed: () {
-        if(appUser.password == _current) {
-          if(_new == _confirm) {
-            passwordChange(appUser,_new);
+          if (appUser.password == _current) {
+            if (_new == _confirm) {
+              passwordChange(appUser, _new);
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => (MaterialApp(
-                          theme: ThemeData.light(),
-                          home: ProfileScreen()))));
+                          theme: ThemeData.light(), home: ProfileScreen()))));
             }
           }
         },
@@ -244,6 +273,4 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
       ),
     );
   }
-
 }
-
