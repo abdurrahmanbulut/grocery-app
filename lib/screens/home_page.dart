@@ -240,11 +240,3 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ));
   }
 }
-/*print(current_step);
-                if (widget.order.status == OrderStatus.waiting)
-                  current_step = 0;
-                else if (widget.order.status == OrderStatus.prepared)
-                  current_step = 1;
-                else if (widget.order.status == OrderStatus.taken)
-                  current_step = 2;
-                print(current_step);*/

@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/screens/campaign/campaign_class.dart';
-
+import 'package:grocery_app/services/database.dart';
+import 'package:grocery_app/screens/category/components/product_card.dart';
 
 class Campaigns extends StatefulWidget {
   final List<CategoryProduct> categories;
-  const Campaigns( this.categories, {Key? key}) : super(key: key);
+  const Campaigns(this.categories, {Key? key}) : super(key: key);
 
   @override
   _CampaignsState createState() => _CampaignsState();
@@ -31,50 +33,58 @@ class _CampaignsState extends State<Campaigns> {
     );
   }
 
-  Container buildCampaignContainer(int numberOfCampaing) {
-
+  Container buildCampaignContainer(
+    int numberOfCampaing,
+  ) {
     return Container(
         margin: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: Colors.white,
+          color: Colors.white38,
+          /*boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, -15),
+                blurRadius: 20,
+                color: Colors.grey.withOpacity(0.15),
+              )
+            ]*/
         ),
         child: Container(
-          color: Colors.amberAccent,
-          child: 
-            TextButton.icon(
-              icon: Image.asset(
-                campaigns[numberOfCampaing].image,
-                height: 250,
-                width: 250,
-              ),
-              label: Column(
-                children: const[
-                  Text(
-                    "\nClick here for details",
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
+          padding: EdgeInsets.all(8), // Border width
+          decoration: BoxDecoration(
+            color: Colors.amberAccent,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: TextButton.icon(
+            icon: Image.asset(campaigns[numberOfCampaing].image,
+                height: 250, width: 250, fit: BoxFit.cover),
+            label: Column(
+              children: const [
+                Text(
+                  "\nClick here for details",
+                  style: TextStyle(
+                    color: Colors.black,
                   ),
-                ],
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SecondRoute(data: numberOfCampaing)),
-                );
-              },
+                ),
+              ],
             ),
-          
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SecondRoute(
+                        categories: widget.categories, data: numberOfCampaing)),
+              );
+            },
+          ),
         ));
   }
 }
 
 class SecondRoute extends StatefulWidget {
   final int data;
-  SecondRoute({required this.data});
+  final List<CategoryProduct> categories;
+  SecondRoute({required this.categories, required this.data});
 
   @override
   State<SecondRoute> createState() => _SecondRouteState(data: data);
@@ -83,7 +93,10 @@ class SecondRoute extends StatefulWidget {
 class _SecondRouteState extends State<SecondRoute> {
   @override
   final int data;
+
   _SecondRouteState({required this.data});
+  List<Product> filteredProducts = [];
+  var keyword = ValueNotifier<String>('');
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,26 +110,74 @@ class _SecondRouteState extends State<SecondRoute> {
         ),
         body: printingCampaign(data));
   }
-}
 
-Container printingCampaign(int numberOfCampaing) {
-  return Container(
-      margin: const EdgeInsets.all(20.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.white,
-      ),
-      child: Column(
-        children: [
-          Center(child: Image.asset(campaigns[numberOfCampaing].image,width: 300,height: 300,)),
-          Text(campaigns[numberOfCampaing].title,
+  Container printingCampaign(int numberOfCampaing) {
+    print(campaigns[0].product);
+    print(campaigns[numberOfCampaing].product);
+    keyword.value = campaigns[numberOfCampaing].product;
+
+    filteredProducts = getFilteredProducts(widget.categories, keyword.value);
+    return Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              width: 20,
+              height: 20,
+            ),
+            Center(
+                child: Image.asset(
+              campaigns[numberOfCampaing].image,
+              width: 300,
+              height: 300,
+              fit: BoxFit.cover,
+            )),
+            const SizedBox(
+              width: 25,
+              height: 25,
+            ),
+            Text(campaigns[numberOfCampaing].title,
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold)),
+            Text(
+              campaigns[numberOfCampaing].description,
               style: const TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold)),
-          Text(
-            campaigns[numberOfCampaing].description,
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ));
+                  color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+             Divider(
+              color: Colors.grey.shade100,
+              height: 15,
+              thickness: 2,
+            ),
+            ValueListenableBuilder(
+              valueListenable: keyword,
+              builder: (context, value, widget) {
+                return productListCreate();
+              },
+            ),
+          ],
+        ));
+  }
+
+  Widget productListCreate() {
+    return Expanded(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: GridView.builder(
+              itemCount: filteredProducts.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 20.0,
+                childAspectRatio: 0.75,
+              ),
+              shrinkWrap: true,
+              itemBuilder: (context, index) =>
+                  ProductCard(product: filteredProducts[index], press: () {}))),
+    );
+  }
 }
