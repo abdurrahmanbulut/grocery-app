@@ -151,6 +151,7 @@ Query getOrderQuery() {
 
 void updateOrder(Order order, DatabaseReference id) {
   id.update(order.toJson());
+  updateOrderStatus(order);
 }
 
 Future<List<Order>> getAllOrders() async {
@@ -200,4 +201,16 @@ Future<List<WalletTransaction>> getAllWalletTransactions() async {
     });
   }
   return walletTransactions;
+}
+
+Future<void> updateOrderStatus(Order order) async {
+  AppUser buyer = await getUserWithUid(order.buyerId);
+  if(buyer.uid.isNotEmpty) {
+    for (int i = 0; i < buyer.prevOrders.length; i++) {
+      if (buyer.prevOrders[i].id == order.id) {
+        buyer.prevOrders[i].status = order.status;
+      }
+    }
+    buyer.update();
+  }
 }

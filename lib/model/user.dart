@@ -279,7 +279,7 @@ Order createOrder(record) {
   Map<String, dynamic> attributes = {
     'time': '',
     'id': '',
-    'uid': '',
+    'buyerId': '',
     'carts': []
   };
 
@@ -290,7 +290,7 @@ Order createOrder(record) {
   Order order = Order(
       DateTime.tryParse(attributes['time']) as DateTime,
       attributes['id'],
-      attributes['uid'],
+      attributes['buyerId'],
       cartList.map((i) => Cart.fromJson(i)).toList(),
       intToStatus(attributes['status']));
   return order;
