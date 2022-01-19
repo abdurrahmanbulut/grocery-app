@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/screens/contact_screen.dart';
-import 'package:grocery_app/screens/credit_cards_screen.dart';
-import 'package:grocery_app/screens/favorites_screen.dart';
+import 'package:grocery_app/screens/wallet_screen.dart';
 import 'package:grocery_app/screens/login_screen.dart';
 import 'package:grocery_app/screens/order_history.dart';
 import 'package:grocery_app/screens/profile_screen.dart';
@@ -11,7 +10,7 @@ import 'dart:io';
 
 class AccountScreen extends StatefulWidget {
   final List<CategoryProduct> categories;
-  const AccountScreen( this.categories, {Key? key}) : super(key: key);
+  const AccountScreen(this.categories, {Key? key}) : super(key: key);
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -34,19 +33,17 @@ class _AccountScreenState extends State<AccountScreen> {
         children: [
           TextButton.icon(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProfileScreen()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
               },
               icon: const Icon(
                 Icons.person,
                 color: Colors.amber,
               ),
               label: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text(
-                      "Profile                                                ",
+                  Text("Profile",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -71,34 +68,9 @@ class _AccountScreenState extends State<AccountScreen> {
                 color: Colors.amber,
               ),
               label: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Previous Orders                               ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.black)),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.amber,
-                  )
-                ],
-              )),
-          const Divider(
-            height: 15,
-            thickness: 2,
-          ),
-          TextButton.icon(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Favorites()));
-              },
-              icon: const Icon(
-                Icons.favorite,
-                color: Colors.amber,
-              ),
-              label: Row(
-                children: const [
-                  Text("Favorites                                           ",
+                  Text("Previous Orders",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -118,15 +90,16 @@ class _AccountScreenState extends State<AccountScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreditCardsScreen()));
+                        builder: (context) => WalletScreen(widget.categories)));
               },
               icon: const Icon(
-                Icons.credit_card,
+                Icons.euro,
                 color: Colors.amber,
               ),
               label: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Cards                                                 ",
+                  Text("Wallet",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -151,8 +124,9 @@ class _AccountScreenState extends State<AccountScreen> {
                 color: Colors.amber,
               ),
               label: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Contact                                             ",
+                  Text("Contact",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
