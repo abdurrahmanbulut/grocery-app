@@ -104,7 +104,7 @@ class _SecondRouteState extends State<SecondRoute> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "Campaign",
+            "Kampanyalar",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,

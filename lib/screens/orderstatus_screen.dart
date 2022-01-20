@@ -81,7 +81,7 @@ class OrderScreenState extends State<OrderScreen> {
   List<Step> getSteps() => [
         Step(
           state: current_step > 0 ? StepState.complete : StepState.indexed,
-          title: Text('Waiting for order aprove'),
+          title: Text('Onay Bekleniyor'),
           content: Container(
             child: Image(
               image: AssetImage("assets/images/order_confirm.jpg"),
@@ -91,7 +91,7 @@ class OrderScreenState extends State<OrderScreen> {
         ),
         Step(
           state: current_step > 1 ? StepState.complete : StepState.indexed,
-          title: Text('Order is being prepared'),
+          title: Text('Sipariş Hazırlanıyor'),
           content: Container(
             child: Image(
               image: AssetImage("assets/images/order_package.jpg"),
@@ -100,7 +100,7 @@ class OrderScreenState extends State<OrderScreen> {
           isActive: current_step >= 1,
         ),
         Step(
-          title: Text('Order is ready to pick up!'),
+          title: Text('Sipariş teslim edilmeye hazır!'),
           content: Container(
             child: Image(
               image: AssetImage("assets/images/package_ready.png"),
