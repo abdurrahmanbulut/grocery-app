@@ -91,6 +91,14 @@ class _PromotionListState extends State<PromotionList> {
                             Image.asset(
                               campaigns[3].image,
                               fit: BoxFit.cover,
+                            ),
+                            Image.asset(
+                              campaigns[4].image,
+                              fit: BoxFit.cover,
+                            ),
+                            Image.asset(
+                              campaigns[5].image,
+                              fit: BoxFit.cover,
                             )
                           ],
                         ),

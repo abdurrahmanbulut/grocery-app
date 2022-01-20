@@ -13,33 +13,33 @@ class Campaign {
 
 List<Campaign> campaigns = [
   Campaign(
-      image: "assets/images/chocolate.jpg",
-      description: "Only for this weekend!",
-      title: "%20 Sale in Chocolates!",
-      product: "Chocolate"),
+      image: "assets/images/sırma.jpg",
+      description: "Sadece bu hafta için!",
+      title: "Sırma ürünlerinde %10 indirim!",
+      product: "Sırma"),
   Campaign(
-      image: "assets/images/milk.jpg",
-      description: "Only for this weekend!",
-      title: "%30 Sale in Milks!",
-      product: "Tea"),
+      image: "assets/images/sütaş.jpg",
+      description: "Sadece bu hafta için!",
+      title: "Süt ürünlerinde %10 indirim.!",
+      product: "Sütaş"),
   Campaign(
-      image: "assets/images/tomatoes.jpg",
-      description: "Only for this weekend!",
-      title: "%40 Sale in Tomatoes!",
-      product: "Ayran"),
+      image: "assets/images/cappy.jpg",
+      description: "Sadece bu hafta için!",
+      title: "Cappy ürünlerinde %10 indirim!",
+      product: "Cappy"),
   Campaign(
-      image: "assets/images/potatoes.jpg",
-      description: "Only for this weekend!",
-      title: "%50 Sale in Potatoes!",
-      product: "Coffe"),
+      image: "assets/images/indomie.png",
+      description: "Sadece bu hafta için!",
+      title: "Indomie noodlelarda %10 indirim!",
+      product: "Noodle"),
   Campaign(
-      image: "assets/images/chicken.jpg",
-      description: "Only for this weekend!",
-      title: "%60 Sale in Chickens!",
-      product: "Fruit Juice"),
+      image: "assets/images/filiz.jpg",
+      description: "Sadece bu hafta için!",
+      title: "Filiz makarnalarda %10 indirim!",
+      product: "Makarna"),
   Campaign(
-      image: "assets/images/meat.jpg",
-      description: "Only for this weekend!",
-      title: "%70 Sale in Meats!",
-      product: "Coca Cola")
+      image: "assets/images/damacana.jpg",
+      description: "Sadece bu hafta için!",
+      title: "Damacanalarda %10 indirim",
+      product: "19L")
 ];
