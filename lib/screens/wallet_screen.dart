@@ -36,7 +36,7 @@ class _WalletScreenState extends State<WalletScreen> {
       body: Column(
         children: [
           Center(
-              child: colorCard("Grocery Coin", appUser.wallet, 1, context,
+              child: colorCard("Bakiye:", appUser.wallet, 1, context,
                   Color(0xFFFFC107))),
           SizedBox(
             height: 50,
@@ -124,7 +124,7 @@ Widget colorCard(
           ),
         ),
         Text(
-          "${type > 0 ? "" : "-"} \$ ${amount.toString()}",
+          "${type > 0 ? "" : "-"}  ${amount.toString()} TL",
           style: TextStyle(
             fontSize: 22,
             color: Colors.black,
