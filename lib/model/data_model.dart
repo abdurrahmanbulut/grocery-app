@@ -50,6 +50,10 @@ class Product {
   bool contains(String keyword) {
     return (name.toUpperCase().contains(keyword.toUpperCase()));
   }
+
+  double getDiscountedPrice() {
+    return price  - (price*discount/100);
+  }
 }
 
 class SubCategory {

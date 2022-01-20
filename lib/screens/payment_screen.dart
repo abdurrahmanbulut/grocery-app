@@ -126,7 +126,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             children: [
               for (var i = 0; i < count; i++)
                 Text(
-                    "${appUser.carts[i].product.name} \$${appUser.carts[i].product.price} x ${appUser.carts[i].numOfItem}",
+                    "${appUser.carts[i].product.name} \$${appUser.carts[i].product.getDiscountedPrice()} x ${appUser.carts[i].numOfItem}",
                     style: TextStyle(fontSize: 16, color: Colors.black)),
             ],
           ),

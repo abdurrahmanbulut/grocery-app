@@ -116,14 +116,14 @@ class AppUser {
   void sumCart() {
     sumOfCart.value = 0;
     for (int i = 0; i < carts.length; i++) {
-      sumOfCart.value += (carts[i].product.price * carts[i].numOfItem);
+      sumOfCart.value += (carts[i].product.getDiscountedPrice() * carts[i].numOfItem);
     }
   }
 
   double sumOrder(int index) {
     double sumofOrder = 0.0;
     for (int i = 0; i < prevOrders[index].carts.length; i++) {
-      sumofOrder += (prevOrders[index].carts[i].product.price *
+      sumofOrder += (prevOrders[index].carts[i].product.getDiscountedPrice() *
           prevOrders[index].carts[i].numOfItem);
     }
     return sumofOrder;

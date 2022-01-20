@@ -114,7 +114,7 @@ class _ProductCardState extends State<ProductCard> {
                 ),
               ),
               TextSpan(
-                text: (widget.product.price - (widget.product.price*widget.product.discount/100)).toString() + " TL",
+                text: (widget.product.getDiscountedPrice()).toString() + " TL",
                 style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
             ],
