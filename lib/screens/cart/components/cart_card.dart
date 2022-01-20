@@ -30,7 +30,7 @@ class _CartCardState extends State<CartCard> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Image.asset(widget.user.carts[widget.cartIndex].product.image),
+              child: Image.network(widget.user.carts[widget.cartIndex].product.image),
             ),
           ),
         ),
