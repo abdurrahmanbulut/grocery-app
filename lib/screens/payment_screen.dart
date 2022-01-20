@@ -151,7 +151,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   String orderCode = await generateOrderCode();
                   if (_result == 1) {
                     Order order = Order(DateTime.now(), orderCode, appUser.uid,
-                        appUser.carts, OrderStatus.waiting);
+                        appUser.carts, OrderStatus.waiting,false);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.update();
@@ -161,7 +161,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   } else if (_result == 2 &&
                       appUser.wallet >= appUser.sumOfCart.value) {
                     Order order = Order(DateTime.now(), orderCode, appUser.uid,
-                        appUser.carts, OrderStatus.waiting);
+                        appUser.carts, OrderStatus.waiting,true);
                     appUser.carts = [];
                     appUser.prevOrders.add(order);
                     appUser.decreaseWallet(appUser.sumOfCart.value);

@@ -193,8 +193,9 @@ class Order {
   String buyerId;
   List<Cart> carts = [];
   OrderStatus status;
+  bool paid;
 
-  Order(this.time, this.id, this.buyerId, this.carts, this.status);
+  Order(this.time, this.id, this.buyerId, this.carts, this.status,this.paid);
 
   Map<String, dynamic> toJson() {
     List<Map> carts = this.carts.map((i) => i.toJson()).toList();
@@ -203,7 +204,8 @@ class Order {
       'id': id,
       'buyerId': buyerId,
       'carts': carts,
-      'status': statusToInt(status)
+      'status': statusToInt(status),
+      'paid': paid
     };
   }
 
@@ -212,7 +214,7 @@ class Order {
       json["id"],
       json["buyerId"],
       List<Cart>.from(json["carts"].map((i) => Cart.fromJson(i))),
-      intToStatus(json["status"]));
+      intToStatus(json["status"]),json["paid"]);
 
   void update() {
     updateOrder(this, dataId);
@@ -301,7 +303,7 @@ Order createOrder(record) {
       attributes['id'],
       attributes['buyerId'],
       cartList.map((i) => Cart.fromJson(i)).toList(),
-      intToStatus(attributes['status']));
+      intToStatus(attributes['status']),attributes['paid']);
   return order;
 }
 
