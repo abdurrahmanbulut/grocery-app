@@ -27,7 +27,7 @@ class CartScreen extends StatelessWidget {
         children: [
           const Center(
             child: Text(
-              "Sepetim",
+              "Sepetin",
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -95,7 +95,7 @@ class _CheckOurCardState extends State<CheckOurCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text.rich(TextSpan(text: "Total:\n", children: [
+              Text.rich(TextSpan(text: "Toplam:\n", children: [
                 TextSpan(
                     text: "${appUser.sumOfCart.value} TL",
                     style: const TextStyle(fontSize: 22, color: Colors.black))

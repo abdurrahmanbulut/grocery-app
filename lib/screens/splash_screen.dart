@@ -37,7 +37,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Loading...'),
+        child: Text('Yükleniyor...'),
       ),
     );
   }

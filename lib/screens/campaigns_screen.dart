@@ -56,18 +56,20 @@ class _CampaignsState extends State<Campaigns> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: TextButton.icon(
-            icon: Image.asset(campaigns[numberOfCampaing].image,
-                height: 250, width: 250, fit: BoxFit.cover),
-            label: Column(
-              children: const [
+            icon: Column(
+              children: [
+                Image.asset(campaigns[numberOfCampaing].image,
+                    height: 250, width: 250, fit: BoxFit.cover),
                 Text(
-                  "\nClick here for details",
+                  "\nDetaylar için tıklayınız.",
                   style: TextStyle(
                     color: Colors.black,
                   ),
                 ),
+                
               ],
             ),
+            label: Text(" "),
             onPressed: () {
               Navigator.push(
                 context,
@@ -148,7 +150,7 @@ class _SecondRouteState extends State<SecondRoute> {
             SizedBox(
               height: 10.0,
             ),
-             Divider(
+            Divider(
               color: Colors.grey.shade100,
               height: 15,
               thickness: 2,

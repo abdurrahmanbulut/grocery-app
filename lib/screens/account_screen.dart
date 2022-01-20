@@ -43,7 +43,7 @@ class _AccountScreenState extends State<AccountScreen> {
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Hesabım",
+                  Text("Profil",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -70,7 +70,7 @@ class _AccountScreenState extends State<AccountScreen> {
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Önceki siparişler",
+                  Text("Geçmiş Siparişler",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -149,7 +149,7 @@ class _AccountScreenState extends State<AccountScreen> {
               Icons.exit_to_app,
               color: Colors.red,
             ),
-            label: const Text("Çıkış yap",
+            label: const Text("Çıkış Yap",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -172,7 +172,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text('Emin misiniz?'),
-                    content: const Text('Uygulamayı kapatmak istiyor musunuz?'),
+                    content: const Text('Uygulamadan çıkmak mı istiyorsunuz?'),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.pop(context),
@@ -188,7 +188,7 @@ class _AccountScreenState extends State<AccountScreen> {
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
-              child: const Text("Uygulamayı kapat"),
+              child: const Text("Uygulamayı Kapat"),
             ),
           ),
         ],

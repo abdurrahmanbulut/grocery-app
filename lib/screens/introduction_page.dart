@@ -55,7 +55,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
           child: ElevatedButton(
             child: const Text(
-              'Let\'s go!',
+              'Başlayalım!',
               style: TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -67,34 +67,34 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       ),
       pages: [
         PageViewModel(
-          title: "Search What You Need",
-          body: "Fill your cart and select the pickup date.",
+          title: "İstediği Ara.",
+          body: "Sepetinizi doldurun ve gelip alın.",
           image: _buildFullscreenImage('images/1.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "We Prepare Your Package.",
-          body: "You don't need to waste your time.",
+          title: "Sepetinizi Hazırlıyoruz.",
+          body: "Zaman harcamanıza gerek yok.",
           image: _buildFullscreenImage('images/2.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "We Will Notify You",
+          title: "Size bildireceğiz",
           body:
-              "We send you a notification with a code when your order is ready.",
+              "Siparişinizi almak için size QR Kod veriyoruz.",
           image: _buildFullscreenImage('images/3.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "Get Your Package",
+          title: "Siparişinizi alın",
           body:
-              "Scan the code we will give you in the market and get your package.",
+              "Size verdiğimiz kodu okutarak siparişinizi teslim alabilirsiniz.",
           image: _buildFullscreenImage('images/5.jpg'),
           decoration: pageDecoration,
         ),
         PageViewModel(
-          title: "If you're excited!",
-          body: "let's get started.",
+          title: "Eğer heyecanlı iseniz!",
+          body: "Hemen başlayalım.",
           image: _buildFullscreenImage('images/4.jpg'),
           decoration: pageDecoration,
         ),
@@ -105,7 +105,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       nextFlex: 0,
       //rtl: true, // Display as right-to-left
       skip: const Text(
-        'Skip',
+        'Atla',
         style: TextStyle(color: Colors.black),
       ),
       next: const Icon(
@@ -113,7 +113,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         color: Colors.black,
       ),
       done: const Text(
-        'Done',
+        'Bitti',
         style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
       ),
       curve: Curves.fastLinearToSlowEaseIn,

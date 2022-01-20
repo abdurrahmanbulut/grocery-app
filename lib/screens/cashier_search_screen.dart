@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/model/data_model.dart';
 import 'package:grocery_app/model/user.dart';
+import 'package:grocery_app/screens/cashier_detailed_order_screen.dart';
 import 'package:grocery_app/screens/cashier_order_screen.dart';
 import 'package:grocery_app/services/database.dart';
 import 'package:grocery_app/utilities/constants.dart';
@@ -60,7 +61,7 @@ class _CashierSearchPageState extends State<CashierSearchPage> {
                 Icons.search,
                 color: Colors.amber,
               ),
-              hintText: 'Search Order',
+              hintText: 'Sipariş Ara',
               hintStyle: kLabelStyle,
             ),
             onChanged: (value) {
@@ -94,7 +95,7 @@ class _CashierSearchPageState extends State<CashierSearchPage> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          OrderHistoryDetailed(order: filteredOrders[index])));
+                          DetailedOrderPage(order: filteredOrders[index])));
                 },
                 child: ListTile(
                   title: Text(filteredOrders[index].id),

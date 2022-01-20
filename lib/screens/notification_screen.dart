@@ -18,7 +18,7 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
-          "Notifications",
+          "Bildirimler",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,

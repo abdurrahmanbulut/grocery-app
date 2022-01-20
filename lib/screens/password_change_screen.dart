@@ -26,7 +26,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Change Password',
+        title: const Text('Şifre Değiştir',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -119,7 +119,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                   Icons.lock,
                   color: Colors.amber,
                 ),
-                hintText: 'Current Password',
+                hintText: 'Kullanılan Şifre',
                 hintStyle: kHintTextStyle,
                 suffixIcon: IconButton(
                     icon: Icon(
@@ -177,7 +177,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                         _isObscure3 = !_isObscure3;
                       });
                     }),
-                hintText: 'New Password',
+                hintText: 'Yeni Şifre',
                 hintStyle: kHintTextStyle,
               ),
               onChanged: (value) {
@@ -225,7 +225,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
                         _isObscure2 = !_isObscure2;
                       });
                     }),
-                hintText: 'Confirm Password',
+                hintText: 'Şifre Doğrulama',
                 hintStyle: kHintTextStyle,
               ),
               onChanged: (value) {
@@ -261,7 +261,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
         ),
         color: Colors.amber,
         child: const Text(
-          'Submit',
+          'Gönder',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.0,
