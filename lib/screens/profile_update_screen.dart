@@ -51,7 +51,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Update Profile',
+        title: const Text('Profil güncelleme',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -191,7 +191,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         ),
         color: Colors.amber,
         child: const Text(
-          'Submit',
+          'Gönder',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.0,

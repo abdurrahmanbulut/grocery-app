@@ -23,7 +23,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Apply Payment',
+        title: const Text('Ödeme sayfası',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -56,7 +56,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Order Note",
+            "Sipariş notu",
             style: TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -75,7 +75,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: const TextField(
             textAlign: TextAlign.left,
             decoration: InputDecoration(
-              hintText: 'Order Note',
+              hintText: 'Sipariş notu',
               border: InputBorder.none,
             ),
           ),
@@ -85,12 +85,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(width: 16.0),
-            Text("Payment Selection",
+            Text("Ödeme seçenekleri",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),
         RadioListTile(
-            title: Text('Cash'),
+            title: Text('Nakit'),
             activeColor: Colors.amber,
             value: 1,
             groupValue: _result,
@@ -100,7 +100,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               });
             }),
         RadioListTile(
-            title: Text('In App Points (Balance: ${appUser.wallet}\$)'),
+            title: Text('Cüzdan ile öde (Bakiye: ${appUser.wallet} TL)'),
             activeColor: Colors.amber,
             value: 2,
             groupValue: _result,
@@ -113,7 +113,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Sum of Products",
+            "Ürünler",
             style: TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -126,7 +126,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             children: [
               for (var i = 0; i < count; i++)
                 Text(
-                    "${appUser.carts[i].product.name} \$${appUser.carts[i].product.getDiscountedPrice()} x ${appUser.carts[i].numOfItem}",
+                    "${appUser.carts[i].product.name} : ${appUser.carts[i].product.getDiscountedPrice()} TL x ${appUser.carts[i].numOfItem}",
                     style: TextStyle(fontSize: 16, color: Colors.black)),
             ],
           ),
@@ -135,7 +135,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Total Cost: \$${appUser.sumOfCart.value}",
+            "Toplam tutar: ${appUser.sumOfCart.value} TL",
             style: const TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -185,7 +185,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               color: Colors.amber,
               child: const Text(
-                'Confirm Payment',
+                'Ödemeyi onayla',
                 style: TextStyle(
                   color: Colors.white,
                   letterSpacing: 1.0,
@@ -203,15 +203,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   showAlertDialogWalletBalance(BuildContext context) {
     Widget okButton = FlatButton(
-      child: Text("OK"),
+      child: Text("Tamam"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Insufficient Balance'),
-      content: Text("Please check your balance."),
+      title: Text('Yetersiz bakiye'),
+      content: Text("Lütfen bakiyenizi kontrol ediniz."),
       actions: [
         okButton,
       ],
@@ -227,7 +227,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   showAlertDialogSuccessfullyPaid(BuildContext context) {
     Widget okButton = FlatButton(
-      child: Text("OK"),
+      child: Text("Tamam"),
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => HomeScreen(widget.categories)));
@@ -235,8 +235,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Successfully Paid'),
-      content: Text("Payment is successful"),
+      title: Text('Sipariş alındı'),
+      content: Text("Ödeme başarılı."),
       actions: [
         okButton,
       ],
@@ -252,15 +252,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   showAlertDialog(BuildContext context) {
     Widget okButton = FlatButton(
-      child: Text("OK"),
+      child: Text("Tamam"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Payment Selection'),
-      content: Text("Please select a payment selection."),
+      title: Text('Ödeme yöntemi'),
+      content: Text("Lütfen ödeme yöntemi seçin."),
       actions: [
         okButton,
       ],
@@ -276,15 +276,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   showAlertDialogEmptyCart(BuildContext context) {
     Widget okButton = FlatButton(
-      child: Text("OK"),
+      child: Text("Tamam"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Cart is empty'),
-      content: Text("Please fill your cart to be able to give order."),
+      title: Text('Sepet boş'),
+      content: Text("Sepete ürün ekleyip tekrar deneyebilirsiniz."),
       actions: [
         okButton,
       ],

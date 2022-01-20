@@ -27,14 +27,14 @@ class CartScreen extends StatelessWidget {
         children: [
           const Center(
             child: Text(
-              "Your Cart",
+              "Sepetim",
               style: TextStyle(color: Colors.black),
             ),
           ),
           ValueListenableBuilder(
             valueListenable: appUser.sumOfCart,
             builder: (context, value, widget) {
-              return Text("(${appUser.carts.length} items)",
+              return Text("(${appUser.carts.length} ürün)",
                   style: const TextStyle(fontSize: 15, color: Colors.black)
                   //style: Theme.of(context).textTheme.caption,
                   );
@@ -97,7 +97,7 @@ class _CheckOurCardState extends State<CheckOurCard> {
             children: [
               Text.rich(TextSpan(text: "Total:\n", children: [
                 TextSpan(
-                    text: "\$${appUser.sumOfCart.value}",
+                    text: "${appUser.sumOfCart.value} TL",
                     style: const TextStyle(fontSize: 22, color: Colors.black))
               ])),
               SizedBox(
@@ -109,7 +109,7 @@ class _CheckOurCardState extends State<CheckOurCard> {
                             builder: (context) => PaymentScreen(widget.categories)));
                       },
                       child: const Text(
-                        "Check Out",
+                        "Ödemeye git",
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
                       style: OutlinedButton.styleFrom(

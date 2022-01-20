@@ -43,7 +43,7 @@ class _AccountScreenState extends State<AccountScreen> {
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Profile",
+                  Text("Hesabım",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -70,7 +70,7 @@ class _AccountScreenState extends State<AccountScreen> {
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Previous Orders",
+                  Text("Önceki siparişler",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -99,7 +99,7 @@ class _AccountScreenState extends State<AccountScreen> {
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Wallet",
+                  Text("Cüzdan",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -126,7 +126,7 @@ class _AccountScreenState extends State<AccountScreen> {
               label: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Text("Contact",
+                  Text("İletişim",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
@@ -149,7 +149,7 @@ class _AccountScreenState extends State<AccountScreen> {
               Icons.exit_to_app,
               color: Colors.red,
             ),
-            label: const Text("Sign Out",
+            label: const Text("Çıkış yap",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -171,16 +171,16 @@ class _AccountScreenState extends State<AccountScreen> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Are you sure?'),
-                    content: const Text('Do you want to close the App'),
+                    title: const Text('Emin misiniz?'),
+                    content: const Text('Uygulamayı kapatmak istiyor musunuz?'),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('No'),
+                        child: const Text('Hayır'),
                       ),
                       TextButton(
                         onPressed: () => exit(0),
-                        child: const Text('Yes'),
+                        child: const Text('Evet'),
                       ),
                     ],
                   ),
@@ -188,7 +188,7 @@ class _AccountScreenState extends State<AccountScreen> {
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
-              child: const Text("Close App"),
+              child: const Text("Uygulamayı kapat"),
             ),
           ),
         ],

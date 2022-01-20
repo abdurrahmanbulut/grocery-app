@@ -57,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
                 Icons.search,
                 color: Colors.amber,
               ),
-              hintText: 'Search Product',
+              hintText: 'Ürün ara',
               hintStyle: kLabelStyle,
             ),
             onChanged: (value) {

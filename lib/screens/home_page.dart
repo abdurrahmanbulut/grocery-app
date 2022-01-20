@@ -228,14 +228,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Ana sayfa'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Search'),
+                  icon: Icon(Icons.search), label: 'Ürün Ara'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart), label: 'Cart'),
+                  icon: Icon(Icons.shopping_cart), label: 'Sepetim'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.campaign), label: 'Campaigns'),
-              BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Account'),
+                  icon: Icon(Icons.campaign), label: 'Kampanyalar'),
+              BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Hesabım'),
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber,
