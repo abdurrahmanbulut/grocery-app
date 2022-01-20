@@ -48,14 +48,14 @@ class OrderScreenState extends State<OrderScreen> {
                 steps: getSteps(),
                 type: StepperType.vertical,
                 currentStep: current_step,
-                controlsBuilder: (context, {onStepContinue, onStepCancel}) {
+                controlsBuilder: (context, ControlsDetails control) {
                   return Container(
                     margin: EdgeInsets.only(top: 5),
                     child: Row(
                       children: [
                         Expanded(
                             child: ElevatedButton(
-                          onPressed: onStepContinue,
+                          onPressed: control.onStepContinue,
                           child: Text(" "),
                           style: ButtonStyle(
                             backgroundColor:
@@ -67,7 +67,7 @@ class OrderScreenState extends State<OrderScreen> {
                         ),
                         Expanded(
                             child: ElevatedButton(
-                          onPressed: onStepCancel,
+                          onPressed: control.onStepCancel,
                           child: Text(" "),
                           style: ButtonStyle(
                             backgroundColor:
