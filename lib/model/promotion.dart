@@ -22,10 +22,9 @@ class Promotion {
 
 Promotion createPromotion(record) {
   Map<String, dynamic> attributes = {
-    'time': '',
     'id': '',
-    'uid': '',
-    'carts': []
+    'name': '',
+    'desc': ''
   };
 
   record.forEach((key, value) => {attributes[key] = value});
