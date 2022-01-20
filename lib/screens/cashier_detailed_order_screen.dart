@@ -39,7 +39,7 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
                 children: [
                   CircleAvatar(
                     backgroundImage:
-                        AssetImage(widget.order.carts[i].product.image),
+                        NetworkImage(widget.order.carts[i].product.image),
                   ),
                   SizedBox(width: 10),
                   Text(
