@@ -112,7 +112,6 @@ class _SecondRouteState extends State<SecondRoute> {
   }
 
   Container printingCampaign(int numberOfCampaing) {
-    print(campaigns[0].product);
     print(campaigns[numberOfCampaing].product);
     keyword.value = campaigns[numberOfCampaing].product;
 
