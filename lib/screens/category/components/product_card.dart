@@ -29,94 +29,107 @@ class _ProductCardState extends State<ProductCard> {
 
   Widget card() {
     valueNotifier.value = appUser.indexCart(widget.product);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        (widget.product.count != 0)?
-        Expanded(
-          child:  Container(
+    return Card(
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+      (widget.product.count != 0)?
+      SizedBox(
+        child:  Container(
+            padding: const EdgeInsets.only(left: 0.5),
+            height: 60,
+            width: 100,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Image.network(widget.product.image, width: 80,)
+        ),
+      ) :
+      Container(
               padding: const EdgeInsets.only(left: 0.5),
-              height: 100,
+              height: 60,
               width: 100,
               decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(
+                  image: ExactAssetImage(widget.product.image),
+                  fit: BoxFit.scaleDown,
+                ),
               ),
-              child: Image.network(widget.product.image)
+        child: Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+            child: Container(
+                color: Colors.white.withOpacity(0.5)
+            ),
           ),
-        ) :
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.only(left: 0.5),
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: ExactAssetImage(widget.product.image),
-                fit: BoxFit.scaleDown,
               ),
             ),
-            child: Positioned.fill(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
-                child: Container(
-                    color: Colors.white.withOpacity(0.5)
+      Padding(
+        padding:  EdgeInsets.only(
+            left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+            right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
+        ),
+        child: SizedBox(
+          height: 30,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 0, bottom: 0, right: 0, top: 4),
+            child: Text(
+                widget.product.name,
+                style: const TextStyle(color: Colors.black, fontSize: 11)
                 ),
               ),
             ),
           ),
+
+      (widget.product.discount == 0)? Padding(
+        padding: EdgeInsets.only(
+            left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+            right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
         ),
-        Padding(
-          padding:  EdgeInsets.only(
-              left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
-              right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
-          ),
-          child: Text(
-            widget.product.name,
-            style: const TextStyle(color: Colors.black),
-          ),
-        ),
-        (widget.product.discount == 0)? Padding(
-          padding: EdgeInsets.only(
-              left: (widget.product.price.toString().length<35)? 35-widget.product.price.toString().length.toDouble() : 0,
-              right: (widget.product.price.toString().length<35)? 35-widget.product.price.toString().length.toDouble() : 0
-          ),
-          child: Text(
-            widget.product.price.toString() + " TL",
-            style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ):
-        Padding(
-          padding: EdgeInsets.only(
-              left: (widget.product.price.toString().length+(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length<30)? 30-widget.product.price.toString().length.toDouble()-(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length.toDouble() : 0,
-              right: (widget.product.price.toString().length+(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length<30)? 30-widget.product.price.toString().length.toDouble()-(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length.toDouble() : 0
-          ),
-          child: RichText(
-            text: TextSpan(
-              children: <TextSpan>[
-                TextSpan(
-                  text: widget.product.price.toString() + "   ",
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    decoration: TextDecoration.lineThrough,
-                      fontWeight: FontWeight.bold
-                  ),
-                ),
-                TextSpan(
-                  text: (widget.product.price - (widget.product.price*widget.product.discount/100)).toString() + " TL",
+        child: Column(
+          children: [
+            const SizedBox(height: 16),
+            Text(
+              widget.product.price.toString() + " TL",
                   style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
+      ):
+      Padding(
+        padding: EdgeInsets.only(
+          left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+          right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
+        ),
+        child: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                text: widget.product.price.toString() + "   ",
+                style: const TextStyle(
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              TextSpan(
+                text: (widget.product.price - (widget.product.price*widget.product.discount/100)).toString() + " TL",
+                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+      ),
+      Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             IconButton(
                 alignment: Alignment.centerLeft,
                 icon: const Icon(Icons.remove),
-                iconSize: 20,
+                iconSize: 15,
                 color: Colors.black,
                 tooltip: 'Decrease amount',
                 onPressed: () {
@@ -146,7 +159,7 @@ class _ProductCardState extends State<ProductCard> {
                 alignment: Alignment.centerRight,
                 icon: const Icon(Icons.add),
                 tooltip: 'Increase amount',
-                iconSize: 20,
+                iconSize: 15,
                 color: Colors.red,
                 onPressed: () {
                   setState(() {
@@ -169,7 +182,9 @@ class _ProductCardState extends State<ProductCard> {
                 }),
           ],
         ),
-      ],
+          ),
+          ],
+      ),
     );
   }
 

@@ -105,20 +105,27 @@ class _CategoryPageState extends State<CategoryPage> {
           isChildPressed = !isChildPressed;
         });
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Image.network(widget.categories[categoryIndex].image),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Text(
-              widget.categories[categoryIndex].name,
-              style: const TextStyle(color: Colors.black54),
+      child: Card(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+        Expanded(
+        child: Image.network(widget.categories[categoryIndex].image,
+            width: 80,
+            fit:BoxFit.fill ),
             ),
-          ),
-        ],
+
+        SizedBox(
+        height: 40,
+        child: Center(
+          child: Text(
+          widget.categories[categoryIndex].name,
+          style: const TextStyle(color: Colors.black54),
+    ),
+    ),
+    ),
+    ],
+    ),
       ),
     );
   }
