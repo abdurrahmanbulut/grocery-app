@@ -109,7 +109,7 @@ class _CategoryPageState extends State<CategoryPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            child: Image.asset(widget.categories[categoryIndex].image),
+            child: Image.network(widget.categories[categoryIndex].image),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),

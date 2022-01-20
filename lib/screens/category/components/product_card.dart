@@ -42,7 +42,7 @@ class _ProductCardState extends State<ProductCard> {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Image.asset(widget.product.image)
+              child: Image.network(widget.product.image)
           ),
         ) :
         Expanded(
