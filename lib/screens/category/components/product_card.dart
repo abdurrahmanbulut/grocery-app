@@ -78,8 +78,8 @@ class _ProductCardState extends State<ProductCard> {
         ),
         (widget.product.discount == 0)? Padding(
           padding: EdgeInsets.only(
-              left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
-              right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
+              left: (widget.product.price.toString().length<35)? 35-widget.product.price.toString().length.toDouble() : 0,
+              right: (widget.product.price.toString().length<35)? 35-widget.product.price.toString().length.toDouble() : 0
           ),
           child: Text(
             widget.product.price.toString() + " TL",
@@ -88,8 +88,8 @@ class _ProductCardState extends State<ProductCard> {
         ):
         Padding(
           padding: EdgeInsets.only(
-              left: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0,
-              right: (widget.product.name.length<35)? 35-widget.product.name.length.toDouble() : 0
+              left: (widget.product.price.toString().length+(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length<30)? 30-widget.product.price.toString().length.toDouble()-(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length.toDouble() : 0,
+              right: (widget.product.price.toString().length+(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length<30)? 30-widget.product.price.toString().length.toDouble()-(widget.product.price - (widget.product.price*widget.product.discount/100)).toString().length.toDouble() : 0
           ),
           child: RichText(
             text: TextSpan(
