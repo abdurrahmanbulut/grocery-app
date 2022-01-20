@@ -57,9 +57,23 @@ class _CategoryPageState extends State<CategoryPage> {
             child: SizedBox(
               width: 700,
               height: 60,
-              child: Center(
-                child: Text(widget.categories[childIndex].name,
-                    style: Theme.of(context).textTheme.headline5!),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        childIndex = 0;
+                        isChildPressed = !isChildPressed;
+                      });
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                    color: Colors.black,
+                  ),
+                  Center(
+                    child: Text(widget.categories[childIndex].name,
+                        style: Theme.of(context).textTheme.headline5!),
+                  ),
+                ]
               ),
             ),
           ),
@@ -109,23 +123,23 @@ class _CategoryPageState extends State<CategoryPage> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-        Expanded(
-        child: Image.network(widget.categories[categoryIndex].image,
-            width: 80,
-            fit:BoxFit.fill ),
-            ),
+              Expanded(
+              child: Image.network(widget.categories[categoryIndex].image,
+                  width: 80,
+                  fit:BoxFit.fill ),
+                  ),
 
-        SizedBox(
-        height: 40,
-        child: Center(
-          child: Text(
-          widget.categories[categoryIndex].name,
-          style: const TextStyle(color: Colors.black54),
-    ),
-    ),
-    ),
-    ],
-    ),
+              SizedBox(
+                height: 40,
+                child: Center(
+                  child: Text(
+                    widget.categories[categoryIndex].name,
+                    style: const TextStyle(color: Colors.black54),
+                  ),
+                ),
+              ),
+            ],
+        ),
       ),
     );
   }
