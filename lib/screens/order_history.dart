@@ -169,7 +169,7 @@ class OrderHistoryDetailed extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   CircleAvatar(
-                    backgroundImage: AssetImage(appUser
+                    backgroundImage: NetworkImage(appUser
                         .prevOrders[generalIndex].carts[i].product.image),
                   ),
                   SizedBox(width: 10),
