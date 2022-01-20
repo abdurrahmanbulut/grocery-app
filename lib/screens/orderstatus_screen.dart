@@ -45,10 +45,39 @@ class OrderScreenState extends State<OrderScreen> {
         // Body
         body: Container(
             child: Stepper(
-          steps: getSteps(),
-          type: StepperType.vertical,
-          currentStep: current_step,
-        )));
+                steps: getSteps(),
+                type: StepperType.vertical,
+                currentStep: current_step,
+                controlsBuilder: (context, {onStepContinue, onStepCancel}) {
+                  return Container(
+                    margin: EdgeInsets.only(top: 5),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: ElevatedButton(
+                          onPressed: onStepContinue,
+                          child: Text(" "),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.grey[50]),
+                          ),
+                        )),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Expanded(
+                            child: ElevatedButton(
+                          onPressed: onStepCancel,
+                          child: Text(" "),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.grey[50]),
+                          ),
+                        ))
+                      ],
+                    ),
+                  );
+                })));
   }
 
   List<Step> getSteps() => [
