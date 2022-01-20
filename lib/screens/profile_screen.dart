@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Profile',
+        title: const Text('Profil',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: (appUser.name.isEmpty)? const Text(
-                      '   Name Surname',
+                      '   Ad Soyad',
                       style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ) : Text(
                       '   '+ appUser.name,
@@ -121,7 +121,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: (appUser.phoneNumber.isEmpty)? const Text(
-                      '   Phone Number',
+                      '   Telefon Numarası',
                       style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                     ): Text(
                       '   '+ appUser.phoneNumber,
@@ -153,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   MaterialButton editButton(context) {
     return MaterialButton(
-      padding: const EdgeInsets.fromLTRB(40.0, 0.0, 19.22, 0.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 0.0, 0, 0.0),
       onPressed: () {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => ProfileUpdateScreen())).then((value) {setState(() {});});
@@ -162,11 +162,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Icon(Icons.edit, color: Colors.amber, size: 24),
         Padding(
           padding: EdgeInsets.all(14.0),
-          child: Text("   Edit Profile",
+          child: Text("   Profili Düzenle",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontFamily: 'OpenSans')),
         ),
-        SizedBox(height: 0, width: 113),
+        SizedBox(height: 0, width: 86),
         Icon(Icons.arrow_forward_ios, color: Colors.amber, size: 24),
       ]),
     );
@@ -185,11 +185,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Icon(Icons.lock_rounded, color: Colors.amber, size: 24),
         Padding(
           padding: EdgeInsets.all(14.0),
-          child: Text("   Change Password",
+          child: Text("   Şifre Değiştir",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 20, fontFamily: 'OpenSans')),
         ),
-        SizedBox(height: 0, width: 50),
+        SizedBox(height: 0, width: 103),
         Icon(Icons.arrow_forward_ios, color: Colors.amber, size: 24),
       ]),
     );

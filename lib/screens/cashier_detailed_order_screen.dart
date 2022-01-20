@@ -16,7 +16,7 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Order Details",
+          "Sipariş Detayı",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -27,7 +27,7 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
           SizedBox(height: 50),
           Center(
             child: Text(
-              "Items",
+              "Ürünler",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -55,15 +55,21 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
                               widget.order.carts[i].product.price)
                           .toString(),
                       style: TextStyle(fontSize: 20)),
-                  Text("\$", style: TextStyle(fontSize: 20)),
+                  Text("TL", style: TextStyle(fontSize: 20)),
                 ],
               ),
             ),
           SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-            child: Text("Total Price = ${widget.order.sumOrder2()}\$",
+            child: Text("Toplam Tutar = ${widget.order.sumOrder2()} TL",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
+            child: (widget.order.paid) ? Text("Ödeme Bilgisi = Ödendi",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)) : Text("Ödeme Bilgisi = Ödenmedi",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 30),
           Divider(
@@ -89,28 +95,49 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
               size: 150.0,
             ),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: InkWell(
-                  onTap: () {
-                    widget.order.status = OrderStatus.prepared;
-                    widget.order.update();
-                    print(widget.order.status.toString());
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 85,
-                    color: Colors.amberAccent,
-                    child: Center(
-                      child: Text('Set Prepared'),
-                    ),
+          Row(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(50, 10, 70, 0),
+              child: InkWell(
+                onTap: () {
+                  widget.order.status = OrderStatus.waiting;
+                  widget.order.update();
+                  print(widget.order.status.toString());
+                },
+                child: Container(
+                  height: 50,
+                  width: 85,
+                  color: Colors.amberAccent,
+                  child: Center(
+                    child: Text('Hazırlanıyor'),
                   ),
                 ),
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(50, 10, 50, 0),
+              child: InkWell(
+                onTap: () {
+                  widget.order.status = OrderStatus.prepared;
+                  widget.order.update();
+                  print(widget.order.status.toString());
+                },
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  height: 50,
+                  width: 85,
+                  color: Colors.green,
+                  child: Center(
+                    child: Text('Hazırlandı'),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+          Row(
+            children: [
               Padding(
-                padding: const EdgeInsets.all(0.0),
+                padding: const EdgeInsets.fromLTRB(50, 10, 70, 30),
                 child: InkWell(
                   onTap: () {
                     widget.order.status = OrderStatus.taken;
@@ -121,15 +148,15 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
                     alignment: Alignment.centerLeft,
                     height: 50,
                     width: 85,
-                    color: Colors.green,
+                    color: Colors.blue,
                     child: Center(
-                      child: Text('Set Ready'),
+                      child: Text('Alındı'),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.fromLTRB(50, 10, 50,30),
                 child: InkWell(
                   onTap: () {
                     widget.order.status = OrderStatus.canceled;
@@ -142,11 +169,12 @@ class _DetailedOrderPageState extends State<DetailedOrderPage> {
                     width: 85,
                     color: Colors.red,
                     child: Center(
-                      child: Text('Set Canceled'),
+                      child: Text('İptal'),
                     ),
                   ),
                 ),
-              )
+              ),
+             
             ],
           )
         ],

@@ -25,7 +25,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            "My Previous Orders",
+            "Geçmiş Siparişlerim",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
@@ -84,7 +84,7 @@ class _OrderHistoryState extends State<OrderHistory> {
               child: TextButton(
                 onPressed: () {},
                 child: const Text(
-                  "You haven't order anything yet!",
+                  "Henüz bir siparişin bulunmuyor!",
                   style: TextStyle(color: Colors.grey, fontSize: 20),
                 ),
               )),
@@ -124,7 +124,7 @@ List<Item> generateItems(int numberOfItems) {
     return Item(
       headerValue: '${appUser.prevOrders[index].id}',
       expandedValue:
-          'Name: ${appUser.name} \nPhone: ${appUser.phoneNumber}\nEmail: ${appUser.email}\nPrice: ${appUser.sumOrder(index)}\$\nTime: $time\nDate: $date',
+          'Ad Soyad: ${appUser.name} \nTelefon: ${appUser.phoneNumber}\nEmail: ${appUser.email}\nTutar: ${appUser.sumOrder(index)} TL\nSaat: $time\nTarih: $date',
       value: TextButton(
         style: TextButton.styleFrom(
           textStyle: const TextStyle(fontSize: 20),
@@ -145,7 +145,7 @@ class OrderHistoryDetailed extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Order Details",
+          "Sipariş Detayı",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -156,7 +156,7 @@ class OrderHistoryDetailed extends StatelessWidget {
           SizedBox(height: 50),
           Center(
             child: Text(
-              "Items",
+              "Ürünler",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -189,14 +189,14 @@ class OrderHistoryDetailed extends StatelessWidget {
                                   .price)
                           .toString(),
                       style: TextStyle(fontSize: 20)),
-                  Text("\$", style: TextStyle(fontSize: 20)),
+                  Text("TL", style: TextStyle(fontSize: 20)),
                 ],
               ),
             ),
           SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 0, 0),
-            child: Text("Total Price = ${appUser.sumOrder(generalIndex)}\$",
+            child: Text("Toplam Tutar = ${appUser.sumOrder(generalIndex)}TL",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 30),
@@ -228,25 +228,3 @@ class OrderHistoryDetailed extends StatelessWidget {
     );
   }
 }
-
-/*
-ListView.builder(
-          itemCount: appUser.prevOrders[generalIndex].carts.length,
-          itemBuilder: (context, index) {
-            var itemprice =
-                appUser.prevOrders[generalIndex].carts[index].numOfItem *
-                    appUser.prevOrders[generalIndex].carts[index].product.price;
-            return ListTile(
-              minVerticalPadding: 30.0,
-              minLeadingWidth: 50.0,
-              contentPadding: EdgeInsets.fromLTRB(30, 5, 0, 5),
-              visualDensity: VisualDensity.comfortable,
-              title: Text(
-                  '${appUser.prevOrders[generalIndex].carts[index].product.name}  x  ${appUser.prevOrders[generalIndex].carts[index].numOfItem}  =  $itemprice\$'),
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(appUser
-                    .prevOrders[generalIndex].carts[index].product.image),
-              ),
-            );
-          }),
-*/ 

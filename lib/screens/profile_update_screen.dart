@@ -51,7 +51,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Profil güncelleme',
+        title: const Text('Profili Düzenle',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -217,7 +217,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
             keyboardType: TextInputType.emailAddress,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (input) =>
-                input!.isValidEmail() ? null : "Email is invalid",
+                input!.isValidEmail() ? null : "Email yanlış",
             controller: _emailController,
             obscureText: false,
             style: const TextStyle(
@@ -258,7 +258,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
             keyboardType: TextInputType.number,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (input) =>
-                (input!.isPhoneNumber()) ? null : "Phone number is invalid",
+                (input!.isPhoneNumber()) ? null : "Telefon Numarası yanlış!",
             controller: _phoneController,
             style: const TextStyle(
               color: Colors.black,
@@ -271,7 +271,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 Icons.phone,
                 color: Colors.amber,
               ),
-              hintText: 'Phone Number',
+              hintText: 'Telefon Numarası',
               hintStyle: kHintTextStyle,
             ),
             onChanged: (value) {
@@ -308,7 +308,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 Icons.assignment,
                 color: Colors.amber,
               ),
-              hintText: 'Name and Surname',
+              hintText: 'Ad Soyad',
               hintStyle: kHintTextStyle,
             ),
             onChanged: (value) {

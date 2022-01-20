@@ -15,7 +15,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   List<Product> filteredProducts = [];
-  List<String> suggestions = ['cola','coffee','snack'];
+  List<String> suggestions = ['kola','kahve','çikolata'];
   var keyword = ValueNotifier<String>('');
   final _searchController = TextEditingController();
 
@@ -57,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
                 Icons.search,
                 color: Colors.amber,
               ),
-              hintText: 'Ürün ara',
+              hintText: 'Ürün Ara',
               hintStyle: kLabelStyle,
             ),
             onChanged: (value) {

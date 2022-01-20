@@ -23,7 +23,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Ödeme sayfası',
+        title: const Text('Ödeme Sayfası',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -39,7 +39,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         children: [
           const Center(
             child: Text(
-              "Your Cart",
+              "Sepetin",
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -56,7 +56,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Sipariş notu",
+            "Sipariş Notu",
             style: TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -75,7 +75,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           child: const TextField(
             textAlign: TextAlign.left,
             decoration: InputDecoration(
-              hintText: 'Sipariş notu',
+              hintText: 'Sipariş Notu',
               border: InputBorder.none,
             ),
           ),
@@ -85,7 +85,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(width: 16.0),
-            Text("Ödeme seçenekleri",
+            Text("Ödeme Yöntemi",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ],
         ),
@@ -126,7 +126,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             children: [
               for (var i = 0; i < count; i++)
                 Text(
-                    "${appUser.carts[i].product.name} : ${appUser.carts[i].product.getDiscountedPrice()} TL x ${appUser.carts[i].numOfItem}",
+                    "${appUser.carts[i].product.name} ${appUser.carts[i].product.price} TL x ${appUser.carts[i].numOfItem}",
                     style: TextStyle(fontSize: 16, color: Colors.black)),
             ],
           ),
@@ -135,7 +135,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(
-            "Toplam tutar: ${appUser.sumOfCart.value} TL",
+            "Toplam Tutar: ${appUser.sumOfCart.value} TL",
             style: const TextStyle(
                 fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -185,7 +185,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               ),
               color: Colors.amber,
               child: const Text(
-                'Ödemeyi onayla',
+                'Ödemeyi Tamamla',
                 style: TextStyle(
                   color: Colors.white,
                   letterSpacing: 1.0,
@@ -210,8 +210,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Yetersiz bakiye'),
-      content: Text("Lütfen bakiyenizi kontrol ediniz."),
+      title: Text('Yetersiz Bakiye!'),
+      content: Text("Bakiyenizi kontrol ediniz."),
       actions: [
         okButton,
       ],
@@ -235,8 +235,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Sipariş alındı'),
-      content: Text("Ödeme başarılı."),
+      title: Text('Ödeme Başarılı!'),
+      content: Text("Ödeme başarılı bir şekilde gerçekleşmiştir."),
       actions: [
         okButton,
       ],
@@ -259,8 +259,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Ödeme yöntemi'),
-      content: Text("Lütfen ödeme yöntemi seçin."),
+      title: Text('Ödeme Yöntemi Seçilmedi!'),
+      content: Text("Lütfen bir ödeme yöntemi seçiniz."),
       actions: [
         okButton,
       ],
@@ -283,8 +283,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: Text('Sepet boş'),
-      content: Text("Sepete ürün ekleyip tekrar deneyebilirsiniz."),
+      title: Text('Sepetiniz Boş!'),
+      content: Text("Sipariş verebilmek için sepetinize ürün ekleyiniz."),
       actions: [
         okButton,
       ],

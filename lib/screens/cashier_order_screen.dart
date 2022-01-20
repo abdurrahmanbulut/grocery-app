@@ -58,7 +58,7 @@ class OrderHistoryDetailed extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Order Details",
+          "Sipariş Detayı",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -75,7 +75,7 @@ class OrderHistoryDetailed extends StatelessWidget {
               contentPadding: EdgeInsets.fromLTRB(30, 5, 0, 5),
               visualDensity: VisualDensity.comfortable,
               title: Text(
-                  '${order.carts[index].product.name}  x  ${order.carts[index].numOfItem}  =  $itemprice\$'),
+                  '${order.carts[index].product.name}  x  ${order.carts[index].numOfItem}  =  $itemprice TL'),
               leading: CircleAvatar(
                 backgroundImage: AssetImage(order.carts[index].product.image),
               ),

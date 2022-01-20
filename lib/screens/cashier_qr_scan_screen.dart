@@ -70,7 +70,7 @@ class _QRScreenWidgetState extends State<QRScreenWidget> {
               color: Colors.cyan.withOpacity(0.2),
               child: Center(
                 child: Text(
-                  'Scan the order',
+                  'Sipariş kodunu tara!',
                   style: Theme.of(context).textTheme.headline4,
                   textAlign: TextAlign.center,
                 ),

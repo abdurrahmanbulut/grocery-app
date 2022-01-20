@@ -62,7 +62,7 @@ class _AddPointPageState extends State<AddPointPage> {
                 Icons.search,
                 color: Colors.amber,
               ),
-              hintText: 'Search User',
+              hintText: 'Kullanıcı Ara',
               hintStyle: kLabelStyle,
             ),
             onChanged: (value) {
@@ -125,7 +125,7 @@ class _AddPointToUserState extends State<AddPointToUser> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Add Balance',
+        title: const Text('Bakiye Ekle',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -139,7 +139,7 @@ class _AddPointToUserState extends State<AddPointToUser> {
               height: 100,
               alignment: Alignment.center,
               child: Text(
-                "${widget.user.email}'s Balance\n\n${widget.user.wallet}\$",
+                "${widget.user.email} Bakiye\n\n${widget.user.wallet} TL",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 17,
@@ -158,7 +158,7 @@ class _AddPointToUserState extends State<AddPointToUser> {
             child: TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  hintText: 'Please enter amount',
+                  hintText: 'Miktar giriniz',
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(17)),
                 ),
@@ -194,7 +194,7 @@ class _AddPointToUserState extends State<AddPointToUser> {
               ),
               color: Colors.amber,
               child: const Text(
-                'Submit',
+                'Gönder',
                 style: TextStyle(
                   color: Colors.white,
                   letterSpacing: 1.0,
@@ -213,15 +213,15 @@ class _AddPointToUserState extends State<AddPointToUser> {
 
 showAlertDialog(BuildContext context, double value, AppUser user) {
   Widget okButton = FlatButton(
-    child: Text("OK"),
+    child: Text("Tamam"),
     onPressed: () {
       Navigator.of(context).pop();
     },
   );
 
   AlertDialog alert = AlertDialog(
-    title: Text('Transaction Successful'),
-    content: Text("$value\$ added to ${user.email}'s balance!"),
+    title: Text('Yükleme Başarılı!'),
+    content: Text("$value TL ${user.email} hesabına yüklendi!"),
     actions: [
       okButton,
     ],

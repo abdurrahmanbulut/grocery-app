@@ -33,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Sign Up',
+        title: const Text('Kayıt Ol',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -86,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (input) =>
-                            input!.isValidEmail() ? null : "Email is invalid",
+                            input!.isValidEmail() ? null : "Email Yanlış!",
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         style: const TextStyle(
@@ -127,7 +127,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (input) => input!.isValidPassword()
                               ? null
-                              : "Password should have 6-10 character.",
+                              : "Şifreniz 6-10 karakter içermelidir.",
                           controller: _passwordController,
                           obscureText: _isObscure,
                           style: const TextStyle(
@@ -153,7 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     _isObscure = !_isObscure;
                                   });
                                 }),
-                            hintText: 'Password',
+                            hintText: 'Şifre',
                             hintStyle: kHintTextStyle,
                           ),
                           onChanged: (value) {
@@ -179,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (input) => (input == _password)
                               ? null
-                              : "Does not match with password",
+                              : "Şifre Eşleşmiyor!",
                           controller: _confirmController,
                           obscureText: true,
                           style: const TextStyle(
@@ -193,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Icons.lock,
                               color: Colors.amber,
                             ),
-                            hintText: 'Re-Enter Password',
+                            hintText: 'Şifreyi Tekrar Giriniz',
                             hintStyle: kHintTextStyle,
                           ),
                           onChanged: (value) {
@@ -235,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     color: Colors.amber,
                     child: const Text(
-                      'Sign Up',
+                      'Kayıt Ol',
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.0,

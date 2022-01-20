@@ -19,9 +19,9 @@ class Contact extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text("Grocery Name",
+            Text("İşletme İsmi",
                 style: TextStyle(fontSize: 15, color: Colors.grey)),
-            Text("Grocery Name",
+            Text("Grocery",
                 style: TextStyle(
                     fontSize: 17,
                     color: Colors.black,
@@ -30,7 +30,7 @@ class Contact extends StatelessWidget {
               height: 15,
               thickness: 2,
             ),
-            Text("Owner", style: TextStyle(fontSize: 15, color: Colors.grey)),
+            Text("Sahibi", style: TextStyle(fontSize: 15, color: Colors.grey)),
             Text("The Severus",
                 style: TextStyle(
                     fontSize: 17,
@@ -40,7 +40,7 @@ class Contact extends StatelessWidget {
               height: 15,
               thickness: 2,
             ),
-            Text("Telephone Number",
+            Text("Telefon Numarası",
                 style: TextStyle(fontSize: 15, color: Colors.grey)),
             Text("05999999",
                 style: TextStyle(
@@ -51,7 +51,7 @@ class Contact extends StatelessWidget {
               height: 15,
               thickness: 2,
             ),
-            Text("Adress", style: TextStyle(fontSize: 15, color: Colors.grey)),
+            Text("Adres", style: TextStyle(fontSize: 15, color: Colors.grey)),
             Text("İstanbul",
                 style: TextStyle(
                     fontSize: 17,

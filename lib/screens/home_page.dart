@@ -160,16 +160,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
       return (await showDialog(
             context: context,
             builder: (context) => new AlertDialog(
-              title: new Text('Are you sure?'),
-              content: new Text('Do you want to exit an App'),
+              title: new Text('Emin misiniz?'),
+              content: new Text('Uygulamadan çıkmak mı istiyorsunuz?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: new Text('No'),
+                  child: new Text('Hayır'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('Yes'),
+                  child: new Text('Evet'),
                 ),
               ],
             ),
@@ -228,14 +228,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Ana sayfa'),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Anasayfa'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Ürün Ara'),
+                  icon: Icon(Icons.search), label: 'Ara'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart), label: 'Sepetim'),
+                  icon: Icon(Icons.shopping_cart), label: 'Sepet'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.campaign), label: 'Kampanyalar'),
-              BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Hesabım'),
+              BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Hesap'),
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber,

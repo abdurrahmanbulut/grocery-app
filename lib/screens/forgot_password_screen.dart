@@ -26,7 +26,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.amber,
-          title: const Text('Reset Password',
+          title: const Text('Şifre Sıfırlama',
               style:
               TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
           centerTitle: true,
@@ -41,7 +41,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    labelText: 'Enter your Email'),
+                    labelText: 'Lütfen Email Giriniz'),
                 onChanged: (value) {
                   setState(() {
                     _email = value.trim();
@@ -59,9 +59,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: const Text('Completed!'),
+                      title: const Text('Tamamlandı!'),
                       content: const Text(
-                          'If mail adress is correct, it will be on the way!'),
+                          'Eposta mailinize gönderilmiştir. Lütfen kontrol ediniz!'),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () => Navigator.pop(context),
@@ -71,7 +71,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                   );
                 },
-                child: const Text("Submit"),
+                child: const Text("Gönder"),
               ),
             ),
           ],

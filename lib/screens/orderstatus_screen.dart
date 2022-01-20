@@ -18,10 +18,8 @@ class OrderScreenState extends State<OrderScreen> {
   @override
   Widget build(BuildContext context) {
     if (widget.order.status == OrderStatus.waiting)
-      current_step = 0;
-    else if (widget.order.status == OrderStatus.prepared)
       current_step = 1;
-    else if (widget.order.status == OrderStatus.taken) current_step = 2;
+    else if (widget.order.status == OrderStatus.prepared) current_step = 2;
     print(current_step);
     print(widget.order.status);
     print(widget.order.id);

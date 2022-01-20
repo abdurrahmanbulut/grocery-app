@@ -28,7 +28,7 @@ class _WalletScreenState extends State<WalletScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Wallet',
+        title: const Text('Cüzdan',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -68,9 +68,9 @@ Column WalletHistory(context, int data) {
     children: [
       //userInformation("Coin have been bought from: ", appUser.walletTransactions[data].sellerId),
       userInformation(
-          "Coin Amount :", appUser.walletTransactions[data].price.toString()),
+          "Para Miktarı :", "${appUser.walletTransactions[data].price.toString()} TL"),
       userInformation(
-          "Process Time: ", formattedDate),       
+          "İşlem Tarihi: ", formattedDate),    
       SizedBox(
         width: MediaQuery.of(context).size.width,
         child: const Divider(

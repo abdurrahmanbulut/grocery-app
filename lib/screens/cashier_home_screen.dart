@@ -37,16 +37,16 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
       return (await showDialog(
             context: context,
             builder: (context) => new AlertDialog(
-              title: new Text('Are you sure?'),
-              content: new Text('Do you want to exit an App'),
+              title: new Text('Emin misiniz?'),
+              content: new Text('Uygulamadan çıkmak istiyor musunuz?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
-                  child: new Text('No'),
+                  child: new Text('Hayır'),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
-                  child: new Text('Yes'),
+                  child: new Text('Evet'),
                 ),
               ],
             ),
@@ -81,7 +81,7 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
             ],
             elevation: 0,
             backgroundColor: Colors.amber,
-            title: const Text('GROCERY APP',
+            title: const Text('GROCERY',
                 style: TextStyle(
                     color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
             centerTitle: true,
@@ -96,12 +96,12 @@ class _CashierHomeScreenState extends State<CashierHomeScreen> {
           ),
           bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Anasayfa'),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'Search'),
+                  icon: Icon(Icons.search), label: 'Ara'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.account_balance_wallet_rounded),
-                  label: 'Add Point'),
+                  label: 'Para Ekle'),
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber,

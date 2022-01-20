@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.amber,
-        title: const Text('Sign In',
+        title: const Text('Giriş Yap',
             style:
                 TextStyle(color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
         centerTitle: true,
@@ -157,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 _buildRememberMeCheckbox(),
                                 SizedBox(
-                                  width: 40,
+                                  width: 70,
                                 ),
                                 _buildForgotPasswordBtn(),
                               ],
@@ -259,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       _isObscure = !_isObscure;
                     });
                   }),
-              hintText: 'Password',
+              hintText: 'Şifre',
               hintStyle: kHintTextStyle,
             ),
             onChanged: (value) {
@@ -285,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: AnimatedTextKit(
             repeatForever: true,
             animatedTexts: [
-              WavyAnimatedText('Welcome to Grocery!'),
+              WavyAnimatedText('Grocery\'e Hoşgeldiniz!'),
             ],
             onTap: () {
               print("Tap Event");
@@ -332,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: AnimatedTextKit(
           animatedTexts: [
             ColorizeAnimatedText(
-              'Welcome to Grocery!',
+              'Grocery\'e Hoşgeldiniz!',
               textStyle: colorizeTextStyle,
               colors: colorizeColors,
             ),
@@ -360,7 +360,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }, //print('Forgot Password Button Pressed'),
         padding: const EdgeInsets.only(right: 0.0),
         child: const Text(
-          'Forgot Password?',
+          'Şifremi Unuttum',
           style: TextStyle(
             color: Colors.black,
             fontFamily: 'OpenSans',
@@ -387,7 +387,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           const Text(
-            'Remember me',
+            'Beni Hatırla',
             style: kLabelStyle,
           ),
         ],
@@ -429,19 +429,19 @@ class _LoginScreenState extends State<LoginScreen> {
               switch (e.message) {
                 case 'There is no user record corresponding to this identifier. The user may have been deleted.':
                   error =
-                      "There is no user record corresponding to this identifiers";
+                      "Böyle bir kullanıcı bulunamadı.";
                   break;
                 case 'The password is invalid or the user does not have a password.':
-                  error = "The password is invalid!";
+                  error = "Girdiğiniz şifre yanlış!";
                   break;
                 case 'Given String is empty or null':
-                  error = "Email or password can not be empty!";
+                  error = "Email ya da şifre boş bırakılamaz!";
                   break;
                 case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
-                  error = "There is a network error.Please try again later!";
+                  error = "Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz!";
                   break;
                 default:
-                  error = "Error";
+                  error = "Hata";
               }
             });
           }
@@ -452,7 +452,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         color: Colors.amber,
         child: const Text(
-          'Sign In',
+          'Giriş Yap',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.0,
@@ -508,7 +508,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       children: const <Widget>[
         Text(
-          'Or',
+          'ya da',
           style: kLabelStyle,
         ),
         SizedBox(
@@ -569,7 +569,7 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 58,
             ),
             const Text(
-              "Sign In with Google",
+              "Google ile giriş",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 13.0,
@@ -605,7 +605,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               width: 30,
             ),
-            Text('Don\'t you have an account? SIGN UP',
+            Text('Hesabınız mı yok? Hemen kayıt ol!',
                 style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'OpenSans',
