@@ -60,6 +60,15 @@ class AppUser {
     dataId = id;
   }
 
+  List<Order> getDailyOrders() {
+    List<Order> dailyOrders = [];
+    prevOrders.forEach((element) {
+      if (element.time.day == DateTime.now().day && (element.status != OrderStatus.taken && element.status != OrderStatus.canceled) ) {
+        dailyOrders.add(element);
+      }
+    });
+    return dailyOrders;
+  }
   @override
   bool operator ==(Object other) {
     return ((other as AppUser).email == email);

@@ -10,6 +10,7 @@ import 'package:grocery_app/screens/orderstatus_screen.dart';
 import 'package:grocery_app/screens/search_screen.dart';
 import 'package:badges/badges.dart';
 import 'package:grocery_app/services/database.dart';
+import 'daily_order_screen.dart';
 import 'notification_screen.dart';
 import 'search_screen.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
@@ -179,14 +180,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     color: Colors.black, fontFamily: 'YOUR_FONT_FAMILY')),
             leading: IconButton(
               onPressed: () {
-                print(appUser.prevOrders[appUser.prevOrders.length - 1].status);
-                print(appUser.prevOrders[appUser.prevOrders.length - 1].id);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => OrderScreen(
-                          order: appUser
-                              .prevOrders[appUser.prevOrders.length - 1])),
+                      builder: (context) => DailyOrderScreen()),
                 );
               },
               icon: Icon(Icons.wallet_travel_rounded),
