@@ -19,7 +19,14 @@ Future<AppUser> signInWithEmail(String _email,String _password) async {
     }
   }
   await _auth.signInWithEmailAndPassword(email: _email, password: _password);
-  user.image = await storage.ref().child('profiles').child(user.dataId.key).getDownloadURL();
+  var listResult = await storage.ref().child('profiles').child(user.dataId.key).listAll();
+  if (listResult.items.isNotEmpty) {
+    user.image = await storage
+        .ref()
+        .child('profiles')
+        .child(user.dataId.key)
+        .getDownloadURL();
+  }
   return user;
 }
 
@@ -44,6 +51,7 @@ Future<AppUser> createUserWithEmail(String _email,String _password) async {
   UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
   AppUser user = AppUser(userCredential.user!.uid, '', '', _email, _password, '', Type.customer,0.0);
   user.setId(saveUser(user));
+  userCredential.user!.sendEmailVerification();
   return user;
 }
 

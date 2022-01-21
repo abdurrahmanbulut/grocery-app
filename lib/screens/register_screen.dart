@@ -220,13 +220,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         AppUser checkedUser = await checkUser(appUser);
                         checkedUser.setId(appUser.dataId);
                         appUser = checkedUser;
-                        Navigator.pushReplacement<void, void>(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) =>
-                                HomeScreen(widget.categories),
-                          ),
-                        );
+                          auth.signOut();
+                          Navigator.pop(context);
                       }
                     },
                     padding: const EdgeInsets.all(12.0),

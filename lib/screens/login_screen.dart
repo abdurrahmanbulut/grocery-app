@@ -407,20 +407,22 @@ class _LoginScreenState extends State<LoginScreen> {
               AppUser checkedUser = await checkUser(appUser);
               checkedUser.setId(appUser.dataId);
               appUser = checkedUser;
-              if (appUser.type == Type.customer) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomeScreen(widget.categories)));
-              } else if (appUser.type == Type.cashier) {
-                List<Order> temporders = await getAllOrders();
-                List<Order> TodaysOrders = TodaysOrdersFunc(temporders);
-                List<Order> orders = await getAllOrders();
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CashierHomeScreen(
-                            widget.categories, orders, TodaysOrders)));
+              if(auth.currentUser!.emailVerified) {
+                if (appUser.type == Type.customer) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(widget.categories)));
+                } else if (appUser.type == Type.cashier) {
+                  List<Order> temporders = await getAllOrders();
+                  List<Order> TodaysOrders = TodaysOrdersFunc(temporders);
+                  List<Order> orders = await getAllOrders();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CashierHomeScreen(
+                              widget.categories, orders, TodaysOrders)));
+                }
               }
             }
           } on FirebaseAuthException catch (e) {
