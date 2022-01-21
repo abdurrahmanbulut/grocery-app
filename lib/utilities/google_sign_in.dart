@@ -31,12 +31,17 @@ class GoogleSignInProvider extends ChangeNotifier {
     }
     final List<AppUser> users = await getAllUsers();
     AppUser user = AppUser(userCredential.user!.uid, '', '', userCredential.user!.email as String, '', '', Type.customer,0);
+    bool _isUser = false;
     for (var element in users) {
       if(element.email == user.email) {
+        _isUser=true;
         user = element;
         break;
       }
     }
+    if (_isUser==false){
+        user.setId(saveUser(user));
+        }
     return user;
   }
 }

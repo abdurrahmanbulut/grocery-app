@@ -86,6 +86,7 @@ class _QRScreenWidgetState extends State<QRScreenWidget> {
     this.controller = controller;
     final expectedCodes = recognisedCodes.map((e) => e.type);
     controller.scannedDataStream.listen((scanData) {
+      controller.pauseCamera();
       int index = 3;
       for (int i = 0; i < widget.allOrders.length; i++) {
         if (widget.allOrders[i].id == scanData.code) index = i;

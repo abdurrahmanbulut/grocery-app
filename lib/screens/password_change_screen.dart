@@ -247,11 +247,7 @@ class _PasswordChangeScreenState extends State<PasswordChangeScreen> {
           if (appUser.password == _current) {
             if (_new == _confirm) {
               passwordChange(appUser, _new);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => (MaterialApp(
-                          theme: ThemeData.light(), home: ProfileScreen()))));
+              Navigator.of(context).pop();
             }
           }
         },

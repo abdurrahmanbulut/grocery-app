@@ -407,7 +407,7 @@ class _LoginScreenState extends State<LoginScreen> {
               AppUser checkedUser = await checkUser(appUser);
               checkedUser.setId(appUser.dataId);
               appUser = checkedUser;
-              if(auth.currentUser!.emailVerified) {
+              if (auth.currentUser!.emailVerified) {
                 if (appUser.type == Type.customer) {
                   Navigator.pushReplacement(
                       context,
@@ -423,6 +423,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (context) => CashierHomeScreen(
                               widget.categories, orders, TodaysOrders)));
                 }
+              } else {
+                showAlertDialog(context);
               }
             }
           } on FirebaseAuthException catch (e) {
@@ -430,8 +432,7 @@ class _LoginScreenState extends State<LoginScreen> {
               print(e.message);
               switch (e.message) {
                 case 'There is no user record corresponding to this identifier. The user may have been deleted.':
-                  error =
-                      "Böyle bir kullanıcı bulunamadı.";
+                  error = "Böyle bir kullanıcı bulunamadı.";
                   break;
                 case 'The password is invalid or the user does not have a password.':
                   error = "Girdiğiniz şifre yanlış!";
@@ -440,7 +441,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   error = "Email ya da şifre boş bırakılamaz!";
                   break;
                 case 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.':
-                  error = "Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz!";
+                  error =
+                      "Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz!";
                   break;
                 default:
                   error = "Hata";
@@ -536,15 +538,35 @@ class _LoginScreenState extends State<LoginScreen> {
           });
           try {
             appUser = await googleSignInProvider.googleLogIn();
-            AppUser checkedUser = await checkUser(appUser);
-            checkedUser.setId(appUser.dataId);
-            appUser = checkedUser;
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomeScreen(widget.categories)));
+            print(appUser.name);
+            if (appUser.email != "") {
+              AppUser checkedUser = await checkUser(appUser);
+              checkedUser.setId(appUser.dataId);
+              appUser = checkedUser;
+              if (appUser.type == Type.customer) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreen(widget.categories)));
+              } else if (appUser.type == Type.cashier){
+                List<Order> temporders = await getAllOrders();
+                List<Order> TodaysOrders = TodaysOrdersFunc(temporders);
+                List<Order> orders = await getAllOrders();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CashierHomeScreen(
+                            widget.categories, orders, TodaysOrders)));
+              }
+            }
+            else {
+
+              showAlertDialog2(context);
+            }
           } catch (e) {
             if (e is FirebaseAuthException) {
+              print("hata");
+              print(e);
               throw e;
             }
           }
@@ -719,4 +741,52 @@ List<Order> TodaysOrdersFunc(List<Order> orders) {
   List<Order> AllOrders = orders;
   AllOrders.removeRange(0, count + 1);
   return AllOrders;
+}
+
+showAlertDialog(BuildContext context) {
+  Widget okButton = FlatButton(
+    child: Text("Tamam"),
+    onPressed: () {
+      Navigator.of(context, rootNavigator: true).pop();
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text('Email Doğrulanmamış!'),
+    content: Text("Lütfen gelen eposta ile emailinizi doğrulayın."),
+    actions: [
+      okButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showAlertDialog2(BuildContext context) {
+  Widget okButton = FlatButton(
+    child: Text("Tamam"),
+    onPressed: () {
+      Navigator.of(context, rootNavigator: true).pop();
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text('Giriş Yapamadınız!'),
+    content: Text("Lütfen email ve şifrenizi doğru girerek tekrar deneyiniz."),
+    actions: [
+      okButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
