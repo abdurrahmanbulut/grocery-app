@@ -70,6 +70,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ],
                     ),
                   );
+                  Navigator.pop(context);
                 },
                 child: const Text("Gönder"),
               ),
