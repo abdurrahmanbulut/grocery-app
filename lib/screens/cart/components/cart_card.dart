@@ -60,7 +60,7 @@ class _CartCardState extends State<CartCard> {
               const SizedBox(height: 10),
               Text.rich(
                 TextSpan(
-                  text: "\$${widget.user.carts[widget.cartIndex].product.getDiscountedPrice()}  ",
+                  text: "${widget.user.carts[widget.cartIndex].product.getDiscountedPrice()}  TL ",
                   style:
                       const TextStyle(fontWeight: FontWeight.w600, color: Colors.black),
                   children: [
@@ -70,7 +70,7 @@ class _CartCardState extends State<CartCard> {
                           fontWeight: FontWeight.w600, color: Colors.pink),
                     ),
                     TextSpan(
-                      text: " \$${(widget.user.carts[widget.cartIndex].product.getDiscountedPrice() * widget.user.carts[widget.cartIndex].numOfItem)}",
+                      text: " ${(widget.user.carts[widget.cartIndex].product.getDiscountedPrice() * widget.user.carts[widget.cartIndex].numOfItem)} TL",
                       style: const TextStyle(
                           fontWeight: FontWeight.w600, color: Colors.black),
                     ),
