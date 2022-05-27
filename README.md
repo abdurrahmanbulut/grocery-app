@@ -1,8 +1,20 @@
 # GroceryApp
-************** GTU CSE343 project ************ <br>
+************** GTU CSE343 project - Software Engineering Course ************ <br>
   - Logo <br>
-<img  src="https://media.giphy.com/media/crP2pFmTT7N3ZcM2LD/giphy.gif" width="200" height="200" />
-  - Screenshots from app <br> <br>
+<img  src="https://media.giphy.com/media/crP2pFmTT7N3ZcM2LD/giphy.gif" width="200" height="200" /> 
+<hr>
+  Contributors <br>
+  <ul>
+  <li>Mete Gonca</li>
+  <li>Muhammed Alperen Karacete</li>
+  <li>Abdullah Muhammet Yiğit</li>
+  <li>Doğukan Güler</li>
+  <li>Abdurrahman Bulut</li>
+  </ul>
+  <hr>
+  
+  * Screenshots from app <br>
+  * You can download apk from this link [Grocery Apk | click](https://gtu-my.sharepoint.com/:u:/g/personal/a_bulut2017_gtu_edu_tr/ETlu3PjLoC1FuyqJ8kn3ah8BWkaGKMilDq8_4igc2Axmdw?download=1) <br> <br>
 <div style="display:flex; ">
   <img style="margin:2rem" src="/assets/screenshots/1.jpg" width="280px" height="550px" /> &nbsp;&nbsp;&nbsp;
   <img style="margin:2rem" src="/assets/screenshots/2.jpg" width="280px" height="550px" /> &nbsp;&nbsp;&nbsp;
