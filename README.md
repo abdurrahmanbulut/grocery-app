@@ -2,7 +2,7 @@
 ************** GTU CSE343 project - Software Engineering Course ************ <br>
 
   * You can download the apk file from this link [Grocery Apk | click - Onedrive](https://gtu-my.sharepoint.com/:u:/g/personal/a_bulut2017_gtu_edu_tr/ETlu3PjLoC1FuyqJ8kn3ah8BWkaGKMilDq8_4igc2Axmdw?download=1) <br> <br>
-  * To see the project report [Click - Google Drive](https://drive.google.com/file/d/1Nch-dAJ95tKMtLP0XGSZxj2sjfxIl12U/view?usp=sharing)
+  * To see the project report document [Click - Google Drive](https://drive.google.com/file/d/1Nch-dAJ95tKMtLP0XGSZxj2sjfxIl12U/view?usp=sharing) . This document describes user stories and its related scenarios, project backlog document with task priorities and their rationales, use case diagrams for the defined scenarios, graphical interface and test cases.
 <hr>
 Logo <br> <br>
 <img  src="https://media.giphy.com/media/crP2pFmTT7N3ZcM2LD/giphy.gif" width="200" height="200" /> 
